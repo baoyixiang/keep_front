@@ -1,0 +1,110 @@
+page{
+  height: 100%;
+  background: #EFEEF4;
+}
+.createHabit{
+
+  .createHabit_tips{
+    margin: 20px auto 30px;
+    line-height: 100px;
+    font-size:26px;
+    color: #666666;
+    width: 95%;
+    height:100px;
+    background: white;
+    border-radius: 12px;
+    text-indent: 1em;
+    .createHabit_tips_btn{
+      float:right;
+      height: 60px;
+      margin-top:20px;
+      color: white;
+      background: #45D17F;
+      border-radius: 30px;
+      font-size:24px;
+      margin-right: 20px;
+      width:110px;
+      text-align: center;
+      text-indent: 0;
+    }
+  }
+  .createHabit_recommend{
+    width:95%;
+    margin:15px auto;
+    .createHabit_recommend_title{
+      font-size: 24px;
+      color:#666666;
+      display: block;
+    }
+    .createHabit_recommend_content:last-child{
+      border: none;
+    }
+    .createHabit_recommend_content{
+      background: white;
+      height:120px;
+      border-bottom:1px solid #F8F8F8;
+      .createHabit_recommend_content_img{
+        display: block;
+        padding: 25px;
+        width:70px;
+        height:70px;
+        float:left;
+      }
+      .createHabit_recommend_content_text{
+        width:400px;
+        float:left;
+        .createHabit_recommend_content_text_title{
+          display: block;
+          font-size:28px;
+          margin-left: 15px;
+          line-height: 60px;
+          font-family: "微软雅黑";
+          color:black;
+          margin-top:6px;
+        }
+        .createHabit_recommend_content_text_num{
+          display: block;
+          font-size: 22px;
+          line-height: 40px;
+          margin-left: 15px;
+          color: #C3C7CC;
+        }
+      }
+      .createHabit_recommend_content_btn{
+        display: block;
+        float: left;
+        text-align: center;
+        width:120px;
+        height:60px;
+        margin-left:50px;
+        font-size: 25px;
+        line-height: 60px;
+        border-radius: 30px;
+        color:#45D17F;
+        background: #F7F7F7;
+        margin-top:30px;
+        border:none;
+        outline: none;
+      }
+    }
+  }
+}
+.at-search-bar__action{
+  background: #45D17F;
+  height:56px;
+  font-size:24px;
+  border-radius:28px;
+  line-height: 56px;
+}
+.at-search-bar{
+  background: #EFEEF4;
+}
+button::after{
+  display: none;
+}
+.createHabit_recommendContent{
+  margin-top:15px;
+}
+.at-search-bar__action{
+  display: none;
+}

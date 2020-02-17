@@ -1,0 +1,96 @@
+page{
+  height: 100%;
+  background: #EFEEF4;
+}
+.mine{
+  background: #F0F0F0;
+  .mine_topBack{
+    width:100%;
+    height:350px;
+    background: #6a9dc3;
+    position:relative;
+    .mine_topBack_headImg{
+      height:120px;
+      width:120px;
+      border-radius: 50%;
+      position:absolute;
+      left:80px;
+      top:50%;
+      margin-top:-60px;
+    }
+    .mine_topBack_nickName{
+      position:absolute;
+      left: 220px;
+      top: 130px;
+      font-size: 30px;
+      color: #333333;
+    }
+    .mine_topBack_headText{
+      position:absolute;
+      left:220px;
+      top:180px;
+      font-size: 30px;
+      color:#333333;
+    }
+    .mine_topBack_login{
+      width:200px;
+      height:80px;
+      background: #45D17F;
+      color:white;
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-top:-40px;
+      margin-left: -100px;
+      border-radius: 40px;
+      font-size: 30px;
+      line-height: 80px;
+      font-family: "微软雅黑";
+    }
+  }
+  .mine_nav{
+    margin-top:20px;
+    .mine_nav_item{
+      background: #fff;
+      height:110px;
+      border-bottom: 1px solid #F3F3F3;
+      position:relative;
+      .mine_nav_item_img{
+        height:40px;
+        width:40px;
+        margin-top:37px;
+        margin-left: 30px;
+        line-height:90px;
+      }
+      .mine_nav_item_text{
+        font-size: 30px;
+        position:absolute;
+        top:37px;
+        left:90px;
+        color: #0F4C81;
+      }
+      .mine_nav_item_icon{
+        position:absolute;
+        right:20px;
+        top:37px;
+        color: #0F4C81;
+        font-weight: lighter;
+      }
+    }
+  }
+  .mine_outLogin{
+    width:95%;
+    border-radius: 5px;
+    margin: 40px auto;
+    background: white;
+    color: #DD2C4B;
+    letter-spacing: 5px;
+    box-shadow:rgba(0, 0, 0, 0.2) 1px 1px 8px 1px;
+    border:none;
+    outline: none;
+  }
+}
+
+Button:after{
+  display: none;
+}

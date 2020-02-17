@@ -1,0 +1,185 @@
+.topNav{
+  height: 100px;
+  overflow: auto;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: scroll;
+  .topNav_item{
+    height:100px;
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius:10px;
+    .topNav_item_icon{
+      padding:10px;
+      height: 80px;
+      width: 80px;
+    }
+  }
+}
+.insist_content{
+  width:95%;
+  margin: 0 auto;
+  .insist_content_first{
+    margin-top:20px;
+    .insist_content_first_title{
+      font-size:30px;
+      font-family: "微软雅黑";
+      font-weight: 600;
+      display: block;
+      padding-top:20px;
+    }
+    .insist_content_first_progress{
+      margin:50px auto;
+      width: 95%;
+    }
+    .insist_content_first_progress2{
+      width:100%;
+      height:320px;
+      position:relative;
+      .right_circle{
+        width:200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 20px solid transparent;
+        border-right: 20px solid #25A2F9;
+        border-bottom:20px solid #25A2F9;
+        transform:rotate(-45deg);
+        position:absolute;
+        top:50px;
+        left:50%;
+        margin-left: -120px;
+      }
+      .left_circle{
+        width:200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 20px solid transparent;
+        border-left: 20px solid #F1F3F7;
+        border-top:20px solid #F1F3F7;
+        transform:rotate(-45deg);
+        position:absolute;
+        top:50px;
+        left:50%;
+        margin-left: -120px;
+      }
+      .mask{
+        width:200px;
+        height: 200px;
+        border-radius: 50%;
+        border:20px solid transparent;
+        transform:rotate(-45deg);
+        position:absolute;
+        top:50px;
+        left:50%;
+        margin-left: -120px;
+      }
+      .percent_number{
+        position: absolute;
+        top:130px;
+        text-align: center;
+        display: block;
+        width: 100%;
+        font-size:44px;
+        font-weight: 600;
+        .percentage{
+          font-size:28px;
+          font-weight: 400;
+        }
+      }
+      .finishedText{
+        position: absolute;
+        top:195px;
+        font-size:24px;
+        color:#C3C7CC;
+        display: block;
+        width:100%;
+        text-align: center;
+      }
+    }
+    .insist_content_first_content{
+      margin:20px auto;
+      display: flex;
+      justify-content: space-around;
+      .insist_content_first_content_item{
+        width:15%;
+        height:140px;
+        text-align: center;
+        .insist_content_first_content_item_finishedNum{
+           display: block;
+           font-size: 50px;
+           color:#25A2F9;
+          font-weight: 600;
+         }
+        .insist_content_first_content_item_notFinishedNum{
+          display: block;
+          font-size: 50px;
+          color:#DD2C4B;
+        }
+        .insist_content_first_content_item_insistingNum{
+          display: block;
+          font-size: 50px;
+          color:#323232;
+        }
+        .insist_content_first_content_item_text{
+          display: block;
+          margin-top:15px;
+          font-size: 32px;
+          color: #8C8C8C;
+        }
+      }
+    }
+  }
+  .insist_content_others{
+    margin-top:20px;
+    .insist_content_others_title{
+      font-size: 30px;
+      font-weight: 600;
+      font-family: 微软雅黑;
+      display: block;
+      padding-top:20px;
+    }
+    .insist_content_others_calendar{
+      margin-top:20px;
+    }
+    .insist_content_others_statistics{
+      margin-top:35px;
+      .insist_content_others_statistics_title{
+        font-size: 35px;
+        color:#666666;
+        margin-bottom: 15px;
+      }
+      .insist_content_others_statistics_item{
+        width:100%;
+        height: 100px;
+        border-bottom:1px solid #CCCCCC;
+        align-items: center;
+        .insist_content_others_statistics_item_dot{
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #45D17F;
+          margin-left: 30px;
+          float:left;
+          margin-top:42px;
+        }
+        .insist_content_others_statistics_item_text {
+          margin-left: 20px;
+          color:#8C8C8C;
+          float: left;
+          line-height: 100px;
+        }
+        .insist_content_others_statistics_item_day{
+          float: right;
+          line-height: 100px;
+          .insist_content_others_statistics_item_day_num{
+            color:#45D17F;
+          }
+        }
+      }
+    }
+  }
+}
+
+.at-calendar__list.flex .flex__item--selected-head.flex__item--selected-tail .flex__item-container{
+  background: #45D17F;
+}

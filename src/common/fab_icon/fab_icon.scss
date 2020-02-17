@@ -1,0 +1,110 @@
+@import "../../../node_modules/taro-ui/dist/style/components/fab";
+
+@keyframes contentView{
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, 0.75, 1);
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.75, 1.25, 1);
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, 0.85, 1);
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    -webkit-transform: scale3d(0.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, 0.95, 1);
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+.at-fab{
+  background: #FFFFFF;
+}
+.fab{
+  position: fixed;
+  bottom: 121px;
+  right: 35px;
+  z-index: 99999999;
+  .fab-content{
+    background: #FFFFFF;
+    width:114px;
+    height:114px;
+    border-radius: 57px;
+
+    box-shadow: 0 6rpx 10rpx -2rpx rgba(0, 0, 0, 0.2), 0 12rpx 20rpx 0 rgba(0, 0, 0, 0.14), 0 2rpx 36rpx 0 rgba(0, 0, 0, 0.12);
+  }
+  .fab-content-ani{
+    animation: contentView 0.6s;
+  }
+  .fab-content-box{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top:20px;
+    .fab-icon{
+      width: 80px;
+      height: 72px;
+    }
+    .fab-text{
+      font-size: 22px;
+      color: #DD2C4B;
+    }
+  }
+
+
+  .view-content{
+    background: #FFFFFF;
+    border-radius: 57px;
+    height:114px;
+    width:240px;
+    overflow:hidden;
+    animation: contentView 0.6s;
+    box-shadow: 0 6rpx 10rpx -2rpx rgba(0, 0, 0, 0.2), 0 12rpx 20rpx 0 rgba(0, 0, 0, 0.14), 0 2rpx 36rpx 0 rgba(0, 0, 0, 0.12);
+  }
+
+
+  .view-content-box-right{
+    margin-left:12px;
+    background: #DD2C4B;
+
+  }
+  .view-content-box{
+    height: 114px;
+    width:114px;
+    float:left;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    .view-icon{
+      width: 55px;
+      height: 55px;
+      padding-top:12px;
+    }
+    .view-text{
+      font-size: 22px;
+      color: #000000;
+    }
+  }
+}
+
+

@@ -1,0 +1,79 @@
+page{
+  background: #EFEEF4;
+}
+.create_habit_button{
+  position:fixed;
+  width:30%;
+  height:80px;
+  box-shadow:rgba(0, 0, 0, 0.2) 1px 1px 8px 1px;
+  background: #3BCA7B;
+  line-height: 80px;
+  color:white;
+  border-radius: 40px;
+  font-size: 26px;
+  left:35%;
+  bottom:30px;
+}
+.index{
+  .div{
+    height:350px;
+    background: #CCCCCC;
+    position:relative;
+    .divAni{
+      width:200px;
+      height: 280px;
+      border-radius: 10px;
+      margin:15px auto;
+      position:absolute;
+      bottom: 5px;
+      left:270px;
+    }
+    .tree{
+      animation: rubberBand 0.6s;
+    }
+  }
+  .list_item{
+    height:150px;
+    position:relative;
+    background: white;
+    width:95%;
+    margin:20px auto;
+    border-radius: 10px;
+    //box-shadow:rgba(0, 0, 0, 0.2) 1px 1px 8px 1px;
+    .list_item_icon{
+      width:60px;
+      height:60px;
+      margin-left: 45px;
+      margin-top:45px;
+    }
+    .list_item_title{
+      position:absolute;
+      left:130px;
+      top:40px;
+    }
+    .list_item_days{
+      position:absolute;
+      left:130px;
+      top:85px;
+      color:#AAAAAA;
+      font-size: 24px;
+    }
+  }
+}
+@keyframes rubberBand {
+  0% {
+    height:280px;
+  }
+  25%{
+    height: 310px;
+  }
+  50%{
+    height:280px;
+  }
+  75%{
+    height: 295px;
+  }
+  to{
+    height:280px;
+  }
+}

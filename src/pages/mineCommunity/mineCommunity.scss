@@ -1,0 +1,56 @@
+
+.at-tabs__item--active {
+  color: #3BCA7B;
+}
+.at-tabs__item-underline{
+  background-color: #45D17F;
+}
+
+.backToTop{
+  position:fixed;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background: #25A2F9;
+  color:white;
+  right:50px;
+  bottom:100px;
+  border:none;
+  outline:none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:3px 6px 15px 0 rgba(0,0,0,.5);
+  animation: anim_display .3s;
+  .backToTop_icon{
+    width:50px;
+    height: 50px;
+  }
+}
+.backToTop_hidden{
+  animation: anim_hidden .3s;
+}
+
+@keyframes anim_hidden {
+  from{
+    transform: scale(1);
+  }
+  to{
+    transform: scale(0);
+  }
+}
+
+@keyframes anim_display {
+  0%{
+    transform: scale(0)
+  }
+  40%{
+    transform:scale(1.0)
+  }
+  75%{
+    transform:scale(1.1)
+  }
+  100%{
+    transform:scale(1)
+  }
+}

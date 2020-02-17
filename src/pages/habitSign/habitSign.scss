@@ -1,0 +1,58 @@
+page{
+  background: #EFEEF4;
+  height: 100%;
+}
+.Sign{
+  .Sign_check{
+    height: 500px;
+    width: 100%;
+    background: white;
+    .Sign_check_date{
+      display: block;
+      height:100px;
+      line-height: 100px;
+      font-size:30px;
+      text-align: center;
+    }
+    .Sign_check_view{
+      width:250px;
+      height:250px;
+      border-radius: 50%;
+      background: #C3C7CC;
+      margin:0px auto;
+      position: relative;
+      .Sign_check_view_img{
+        display: block;
+        position: absolute;
+        height:200px;
+        width:200px;
+        border-radius:50%;
+        top:50%;
+        left: 50%;
+        margin-left: -100px;
+        margin-top:-100px;
+      }
+    }
+    .Sign_check_btn{
+      margin:50px auto;
+      width:140px;
+      height:60px;
+      border-radius: 30px;
+      background: orange;
+      color:white;
+      font-size: 24px;
+      line-height: 60px;
+      border:none;
+      outline: none;
+    }
+  }
+}
+.view_back{
+  background: white;
+  height:150px;
+  width: 150px;
+  position:absolute;
+  top:50px;
+  left: 50px;
+  border-radius: 50%;
+}
