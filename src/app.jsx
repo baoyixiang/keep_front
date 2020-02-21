@@ -7,8 +7,8 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index',
       'pages/discover/discover',
+      'pages/index/index',
       'pages/hopes/hopes',
       'pages/mine/mine',
       'pages/createHabit/createHabit',

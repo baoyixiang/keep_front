@@ -1,0 +1,106 @@
+page{
+  background: #8C8C8C;
+}
+.discover-page{
+  .discover-divider-0{
+    height: 180px;
+  }
+  .discover-divider-1{
+    height: 20px;
+  }
+}
+.discover-search{
+
+}
+.discover-recommend{
+  width: 92%;
+  height: 168px;
+  margin: 10px 4%;
+  background: white;
+  border-radius: 10px;
+}
+.discover-recommend-text{
+  width: 92%;
+  height: 168px;
+  margin: 0px 4%;
+  font-size: 40px;
+  font-weight: bold;
+}
+.discover-recommend-swiper{
+  height: 120px;
+  margin-top: 10px;
+  .discover-no-recommend{
+    font-size: 32px;
+    width: 91.4%;
+    text-align: center;
+    line-height: 4;
+  }
+  .discover-recommend-item{
+    width: 100px;
+    height: 100px;
+    padding-right: 20px;
+    .discover-recommend-item-image{
+      width: 100px;
+      height: 100px;
+      box-shadow: 0 6rpx 15rpx -2rpx rgba(0, 0, 0, 0.3);
+      margin-right: 20px;
+      border-radius: 150px;
+    }
+  }
+}
+.discover-habit{
+  width: 92%;
+  height: 380px;
+  margin: 30px 4%;
+  background: white;
+  border-radius: 10px;
+  .discover-habit-text{
+    width: 92%;
+    justify-content: space-between;
+    padding: 10px 4%;
+    font-weight: bold;
+  }
+  .discover-habit-text-left{
+    font-size: 32px;
+  }
+  .discover-habit-text-right{
+    font-size: 20px;
+    color: #25A2F9;
+    line-height: 50px;
+  }
+  .discover-habit-list{
+    flex-direction: column;
+  }
+  .discover-habit-item{
+    width: 85%;
+    height: 100px;
+    margin-left: 8%;
+    margin-right: 7%;
+    justify-content: space-between;
+    .discover-habit-item-image{
+      width: 75px;
+      height: 75px;
+      border-radius: 150px;
+    }
+    .discover-habit-item-divider{
+      width: 10px;
+    }
+    .discover-habit-item-text{
+      flex-direction: column;
+      justify-content: space-around;
+      .discover-habit-item-text-top{
+        font-size: 28px;
+      }
+      .discover-habit-item-text-bottom{
+        font-size: 20px;
+      }
+    }
+    .discover-habit-item-button{
+      width: 80px;
+      height: 50px;
+      font-size: 24px;
+      line-height: 45px;
+      margin-top: 10px;
+    }
+  }
+}
