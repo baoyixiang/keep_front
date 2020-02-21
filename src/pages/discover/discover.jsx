@@ -140,6 +140,7 @@ export default class Discover extends Component {
             <Text>查看更多</Text>
           </View>
         </View>
+        <View className='discover-habit-divider'></View>
         <View className='discover-habit-list at-row'>
           {habitItem}
         </View>
