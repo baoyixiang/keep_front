@@ -10,6 +10,8 @@ class App extends Component {
       'pages/index/index',
       'pages/discover/discover',
       'pages/hopes/hopes',
+      'pages/hopes/hopes_detail/hopesDetail',
+      'pages/hopes/createHope/createHope',
       'pages/mine/mine',
       'pages/createHabit/createHabit',
       'pages/mineHomePage/mineHomePage',
