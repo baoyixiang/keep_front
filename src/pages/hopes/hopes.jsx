@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import {View, Text, Image} from '@tarojs/components'
 import './hopes.scss'
 import React from "react";
 import NavBar from "../../common/navBar/navBar";
@@ -10,58 +10,63 @@ export default class Hopes extends Component {
     super(...arguments)
     this.state = {
       current: 0,
+      list:[
+        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
+          nickName:'*****',
+          content:'asasasasas',
+          pic:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3073982641,3389786265&fm=26&gp=0.jpg"},
+        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
+          nickName:'*****',
+          content:'asasasasas',
+          pic:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=34693802,4065768970&fm=26&gp=0.jpg"},
+        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
+          nickName:'*****',
+          content:'asasasasas',
+          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg"},
+        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
+          nickName:'*****',
+          content:'asasasasas',
+          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg"},
+        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
+          nickName:'*****',
+          content:'asasasasas',
+          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg"},
+
+      ],
     }
   }
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+  }
 
-  componentWillUnmount () { }
+  componentWillUnmount () {
+
+  }
 
   componentDidShow () { }
 
   componentDidHide () { }
-  handleClick (value) {
-    this.setState({
-      current: value
+
+  renderList(list){
+   return list.map((item,index)=>{
+      return <View className='list_item'>
+        {index%2===0?<Image className='list_item_img' src={item.pic} mode='aspectFill'/>:null}
+        {item.content}
+      </View>
     })
+
   }
+
   render () {
     return (
       <View className='hopes'>
-        <NavBar title={"萌芽社区"} back={false}/>
+        <NavBar title={"心愿墙"} back={false}/>
         <BarTakeUp/>
-        <AtTabs className="hopes_tabBar"
-          current={this.state.current}
-          scroll
-          tabList={[
-            { title: '标签页1' },
-            { title: '标签页2' },
-            { title: '标签页3' },
-            { title: '标签页4' },
-            { title: '标签页5' },
-            { title: '标签页6' }
-          ]}
-          onClick={this.handleClick.bind(this)}>
-          <AtTabsPane current={this.state.current} index={0}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页一的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={2}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={3}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页四的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={4}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页五的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={5}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>
-          </AtTabsPane>
-        </AtTabs>
+        <View className="all">
+          {this.renderList(this.state.list)}
+        </View>
+
       </View>
     )
   }

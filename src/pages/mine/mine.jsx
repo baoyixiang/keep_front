@@ -114,10 +114,8 @@ export default class Mine extends Component {
         }else{
           console.log('cancel')
         }
-
       }
     })
-
   }
   render () {
     const {photo,nickName,city}=this.state;
