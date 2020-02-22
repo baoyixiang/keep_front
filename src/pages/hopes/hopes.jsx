@@ -65,6 +65,7 @@ export default class Hopes extends Component {
   componentDidHide () { }
 
   redirectToHopeDetail(id){
+    console.log(id)
     Taro.navigateTo({
       url:'./hopes_detail/hopesDetail?id='+id
     })

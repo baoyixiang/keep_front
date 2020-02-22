@@ -1,0 +1,42 @@
+.content{
+  margin:15px auto;
+  width:95%;
+  font-size:28px;
+  border-radius: 18px;
+  box-shadow: 0 10px 20rpx -2rpx rgba(0, 0, 0, 0.4);
+  .content_top{
+    height:100px;
+    overflow: hidden;
+    position: relative;
+    .head{
+      margin:10px 0px 0 20px;
+      width:80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    .time{
+      position:absolute;
+      left:115px;
+      bottom:10px;
+      font-size:26px;
+      color:#666666;
+    }
+  }
+  .content_text{
+    text-indent: 1.5em;
+    display: block;
+    width:94%;
+    margin-left: 3%;
+    font-size:28px;
+    color: #666666;
+    line-height: 35px;
+    letter-spacing: 3px;
+  }
+  .pic{
+    display: block;
+    width:95%;
+    margin:10px auto;
+    border-radius: 10px;
+    padding-bottom: 20px
+  }
+}
