@@ -79,7 +79,10 @@ export default class MineHomePage extends Component{
     })
   }
 
-  sliceEnd() {
+  redirectToPerson(title){
+    Taro.navigateTo({
+      url:"./fansOrAttention/fansOrAttention?title="+this.state.nickName+"的"+title
+    })
   }
 
   changeLikeStatus(id){
@@ -113,8 +116,8 @@ export default class MineHomePage extends Component{
           <Text className="homePage_top_text">遇见更好的自己</Text>
         </View>
         <View className="homePage_relate">
-          <View className="homePage_relate_fans">粉丝 {fans}</View>
-          <View className="homePage_relate_follow">关注 {follow}</View>
+          <View className="homePage_relate_fans" onClick={this.redirectToPerson.bind(this,"粉丝")}>粉丝 {fans}</View>
+          <View className="homePage_relate_follow" onClick={this.redirectToPerson.bind(this,"关注")}>关注 {follow}</View>
         </View>
         <View className="homePage_insist">
           <Text className="homePage_insist_title">{habitNumber}个正在坚持的习惯</Text>

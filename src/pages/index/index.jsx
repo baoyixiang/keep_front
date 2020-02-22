@@ -6,7 +6,6 @@ import React from "react";
 import photo from '../../assets/images/mine/keep_statics.png'
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
-import Loading from "../../common/loading/loading";
 export default class Index extends Component {
 
   constructor(props){
@@ -96,6 +95,7 @@ export default class Index extends Component {
             <View>{this.renderHabits()}</View>
         }
         <AtButton className="create_habit_button" onClick={this.createHabit.bind(this)}>添加习惯</AtButton>
+
       </View>
     )
   }

@@ -6,6 +6,7 @@ import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {Image, ScrollView, View} from "@tarojs/components";
 import {AtButton, AtTabs, AtTabsPane} from "taro-ui";
 import Record from "../../common/record/record";
+import Bottom from "../../common/bottom/Bottom";
 
 export default class MineCommunity extends Component{
   constructor(props){
@@ -121,6 +122,7 @@ export default class MineCommunity extends Component{
         {displayTop?<View onClick={this.goTop.bind(this)} className={["backToTop",this.state.hiddenBack]}>
           <Image src={require('../../assets/images/community/top.png')} className="backToTop_icon"/>
         </View>:null}
+        <Bottom/>
       </View>
     )
   }

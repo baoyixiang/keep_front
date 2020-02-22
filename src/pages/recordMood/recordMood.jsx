@@ -39,6 +39,9 @@ export default class RecordMood extends Component{
         sound:res.tempFilePath,
       })
     })
+    recordManager.onError((res)=>{
+      console.log(res)
+    })
     Taro.getSystemInfo().then(res=>{
       this.setState({
         screenWidth:res.screenWidth,
@@ -46,11 +49,11 @@ export default class RecordMood extends Component{
     })
     ica=Taro.createInnerAudioContext();
     ica.onStop(()=>{
-      console.log(111)
       clearInterval(tryTimer);
       tryTimer=null;
       this.setState({
         isListen:false,
+        percentage:1,
       })
     })
   }
@@ -212,6 +215,7 @@ export default class RecordMood extends Component{
   }
 
   tryListen(){
+    console.log(ica.src)
     let that=this;
     if(this.state.isListen){
       ica.pause();
@@ -224,7 +228,6 @@ export default class RecordMood extends Component{
       clearInterval(tryTimer);
       tryTimer=null;
       tryTimer=setInterval(()=>{
-        console.log(ica.currentTime,that.state.totalTime)
         that.setState({
           percentage:ica.currentTime/that.state.totalTime>1?1:ica.currentTime/that.state.totalTime,
           trySoundTime:Math.floor(ica.currentTime),
