@@ -17,9 +17,19 @@ export default class Index extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    Taro.getStorage({
+      key:'userInfo',
+      fail(){
+        Taro.navigateTo({
+          url:'../login/login'
+        })
+      }
+    })
+  }
 
   componentDidMount () {
+    let that=this;
     const habitsList=[
       {
         image:photo,

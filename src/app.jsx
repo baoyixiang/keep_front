@@ -13,6 +13,7 @@ class App extends Component {
       'pages/hopes/hopes_detail/hopesDetail',
       'pages/hopes/createHope/createHope',
       'pages/mine/mine',
+      'pages/login/login',
       'pages/createHabit/createHabit',
       'pages/mineHomePage/mineHomePage',
       'pages/insistStatistics/insistStatistics',
@@ -74,9 +75,12 @@ class App extends Component {
         }
       })
     }
+
   }
 
-  componentDidShow () {}
+  componentDidShow () {
+
+  }
 
   componentDidHide () {}
 

@@ -22,7 +22,6 @@ export default class Mine extends Component {
     Taro.getStorage({
       key:'userInfo',
       success(res){
-        // console.log(res.data)
         that.setState({
           nickName:res.data.nickName,
           photo:res.data.avatarUrl,
@@ -61,6 +60,7 @@ export default class Mine extends Component {
       default:break;
     }
   }
+
 
   renderNavItems(){
     let obj=[
@@ -127,13 +127,13 @@ export default class Mine extends Component {
             <Text className='mine_topBack_nickName'>{nickName}</Text>
             <Text className='mine_topBack_headText'>{city}</Text>
           </View>:
-            <Button className="mine_topBack_login" openType="getUserInfo" onGetUserInfo={this.getUserInfo} lang={"zh_CN"}>登 录</Button>
+            <Button className="mine_topBack_login" onClick={this.toLogin.bind(this)}>登 录</Button>
           }
         </View>
         <View className='mine_nav'>
           {this.renderNavItems()}
         </View>
-        {photo?<Button className="mine_outLogin" onClick={this.outLogin.bind(this)}>退出登录</Button>:null}
+        {/*{photo?<Button className="mine_outLogin" onClick={this.outLogin.bind(this)}>退出登录</Button>:null}*/}
       </View>
     )
   }
