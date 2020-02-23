@@ -3,7 +3,7 @@ import React from "react";
 import './mineCommunity.scss';
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
-import {Image, ScrollView, View} from "@tarojs/components";
+import {Image, ScrollView, Text, View} from "@tarojs/components";
 import {AtButton, AtTabs, AtTabsPane} from "taro-ui";
 import Record from "../../common/record/record";
 import Bottom from "../../common/bottom/Bottom";
@@ -120,7 +120,7 @@ export default class MineCommunity extends Component{
           }
         </AtTabs>
         {displayTop?<View onClick={this.goTop.bind(this)} className={["backToTop",this.state.hiddenBack]}>
-          <Image src={require('../../assets/images/community/top.png')} className="backToTop_icon"/>
+       <Text>去顶部</Text>
         </View>:null}
         <Bottom/>
       </View>

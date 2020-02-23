@@ -6,8 +6,8 @@ page{
   background: #F0F0F0;
   .mine_topBack{
     width:100%;
-    height:350px;
-    background: #6a9dc3;
+    height:400px;
+    background: #1A80D2;
     position:relative;
     .mine_topBack_headImg{
       height:120px;
@@ -20,22 +20,22 @@ page{
     }
     .mine_topBack_nickName{
       position:absolute;
-      left: 220px;
-      top: 130px;
+      left: 225px;
+      top: 157px;
       font-size: 30px;
-      color: #333333;
+      color: white;
     }
     .mine_topBack_headText{
       position:absolute;
-      left:220px;
-      top:180px;
+      left:225px;
+      top:208px;
       font-size: 30px;
-      color:#333333;
+      color:white;
     }
     .mine_topBack_login{
       width:200px;
       height:80px;
-      background: #45D17F;
+      background: #25A2F9;
       color:white;
       position:absolute;
       top:50%;
