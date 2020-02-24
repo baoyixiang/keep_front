@@ -1,0 +1,40 @@
+page{
+  background: #EFEEF4;
+}
+.recommend-custom-list_item{
+  height:150px;
+  position:relative;
+  background: white;
+  width:95%;
+  margin:20px auto;
+  border-radius: 10px;
+  //box-shadow:rgba(0, 0, 0, 0.2) 1px 1px 8px 1px;
+  .recommend-custom-list_item_icon{
+    width: 75px;
+    height: 75px;
+    border-radius: 150px;
+    margin-left: 45px;
+    margin-top:45px;
+  }
+  .recommend-custom-list_item_title{
+    position:absolute;
+    left:130px;
+    top:40px;
+  }
+  .recommend-custom-list_item_days{
+    position:absolute;
+    left:130px;
+    top:85px;
+    color:#AAAAAA;
+    font-size: 24px;
+  }
+  .recommend-custom-list_item-button{
+    position:absolute;
+    right:80px;
+    top:55px;
+    width: 100px;
+    height: 60px;
+    font-size: 24px;
+    line-height: 45px;
+  }
+}

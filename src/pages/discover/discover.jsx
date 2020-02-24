@@ -5,6 +5,7 @@ import React from "react";
 import Loading from "../../common/loading/loading";
 import {AtButton, AtSearchBar} from "taro-ui";
 import {getRecommendCustomList, getRecommendUserList} from "../../api/apis";
+import NavBar from "../../common/navBar/navBar";
 
 export default class Discover extends Component {
 
@@ -16,6 +17,7 @@ export default class Discover extends Component {
       recommendCustomList: [],
       title: "",
       logo: "",
+      tagsList: ["考研","运动","音乐"],
     }
   }
 
@@ -23,21 +25,22 @@ export default class Discover extends Component {
     isLoading:true,
   }
 
-
   componentWillMount () { }
 
   componentDidMount () {
+    let {tagsList} = this.state;
+
     getRecommendUserList().then((result)=>{
       this.setState({
         recommendUserList: result.data
       })
-    })
+    });
 
-    getRecommendCustomList(1,["考研","运动","音乐"]).then((result)=>{
+    getRecommendCustomList(1,tagsList).then((result)=>{
       this.setState({
         recommendCustomList: result.data
       })
-    })
+    });
 
     setTimeout(()=>{
       this.setState({
@@ -55,6 +58,7 @@ export default class Discover extends Component {
   render () {
     return (
       <View className='discover-page'>
+        <NavBar title="发现"/>
         <View className='discover-divider-0'></View>
         {this.renderSearch()}
         <View className='discover-divider-1'></View>
@@ -88,7 +92,7 @@ export default class Discover extends Component {
     let {recommendUserList} = this.state;
     const recommendItem = (recommendUserList.length || 0) === 0 ?
       <View className='discover-no-recommend'>暂无推荐用户</View> :
-      recommendUserList.map((item,index)=>
+      recommendUserList.map((item)=>
         <View className='discover-recommend-item'>
           <Image className='discover-recommend-item-image' src={item.avatar} onClick={()=>{}} mode={"aspectFill"}/>
         </View>
@@ -114,8 +118,24 @@ export default class Discover extends Component {
     let {recommendCustomList} = this.state;
     const recommendCustomItem = recommendCustomList.length > 0 ?
       recommendCustomList.map((item)=>
-      <View>
-        {this.renderHabit(item)}
+      // <View>
+      //   {this.renderHabit(item.customList,item.title)}
+      // </View>
+      <View className='discover-habit'>
+        <View className='discover-habit-text at-row'>
+          <View className='discover-habit-text-left'>
+            <Text>{item.title}</Text>
+          </View>
+          <View className='discover-habit-text-right' onClick={()=>Taro.navigateTo({
+            url: `/pages/discover/recommendCustom/recommendCustom?tags=${item.title}`,
+          }).then()}>
+            <Text>查看更多</Text>
+          </View>
+        </View>
+        <View className='discover-habit-divider'></View>
+        <View className='discover-habit-list at-row'>
+          {this.renderHabit(item.customList)}
+        </View>
       </View>
     ) :
       <View>
@@ -128,13 +148,14 @@ export default class Discover extends Component {
     );
   }
 
-  renderHabit(habitList) {
-    // let habitList = [
-    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-    // ];
-    const habitItem = habitList.map((item)=>
+  gotoRecommendCustom(tags) {
+    Taro.navigateTo({
+      url: `/pages/discover/recommendCustom/recommendCustom?tags=${tags}`,
+    }).then()
+  }
+
+  renderHabit(customList) {
+    const customItem = customList.map((item)=>
       <View className='discover-habit-item at-row'>
         <View>
           <View className='at-row'>
@@ -156,20 +177,27 @@ export default class Discover extends Component {
       </View>
     )
     return(
-      <View className='discover-habit'>
-        <View className='discover-habit-text at-row'>
-          <View className='discover-habit-text-left'>
-            <Text>热门习惯</Text>
-          </View>
-          <View className='discover-habit-text-right'>
-            <Text>查看更多</Text>
-          </View>
-        </View>
-        <View className='discover-habit-divider'></View>
-        <View className='discover-habit-list at-row'>
-          {habitItem}
-        </View>
+      <View className='discover-habit-list at-row'>
+        {customItem}
       </View>
     );
+    // return(
+    //   <View className='discover-habit'>
+    //     <View className='discover-habit-text at-row'>
+    //       <View className='discover-habit-text-left'>
+    //         <Text>{title}</Text>
+    //       </View>
+    //       <View className='discover-habit-text-right' onClick={()=>Taro.navigateTo({
+    //         url: `/pages/discover/recommendCustom/recommendCustom?tags=${title}`,
+    //       }).then()}>
+    //         <Text>查看更多</Text>
+    //       </View>
+    //     </View>
+    //     <View className='discover-habit-divider'></View>
+    //     <View className='discover-habit-list at-row'>
+    //       {customItem}
+    //     </View>
+    //   </View>
+    // );
   }
 }
