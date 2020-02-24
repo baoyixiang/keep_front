@@ -13,6 +13,20 @@ export  function doLogin(params) {
 }
 
 /**
+ * 获取推荐用户列表
+ */
+export function getRecommendUserList() {
+  return get(`/api/user/user_list/recommend_user_list`)
+}
+
+/**
+ * 获取推荐习惯列表
+ */
+export function getRecommendCustomList(userId,tagsList) {
+  return post('/api/user/custom/recommend_custom_list',{userId,tagsList})
+}
+
+/**
  * 发送验证码
  */
 export function sendSMSCode(phone,scene,version,verify) {

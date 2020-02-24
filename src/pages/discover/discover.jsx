@@ -4,15 +4,21 @@ import './discover.scss'
 import React from "react";
 import Loading from "../../common/loading/loading";
 import {AtButton, AtSearchBar} from "taro-ui";
+import {getRecommendCustomList, getRecommendUserList} from "../../api/apis";
 
 export default class Discover extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      recommendUserList: [],
+      recommendCustomList: [],
+      title: "",
+      logo: "",
     }
   }
+
   state={
     isLoading:true,
   }
@@ -21,6 +27,18 @@ export default class Discover extends Component {
   componentWillMount () { }
 
   componentDidMount () {
+    getRecommendUserList().then((result)=>{
+      this.setState({
+        recommendUserList: result.data
+      })
+    })
+
+    getRecommendCustomList(1,["考研","运动","音乐"]).then((result)=>{
+      this.setState({
+        recommendCustomList: result.data
+      })
+    })
+
     setTimeout(()=>{
       this.setState({
         isLoading:false
@@ -41,9 +59,7 @@ export default class Discover extends Component {
         {this.renderSearch()}
         <View className='discover-divider-1'></View>
         {this.renderRecommend()}
-        {this.renderHabit()}
-        {this.renderHabit()}
-        {this.renderHabit()}
+        {this.renderRecommendHabit()}
         <Loading display={this.state.isLoading}/>
       </View>
     )
@@ -69,21 +85,12 @@ export default class Discover extends Component {
 
   //推荐用户
   renderRecommend() {
-    let recommendList = [
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-      "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg",
-    ];
-    const recommendItem = (recommendList.length || 0) === 0 ?
+    let {recommendUserList} = this.state;
+    const recommendItem = (recommendUserList.length || 0) === 0 ?
       <View className='discover-no-recommend'>暂无推荐用户</View> :
-      recommendList.map((item,index)=>
+      recommendUserList.map((item,index)=>
         <View className='discover-recommend-item'>
-          <Image className='discover-recommend-item-image' src={item} onClick={()=>{}} mode={"aspectFill"}/>
+          <Image className='discover-recommend-item-image' src={item.avatar} onClick={()=>{}} mode={"aspectFill"}/>
         </View>
       );
     return(
@@ -103,22 +110,40 @@ export default class Discover extends Component {
     );
   }
 
-  renderHabit() {
-    let habitList = [
-      ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-      ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-      ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
-    ];
+  renderRecommendHabit() {
+    let {recommendCustomList} = this.state;
+    const recommendCustomItem = recommendCustomList.length > 0 ?
+      recommendCustomList.map((item)=>
+      <View>
+        {this.renderHabit(item)}
+      </View>
+    ) :
+      <View>
+        <View>暂无推荐列表</View>
+      </View>
+    return(
+      <View>
+        {recommendCustomItem}
+      </View>
+    );
+  }
+
+  renderHabit(habitList) {
+    // let habitList = [
+    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
+    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
+    //   ["http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg","考研","已有233位朋友在坚持"],
+    // ];
     const habitItem = habitList.map((item)=>
       <View className='discover-habit-item at-row'>
         <View>
           <View className='at-row'>
-            <Image className='discover-habit-item-image' src={"http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg"} />
+            <Image className='discover-habit-item-image' src={item.logo} />
             <View className='discover-habit-item-divider'></View>
             <View>
               <View className='discover-habit-item-text at-row'>
                 <View className='discover-habit-item-text-top'>
-                  <Text>考研</Text>
+                  <Text>{item.title || "暂无"}</Text>
                 </View>
                 <View className='discover-habit-item-text-bottom'>
                   <Text>已有233位朋友在坚持</Text>
