@@ -133,7 +133,8 @@ export default class Record extends Component{
           <View className="comments">
             {this.renderComments(item)}
           </View>
-          {answering===item.id? <View className="inpView"><Input autoFocus={true} onBlur={this.blurInput} placeholder={placeHolder} className="inpView_input"/></View>:null}
+          {answering===item.id? <View className="inpView"><Input onConfirm={()=>{
+            console.log('enter')}} autoFocus={true} onBlur={this.blurInput} placeholder={placeHolder} className="inpView_input"/></View>:null}
           <View className="comment">
             <View onClick={this.changeAnswering.bind(this,item.id,"")} className="text">
               <Image src={comment} className={"text_icon"}/>
