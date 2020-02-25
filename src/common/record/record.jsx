@@ -118,7 +118,7 @@ export default class Record extends Component{
             <Text className="nickName">{item.nickName}</Text>
             <View className="insist">坚持<Text className="insist_day">{item.title}</Text></View>
             <Text className="date">{item.date}</Text>
-            <Text className="day">{item.day}</Text>
+            {/*<Text className="day">{item.day}</Text>*/}
           </View>
           {item.sound?<View onClick={this.playSound.bind(this,item.sound.url)} className="record_item_sound">
             <View style={{marginLeft:"10px",width:iac.src===item.sound.url?soundWidth+"%":"24%"}} className="record_item_sound_iconView">
