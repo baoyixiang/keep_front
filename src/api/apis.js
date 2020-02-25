@@ -16,7 +16,7 @@ export  function doLogin(params) {
  * 获取推荐用户列表
  */
 export function getRecommendUserList() {
-  return get(`/api/user/user_list/recommend_user_list`)
+  return get(`/api/user/recommend_user_list`)
 }
 
 /**
