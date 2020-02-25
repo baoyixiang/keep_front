@@ -72,7 +72,7 @@ export default class OthersHomePage extends Component{
     return habitsList.map((item,index)=>{
       return <View onClick={this.selectBook.bind(this,index)} className={index!=bigIndex?"homePage_insist_content_item":"homePage_insist_content_item bigItem"}>
         <Image className="homePage_insist_content_item_cover" src={"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2557850634,2312125362&fm=11&gp=0.jpg"}/>
-        <View className="homePage_insist_content_item_set"><Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/></View>
+        {/*<View className="homePage_insist_content_item_set"><Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/></View>*/}
         <Text className="homePage_insist_content_item_title">{item.title}</Text>
         <Text className="homePage_insist_content_item_day">{item.num}天</Text>
       </View>
