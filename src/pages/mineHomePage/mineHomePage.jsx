@@ -5,6 +5,7 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import './mineHomePage.scss'
 import Record from "../../common/record/record";
+import { AtFloatLayout } from "taro-ui"
 export default class MineHomePage extends Component{
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ export default class MineHomePage extends Component{
       habitNumber: 5,
       bigIndex: 0,
       recordList: [],
+      isOpen:false,
     }
   }
 
@@ -35,12 +37,12 @@ export default class MineHomePage extends Component{
       }
     })
     const habitsList=[
-      {cover:"",title:"考研",num:21},
-      {cover:"",title:"自律~运动",num:12},
-      {cover:"",title:"背单词",num:30},
-      {cover:"",title:"考研",num:21},
-      {cover:"",title:"自律~运动",num:12},
-      {cover:"",title:"背单词",num:30},
+      {cover:"",title:"考研",num:21,id:1},
+      {cover:"",title:"自律~运动",num:12,id:2},
+      {cover:"",title:"背单词",num:30,id:3},
+      {cover:"",title:"考研",num:21,id:3},
+      {cover:"",title:"自律~运动",num:12,id:4},
+      {cover:"",title:"背单词",num:30,id:5},
     ];
     const recordList=[
       {id:1,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录",
@@ -72,7 +74,7 @@ export default class MineHomePage extends Component{
     return habitsList.map((item,index)=>{
       return <View onClick={this.selectBook.bind(this,index)} className={index!=bigIndex?"homePage_insist_content_item":"homePage_insist_content_item bigItem"}>
         <Image className="homePage_insist_content_item_cover" src={"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2557850634,2312125362&fm=11&gp=0.jpg"}/>
-        <View className="homePage_insist_content_item_set"><Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/></View>
+        <View onClick={this.handleClose.bind(this,item.id)}  className="homePage_insist_content_item_set"><Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/></View>
         <Text className="homePage_insist_content_item_title">{item.title}</Text>
         <Text className="homePage_insist_content_item_day">{item.num}天</Text>
       </View>
@@ -97,6 +99,38 @@ export default class MineHomePage extends Component{
       recordList
     })
   }
+
+  handleClose(id){
+    console.log(id)
+    this.setState({
+      isOpen:!this.state.isOpen
+    })
+  }
+
+  handleHabit(flag){
+    let info=""
+    if(flag===0){
+      info="删除"
+    }else {
+      info="归档"
+    }
+    let that=this;
+    Taro.showModal({
+      title:"提示",
+      content:`是否确认${info}？`,
+      confirmText:"确认",
+      confirmColor:"#DD2C4B",
+      cancelText:"关闭",
+      success(e){
+        if(e.confirm){
+          that.handleClose();
+        }else{
+          that.handleClose()
+        }
+      }
+    })
+  }
+
   render() {
     const {
       photo,
@@ -109,7 +143,14 @@ export default class MineHomePage extends Component{
     return(
       <View className="homePage">
         <NavBar back={true} title={"个人主页"}/>
-        <BarTakeUp/>
+
+        <AtFloatLayout isOpened={this.state.isOpen}  onClose={this.handleClose.bind(this,0)}>
+          <View>
+            <View className='floatLay' onClick={this.handleHabit.bind(this,0)}>删除习惯</View>
+            <View className='floatLay' onClick={this.handleHabit.bind(this,1)}>归档习惯</View>
+            <View className='floatLay' onClick={this.handleClose.bind(this)}>取消</View>
+          </View>
+        </AtFloatLayout>
         <View className="homePage_top">
           <Image className="homePage_top_photo" src={photo}/>
           <Text className="homePage_top_name">{nickName}</Text>
@@ -121,7 +162,7 @@ export default class MineHomePage extends Component{
         </View>
         <View className="homePage_insist">
           <Text className="homePage_insist_title">{habitNumber}个正在坚持的习惯</Text>
-          <View onTouchEnd={this.sliceEnd.bind(this)} className="homePage_insist_content">
+          <View className="homePage_insist_content">
             {/*<View className="homePage_insist_content_itemLR" style={{transform:'translate('+transX+'px)'}}></View>*/}
             {this.renderHabitBook()}
             {/*<View className="homePage_insist_content_itemLR" style={{transform:'translate('+transX+'px)'}}></View>*/}

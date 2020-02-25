@@ -149,3 +149,31 @@ page{
     }
   }
 }
+.at-float-layout__container{
+  height:320px;
+  min-height: 320px;
+  max-height: 320px;
+}
+.at-float-layout .layout-body {
+  padding:0;
+  background: #EFEEF4;
+}
+.floatLay{
+  background: white;
+  height:100px;
+
+  text-align: center;
+  font-family: 微软雅黑;
+  font-size: 30px;
+  line-height: 100px;
+  letter-spacing: 1px;
+}
+.floatLay:last-child{
+  margin-top:20px;
+}
+.floatLay:nth-child(1){
+  border-bottom: 1px solid #C3C7CC;
+}
+.floatLay:active{
+  opacity: 0.8;
+}
