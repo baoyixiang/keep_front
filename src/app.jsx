@@ -17,6 +17,7 @@ class App extends Component {
       'pages/login/login',
       'pages/createHabit/createHabit',
       'pages/mineHomePage/mineHomePage',
+      'pages/minePlaceFiles/minePlaceFiles',
       'pages/mineHomePage/fansOrAttention/fansOrAttention',
       'pages/mineHomePage/othersHomePage/othersHomePage',
       'pages/insistStatistics/insistStatistics',

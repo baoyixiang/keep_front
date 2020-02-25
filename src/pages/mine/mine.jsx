@@ -56,6 +56,11 @@ export default class Mine extends Component {
       case 2:
         Taro.navigateTo({
           url:'../mineCommunity/mineCommunity'
+        });
+        break;
+      case 3:
+        Taro.navigateTo({
+          url:'../minePlaceFiles/minePlaceFiles'
         })
       default:break;
     }
@@ -67,7 +72,7 @@ export default class Mine extends Component {
       {id:0,img:hope_list,text:"我的主页"},
       {id:1,img:keep_statics,text:"坚持统计"},
       {id:2,img:hope_list,text:"我的社区"},
-      {id:3,img:concerned,text:"我的关注"},
+      {id:3,img:concerned,text:"我的归档"},
     ];
     return obj.map(item=>{
       return <View onClick={this.handleClickNav.bind(this,item.id)} className='mine_nav_item'>

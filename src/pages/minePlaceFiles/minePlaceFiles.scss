@@ -1,0 +1,45 @@
+.noPlace{
+  text-align: center;
+  font-weight: 600;
+  margin-top:60px;
+  font-size:33px;
+}
+page{
+  height:100%;
+  background: #EFEEF4;
+}
+.list_item{
+  width:44%;
+  height:200px;
+  background: #1A80D2;
+  border-radius: 8px;
+  box-shadow: 2px 4px 4px 2px rgba(0,0,0,0.3);
+  margin-top:32px;
+  margin-left:4%;
+  float:left;
+  opacity: 0.75;
+  .title{
+    line-height: 100px;
+    display: inline-block;
+    height:100px;
+    text-align: center;
+    width:100%;
+    color:white;
+    font-size:32px;
+  }
+  .days{
+    line-height: 100px;
+    display: inline-block;
+    height:100px;
+    text-align: center;
+    width:100%;
+    color:white;
+    font-size:30px;
+  }
+}
+.top{
+  margin-left: 4%;
+  font-size:30px;
+  font-weight: 600;
+  margin-top:35px;
+}
