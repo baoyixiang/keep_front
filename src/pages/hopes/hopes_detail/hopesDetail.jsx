@@ -18,7 +18,8 @@ export default class HopeDetail extends Component{
     }
   }
   componentDidMount() {
-    console.log(this.$router.params.id);
+    let {id}=this.$router.params;
+    console.log(id)
   }
   render() {
     const {detail}=this.state;

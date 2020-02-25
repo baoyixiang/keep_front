@@ -37,7 +37,11 @@ export default class FansOrAttention extends Component{
       title:this.$router.params.title,type
     })
   }
-
+  redirectToPerson(){
+    Taro.navigateTo({
+      url:'../othersHomePage/othersHomePage'
+    })
+  }
   render() {
     const {persons,type}=this.state;
     return <View>
@@ -46,7 +50,7 @@ export default class FansOrAttention extends Component{
       <View>
         {
           persons.map(item=>{
-            return <View className='list'>
+            return <View onClick={this.redirectToPerson.bind(this)} className='list'>
               <Image className='photo' src={item.photo} alt={"头像"}/>
               <Text className='name'>{item.nickName}</Text>
               {type===1?<Text className='cancelAttention'>取消关注</Text>:null}

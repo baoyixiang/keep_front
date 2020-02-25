@@ -67,7 +67,7 @@ export default class Hopes extends Component {
   redirectToHopeDetail(id){
     console.log(id)
     Taro.navigateTo({
-      url:'./hopes_detail/hopesDetail?id='+id
+      url:`./hopes_detail/hopesDetail?id=${id}`
     })
   }
 
