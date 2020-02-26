@@ -45,3 +45,8 @@ export function getAllHopes(params){
 export function createHope(params) {
   return post('/api/user/hope/newHope',params)
 }
+
+//获取心愿详情
+export function getHopeDetail(params){
+  return post('/api/user/hope/hopeDetail',{hopeId:params})
+}

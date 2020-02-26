@@ -6,36 +6,13 @@ import NavBar from "../../common/navBar/navBar";
 import {AtButton, AtTabs, AtTabsPane} from 'taro-ui'
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {getAllHopes} from "../../api/apis";
+import Loading from "../../common/loading/loading";
 export default class Hopes extends Component {
   constructor () {
     super(...arguments)
     this.state = {
       current: 0,
-      list:[
-        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
-          time:'2019-05-12',
-          content:'这是第一段文字，这是第一段文字，这是第一段文字',
-          pic:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3073982641,3389786265&fm=26&gp=0.jpg",
-          id:1,
-        },
-        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
-          time:'2019-05-12',
-          content:'这是第二段文字，这是第一段文字，这是第一段文字',
-          pic:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=34693802,4065768970&fm=26&gp=0.jpg",id:2,},
-        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
-          time:'2019-05-12',
-          content:'这是第一段文字，这是第一段文字，这是第一段文字',
-          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg",id:3},
-        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
-          time:'2019-05-12',
-          content:'这是第一段文字，这是第一段文字，这是第一段文字',
-          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg",id:4},
-        {icon:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',
-          time:'2019-05-12',
-          content:'这是一串文字文字这是一串文字文字这是一串文字文字这是一串文字文字这是一串文字文字',
-          pic:"http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg",id:5},
-
-      ],
+      loading:false,
       left:[],
       right:{}
     }
@@ -43,24 +20,30 @@ export default class Hopes extends Component {
   componentWillMount () { }
 
   componentDidMount () {
+    let that=this;
+    that.setState({
+      loading:true
+    })
     getAllHopes({
       pageNo:0,
       pageSize:10,
     }).then(res=>{
+      let left=[];
+      let right=[];
       console.log(res)
+      res.data.forEach((item,index)=>{
+        if(index%2===0){
+          left.push(item)
+        }else{
+          right.push(item)
+        }
+      })
+      that.setState({
+        left,right,
+        loading:false
+      })
     })
-    let left=[];
-    let right=[];
-    this.state.list.forEach((item,index)=>{
-      if(index%2===0){
-        left.push(item)
-      }else{
-        right.push(item)
-      }
-    })
-    this.setState({
-      left,right
-    })
+
   }
 
   componentWillUnmount () {
@@ -90,11 +73,11 @@ export default class Hopes extends Component {
         list.map(item=>{
           return <View onClick={this.redirectToHopeDetail.bind(this,item.id)} className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={item.icon} mode='aspectFill'/>
-              <Text className='list_item_text'>{item.time}</Text>
+              <Image className='list_item_photo' src={item.avatar} mode='aspectFill'/>
+              <Text className='list_item_text'>{item.createTime.substring(0,11)}</Text>
             </View>
-            <Image className='list_item_img' src={item.pic}/>
-            <Text className='list_item_content'>{item.content}</Text>
+            <Image className='list_item_img' src={item.images[0]||require('../../assets/images/image_404.png')}/>
+            <Text className='list_item_content'>{item.wordContent}</Text>
           </View>
         })
       }
@@ -106,11 +89,11 @@ export default class Hopes extends Component {
         list.map(item=>{
           return <View onClick={this.redirectToHopeDetail.bind(this,item.id)} className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={item.icon} mode='aspectFill'/>
-              <Text className='list_item_text'>{item.time}</Text>
+              <Image className='list_item_photo' src={item.avatar} mode='aspectFill'/>
+              <Text className='list_item_text'>{item.createTime.substring(0,11)}</Text>
             </View>
-            <Image className='list_item_img' src={item.pic}/>
-            <Text className='list_item_content'>{item.content}</Text>
+            <Image className='list_item_img' src={item.images[0]||require('../../assets/images/image_404.png')}/>
+            <Text className='list_item_content'>{item.wordContent}</Text>
           </View>
         })
       }
@@ -122,6 +105,7 @@ export default class Hopes extends Component {
       <View className='hopes'>
         <NavBar title="心愿"/>
         <BarTakeUp/>
+        <Loading display={this.state.loading}/>
         <View className='all'>
           {this.renderLeft(left)}
           {this.renderRight(right)}

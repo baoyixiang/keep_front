@@ -6,6 +6,7 @@ import NavBar from "../../../common/navBar/navBar";
 import BarTakeUp from "../../../common/barTakeUp/barTakeUp";
 import {AtButton, AtImagePicker, AtTextarea,AtSwitch} from "taro-ui";
 import {createHope, getUserCustomList} from "../../../api/apis";
+import Loading from "../../../common/loading/loading";
 
 export default class CreateHope extends Component{
   constructor(props){
@@ -15,6 +16,7 @@ export default class CreateHope extends Component{
       files:[],
       isSeeSelf:false,
       isAnonymous:false,
+      loading:false,
     }
   }
 
@@ -56,14 +58,17 @@ export default class CreateHope extends Component{
     const filePath=that.state.files[0].url;
     let pos=filePath.lastIndexOf('.');
     let ext=filePath.substr(pos,filePath.length);
-    if(that.state.hopeText===''){
+    if(that.state.hopeText===''||that.satte.files.length===0){
       Taro.showModal({
         title:'提示',
-        content:'文字不能为空',
+        content:'文字&图片不能为空',
         showCancel:false
       })
       return;
     }
+    this.setState({
+      loading:true,
+    })
     Taro.cloud.uploadFile({
       cloudPath:'recordMood/'+Date.parse(new Date())+ext,
       filePath:that.state.files[0].url,
@@ -81,11 +86,15 @@ export default class CreateHope extends Component{
               voice:"",
               wordContent:that.state.hopeText
             }
-            createHope(params).then(res=>{
-              if(res.statusCode){
-                Taro.navigateBack();
-              }
-            })
+            console.log(params)
+            // createHope(params).then(res=>{
+            //   if(res.statusCode){
+            //     that.setState({
+            //       loading:false,
+            //     })
+            //     Taro.navigateBack();
+            //   }
+            // })
           }
         })
 
@@ -108,6 +117,7 @@ export default class CreateHope extends Component{
       <View>
         <NavBar title={"创建心愿"} back={true}/>
         <BarTakeUp/>
+        <Loading display={this.state.loading}/>
         <AtTextarea customStyle={{width:"95%",margin:"20px auto"}} placeholder="写下自己的心愿吧" onChange={this.changeHopeText.bind(this)} value={this.state.hopeText}/>
         {
           this.state.files.length===1?<AtImagePicker
