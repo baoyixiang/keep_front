@@ -11,3 +11,17 @@
   outline: none;
   border-radius: 0;
 }
+.isSeeSelf{
+  position: fixed;
+  bottom:120px;
+  right:20px;
+  width:250px;
+  font-size: 32px;
+}
+.isAnonymous{
+  position: fixed;
+  bottom:120px;
+  right:260px;
+  width:320px;
+  font-size: 32px;
+}

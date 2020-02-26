@@ -31,3 +31,17 @@ export function getRecommendCustomList(userId,tagsList) {
 export function getUserCustomList(params){
   return post('/api/user/custom/list',params)
 }
+
+
+/**
+ * 心愿模块
+ * **/
+
+export function getAllHopes(params){
+  return post('/api/user/hope/allHopes',params)
+}
+
+//创建心愿
+export function createHope(params) {
+  return post('/api/user/hope/newHope',params)
+}

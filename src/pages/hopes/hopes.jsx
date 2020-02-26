@@ -5,6 +5,7 @@ import React from "react";
 import NavBar from "../../common/navBar/navBar";
 import {AtButton, AtTabs, AtTabsPane} from 'taro-ui'
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
+import {getAllHopes} from "../../api/apis";
 export default class Hopes extends Component {
   constructor () {
     super(...arguments)
@@ -42,6 +43,12 @@ export default class Hopes extends Component {
   componentWillMount () { }
 
   componentDidMount () {
+    getAllHopes({
+      pageNo:0,
+      pageSize:10,
+    }).then(res=>{
+      console.log(res)
+    })
     let left=[];
     let right=[];
     this.state.list.forEach((item,index)=>{
