@@ -56,7 +56,7 @@ export default class MinePlaceFiles extends Component{
           <Text className='days'>已坚持{item.days}天</Text>
       </View>)
     })
-    const TOP=<View className='top'>{list.length}个习惯已经归档（长按可以归档）</View>
+    const TOP=<View className='top'>{list.length}个习惯已经归档（长按可以恢复）</View>
     return <View>{TOP}{List}</View>
   }
 

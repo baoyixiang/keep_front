@@ -143,7 +143,7 @@ export default class MineHomePage extends Component{
     return(
       <View className="homePage">
         <NavBar back={true} title={"个人主页"}/>
-
+        <BarTakeUp/>
         <AtFloatLayout isOpened={this.state.isOpen}  onClose={this.handleClose.bind(this,0)}>
           <View>
             <View className='floatLay' onClick={this.handleHabit.bind(this,0)}>删除习惯</View>
