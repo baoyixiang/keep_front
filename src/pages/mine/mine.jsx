@@ -20,15 +20,26 @@ export default class Mine extends Component {
   componentDidMount() {
     let that=this;
     Taro.getStorage({
-      key:'userInfo',
-      success(res){
+      key: 'userInfoModel',
+      success(res) {
+        console.log("成功获取存储本地用户数据1");
+        console.log(res);
         that.setState({
-          nickName:res.data.nickName,
-          photo:res.data.avatarUrl,
-          city:res.data.province+"-"+res.data.city,
+          nickName: res.data.name,
+          photo: res.data.avatar,
         })
       }
-    })
+    }). then()
+    Taro.getStorage({
+      key: 'userInfo',
+      success(res) {
+        console.log("成功获取本地用户数据2");
+        console.log(res);
+        that.setState({
+          city: res.data.province + "-" + res.data.city,
+        })
+      }
+    }).then()
   }
 
   handleClickNav(id){

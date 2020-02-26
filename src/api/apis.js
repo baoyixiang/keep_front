@@ -8,8 +8,8 @@ import {save} from "../action/user";
  * 小程序登录
  * @param code
  */
-export  function doLogin(params) {
-  return post('/api/applet/user/appletLogin',params)
+export  function doLogin(code,avatarUrl,nickName,personalSignature,gender) {
+  return post('/api/user/login',{code,avatarUrl,nickName,personalSignature,gender})
 }
 
 /**

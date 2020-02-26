@@ -1,8 +1,8 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "myApp",
+	"projectname": "Hengyuan",
 	"description": "Keep_weapp",
-	"appid": "wx64fe86365b3891c1",
+	"appid": "wx8b2d8f761f990064",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,

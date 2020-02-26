@@ -22,9 +22,11 @@ export default class RecommendCustom extends Component{
 
     let typeList = [tags];
 
-    getRecommendCustomList(1,typeList).then((result)=>{
+    let userInfo = Taro.getStorageSync('userInfoModel');
+
+    getRecommendCustomList(userInfo.id,typeList).then((result)=>{
       this.setState({
-        recommendCustomList: result.data[0]
+        recommendCustomList: result.data[0].customList
       })
     })
   }
@@ -37,7 +39,7 @@ export default class RecommendCustom extends Component{
         <NavBar back={true} title={tags}/>
         <BarTakeUp/>
         {
-          recommendCustomList.customList.length === 0 ?
+          recommendCustomList.length === 0 ?
             <Text>暂无习惯</Text> :
             <View>{this.renderHabits()}</View>
         }
@@ -48,7 +50,7 @@ export default class RecommendCustom extends Component{
   renderHabits(){
     let image = "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg"
     const {recommendCustomList} = this.state;
-    return recommendCustomList.customList.map(item =>
+    return recommendCustomList.map(item =>
       <View className='recommend-custom-list_item'>
         <Image className='recommend-custom-list_item_icon' src={item.logo || image}/>
         <Text className='recommend-custom-list_item_title'>{item.title || "——"}</Text>

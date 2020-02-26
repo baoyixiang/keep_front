@@ -64,11 +64,11 @@ class App extends Component {
     Taro.cloud.init({
       env:"forever-hope-bstqt"
     })
-    let value=Taro.getStorageSync('open_id');
+    let value = Taro.getStorageSync('userInfo');
     if(!value){
       Taro.cloud.callFunction({
         name:'getOpenid',
-        success(res){
+        success(res) {
          Taro.setStorage({
             key:'open_id',
             data:res.result.userInfo.openid
