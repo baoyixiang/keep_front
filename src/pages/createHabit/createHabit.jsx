@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, Image, Button} from '@tarojs/components'
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
-import {AtButton, AtSearchBar} from "taro-ui";
+import {AtButton, AtModalAction, AtModalContent, AtModalHeader, AtSearchBar, AtModal, AtImagePicker} from "taro-ui";
 import './createHabit.scss'
 export default class CreateHabit extends Component{
   constructor(props){
@@ -11,7 +11,9 @@ export default class CreateHabit extends Component{
     this.state={
       habitName:"",
       recommendList:[],
-      tips:true
+      tips:true,
+      files:[],
+      isOpened:false,
     }
   }
 
@@ -27,7 +29,20 @@ export default class CreateHabit extends Component{
       recommendList
     })
   }
+  createCustom(){
+    this.setState({
+      isOpened:!this.state.isOpened
+    })
+  }
 
+  createCustomConfirm(){
+
+  }
+  onChange (files) {
+    this.setState({
+      files
+    })
+  }
   changeHabitName(e){
     this.setState({
       habitName:e,
@@ -45,6 +60,7 @@ export default class CreateHabit extends Component{
     return recommendList.map(item=>{
       return (
         <View className="createHabit_recommend_content">
+
           <Image src={item.img} className="createHabit_recommend_content_img"/>
           <View className="createHabit_recommend_content_text">
             <Text className="createHabit_recommend_content_text_title">{item.title}</Text>
@@ -61,12 +77,31 @@ export default class CreateHabit extends Component{
     const {habitName, tips}=this.state;
     return(
       <View className="createHabit">
+        <AtModal isOpened={this.state.isOpened}>
+          <AtModalHeader>选择图标</AtModalHeader>
+          <AtModalContent>
+            {
+              this.state.files.length===1?<AtImagePicker
+                length={1}
+                files={this.state.files}
+                onChange={this.onChange.bind(this)}
+                showAddBtn={false}
+              />:<AtImagePicker
+                length={1}
+                files={this.state.files}
+                onChange={this.onChange.bind(this)}
+              />
+            }
+          </AtModalContent>
+          <AtModalAction> <Button onClick={this.setState({files:[],isOpened:false})}>取消</Button> <Button onClick={this.createCustomConfirm.bind(this)}>确定</Button> </AtModalAction>
+        </AtModal>
         <NavBar back={true} title={"创建个人习惯"}/>
         <BarTakeUp height={50}/>
           <AtSearchBar value={habitName} onClear={this.clearHabitName.bind(this)} onChange={this.changeHabitName.bind(this)} placeholder={"输入习惯名称"} actionName={tips?"添加":"创建"}/>
         {habitName!==""?<View className="createHabit_tips">
-          {tips?`习惯"${habitName}"已经存在，可以添加`:`习惯"${habitName}"尚未创建`}
-          <Button className="createHabit_tips_btn">{tips?"添加":"创建"}</Button>
+          {/*{tips?`习惯"${habitName}"已经存在，可以添加`:`习惯"${habitName}"尚未创建`}*/}
+          {`是否创建习惯"${habitName}"?`}
+          <Button onClick={this.createCustom.bind(this)} className="createHabit_tips_btn">{"创建"}</Button>
         </View>:null}
         <View className="createHabit_recommend">
           <Text className="createHabit_recommend_title">智能推荐</Text>

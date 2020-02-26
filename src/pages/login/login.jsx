@@ -45,6 +45,7 @@ export default class Login extends Component {
                 //Taro.setStorageSync("token",result.data.token);
                 Taro.setStorageSync("userInfoModel",result.data);
                 Taro.setStorageSync("userInfo",userInfo);
+                // console.log(result.data,userInfo)
                 Taro.showToast({
                   title: "登录成功",
                   icon: "success",

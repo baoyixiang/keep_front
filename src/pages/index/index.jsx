@@ -6,6 +6,7 @@ import React from "react";
 import photo from '../../assets/images/mine/keep_statics.png'
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
+import {getRecommendCustomList, getUserCustomList} from "../../api/apis";
 export default class Index extends Component {
 
   constructor(props){
@@ -28,6 +29,20 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
+    Taro.getStorage({
+      key:'userInfoModel',
+      success(res){
+        const params={
+          pageNo:0,
+          pageSize:10,
+          userId:res.data.id
+        }
+        getUserCustomList(params).then(res=>{
+          console.log(res)
+        })
+      }
+    })
+    // getRecommendCustomList()
     let that=this;
     const habitsList=[
       {
