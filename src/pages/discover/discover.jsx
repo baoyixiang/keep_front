@@ -203,6 +203,22 @@ export default class Discover extends Component {
     );
   }
 
+  joinCustomAndDelete(customList,customItem,customId) {
+    joinCustom(customId);
+    console.log("删除前");
+    console.log(customList);
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == customItem) {
+        customList.splice(i,i+1);
+      }
+    }
+    this.setState({
+      customList: customList,
+    });
+    console.log("删除后");
+    console.log(customList);
+  }
+
   renderStudy() {
     let {recommendStudyList} = this.state;
     const customItem = recommendStudyList.length > 0 ?
@@ -224,7 +240,7 @@ export default class Discover extends Component {
             </View>
           </View>
         </View>
-        <AtButton className='discover-habit-item-button' onClick={()=>joinCustom(item.id)}>加入</AtButton>
+        <AtButton className='discover-habit-item-button' onClick={this.joinCustomAndDelete.bind(this,recommendStudyList,item,item.id)}>加入</AtButton>
       </View>
     ) :
     <View className='discover-habit--no-item'>
@@ -258,7 +274,7 @@ export default class Discover extends Component {
               </View>
             </View>
           </View>
-          <AtButton className='discover-habit-item-button' onClick={()=>joinCustom(item.id)}>加入</AtButton>
+          <AtButton className='discover-habit-item-button' onClick={this.joinCustomAndDelete.bind(this,recommendSportList,item,item.id)}>加入</AtButton>
         </View>
       ) :
       <View className='discover-habit--no-item'>
@@ -269,17 +285,6 @@ export default class Discover extends Component {
         {customItem}
       </View>
     );
-  }
-
-  joinCustomAndDelete(customList,customItem,customId) {
-    joinCustom(customId);
-    console.log("删除前");
-    console.log(customList);
-    this.setState({
-
-    })
-    console.log("删除后");
-    console.log(customList);
   }
 
   renderMusic() {

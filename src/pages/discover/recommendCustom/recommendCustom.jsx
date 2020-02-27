@@ -46,6 +46,22 @@ export default class RecommendCustom extends Component{
     );
   }
 
+  joinCustomAndDelete(customList,customItem,customId) {
+    joinCustom(customId);
+    console.log("删除前");
+    console.log(customList);
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == customItem) {
+        customList.splice(i,i+1);
+      }
+    }
+    this.setState({
+      customList: customList,
+    });
+    console.log("删除后");
+    console.log(customList);
+  }
+
   renderHabits(){
     let image = "http://file01.16sucai.com/d/file/2013-11-11/13841505716891.jpg"
     const {recommendCustomList} = this.state;
@@ -54,7 +70,7 @@ export default class RecommendCustom extends Component{
         <Image className='recommend-custom-list_item_icon' src={item.logo || image}/>
         <Text className='recommend-custom-list_item_title'>{item.title || "——"}</Text>
         <Text className='recommend-custom-list_item_days'>已有233位朋友在坚持</Text>
-        <AtButton className='recommend-custom-list_item-button' onClick={()=>joinCustom(item.id)}>加入</AtButton>
+        <AtButton className='recommend-custom-list_item-button' onClick={this.joinCustomAndDelete.bind(this,recommendCustomList,item,item.id)}>加入</AtButton>
       </View>
     )
   }
