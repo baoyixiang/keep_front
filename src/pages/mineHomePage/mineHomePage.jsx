@@ -6,11 +6,14 @@ import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import './mineHomePage.scss'
 import Record from "../../common/record/record";
 import { AtFloatLayout } from "taro-ui"
+import { getUserCustomList, myFollowing, followedMe } from "../../api/apis";
+
 export default class MineHomePage extends Component{
   constructor(props) {
     super(props);
     this.book=[];
     this.state = {
+      userId: 0,
       habitsList: [],
       photo: "",
       nickName: '',
@@ -24,26 +27,37 @@ export default class MineHomePage extends Component{
   }
 
   componentDidMount() {
-    let that=this;
+    let that = this;
     Taro.getStorage({
-      key:"userInfo",
+      key:"userInfoModel",
       success(res){
-        console.log(res);
         const data=res.data;
         that.setState({
-          photo:data.avatarUrl,
-          nickName:data.nickName
-        })
+          photo:data.avatar,
+          nickName:data.name,
+          userId: data.id,
+        });
+        console.log('userId:',this.state.userId);
       }
-    });
-    const habitsList=[
-      {cover:"",title:"考研",num:21,id:1},
-      {cover:"",title:"自律~运动",num:12,id:2},
-      {cover:"",title:"背单词",num:30,id:3},
-      {cover:"",title:"考研",num:21,id:3},
-      {cover:"",title:"自律~运动",num:12,id:4},
-      {cover:"",title:"背单词",num:30,id:5},
-    ];
+    }).then(
+      getUserCustomList(
+        {
+          pageNo:0,
+          pageSize:99,
+          userId: this.state.userId,
+        }).then( res => {
+        // console.log('habitList',res);
+        that.setState({
+          habitsList: res.data.list,
+        })
+      }),
+      myFollowing({
+        userId: this.state.userId,
+      }).then( res => {
+        console.log('res',res);
+      })
+    );
+    console.log('userId2:',this.state.userId);
     const recordList=[
       {id:1,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录",
         comments:[{from:"与我西南",to:"珊莎",content:"向你学习向你学习向你学习向你学习向你学习向你学习向你学习向你学习"},{from:"珊莎",to:"",content: "谢谢大家"}],
@@ -56,9 +70,8 @@ export default class MineHomePage extends Component{
       {id:3,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录",
         comments:[]
       },
-    ]
+    ];
     this.setState({
-      habitsList,
       recordList
     })
   }
@@ -72,9 +85,11 @@ export default class MineHomePage extends Component{
   renderHabitBook(){
     const {bigIndex,habitsList}=this.state;
     return habitsList.map((item,index)=>{
-      return <View onClick={this.selectBook.bind(this,index)} className={index!=bigIndex?"homePage_insist_content_item":"homePage_insist_content_item bigItem"}>
-        <Image className="homePage_insist_content_item_cover" src={"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2557850634,2312125362&fm=11&gp=0.jpg"}/>
-        <View onClick={this.handleClose.bind(this,item.id)}  className="homePage_insist_content_item_set"><Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/></View>
+      return <View onClick={this.selectBook.bind(this,index)} className={index!==bigIndex?"homePage_insist_content_item":"homePage_insist_content_item bigItem"}>
+        <Image className="homePage_insist_content_item_cover" src={item.logo}/>
+        <View onClick={this.handleClose.bind(this,item.id)}  className="homePage_insist_content_item_set">
+          <Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/>
+        </View>
         <Text className="homePage_insist_content_item_title">{item.title}</Text>
         <Text className="homePage_insist_content_item_day">{item.num}天</Text>
       </View>
@@ -88,27 +103,27 @@ export default class MineHomePage extends Component{
   }
 
   changeLikeStatus(id){
-    console.log(id)
+    console.log(id);
     let {recordList}=this.state;
     recordList.forEach(item=>{
       if(item.id===id){
         item.isLike=!item.isLike;
       }
-    })
+    });
     this.setState({
       recordList
     })
   }
 
   handleClose(id){
-    console.log(id)
+    console.log(id);
     this.setState({
       isOpen:!this.state.isOpen
     })
   }
 
   handleHabit(flag){
-    let info=""
+    let info="";
     if(flag===0){
       info="删除"
     }else {
@@ -165,7 +180,6 @@ export default class MineHomePage extends Component{
           <View className="homePage_insist_content">
             {/*<View className="homePage_insist_content_itemLR" style={{transform:'translate('+transX+'px)'}}></View>*/}
             {this.renderHabitBook()}
-            {/*<View className="homePage_insist_content_itemLR" style={{transform:'translate('+transX+'px)'}}></View>*/}
           </View>
         </View>
         <View className="homePage_record">

@@ -23,7 +23,7 @@ export default class Hopes extends Component {
     let that=this;
     that.setState({
       loading:true
-    })
+    });
     getAllHopes({
       pageNo:0,
       pageSize:10,

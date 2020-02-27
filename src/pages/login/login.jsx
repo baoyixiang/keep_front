@@ -75,7 +75,7 @@ export default class Login extends Component {
         duration: 2000
       }).then()
     }
-  }
+  };
 
   render () {
     return (

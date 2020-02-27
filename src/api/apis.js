@@ -33,7 +33,7 @@ export function JoinCustom(params) {
   return post('/api/user/custom/join_custom',params)
 }
 
-//获取主页列表
+//获取习惯列表
 export function getUserCustomList(params){
   return post('/api/user/custom/list',params)
 }
@@ -42,7 +42,6 @@ export function getUserCustomList(params){
 /**
  * 心愿模块
  * **/
-
 export function getAllHopes(params){
   return post('/api/user/hope/allHopes',params)
 }
@@ -55,4 +54,24 @@ export function createHope(params) {
 //获取心愿详情
 export function getHopeDetail(params){
   return post('/api/user/hope/hopeDetail',{hopeId:params})
+}
+
+/**
+ * 打卡
+ * **/
+//评论打卡
+export function checkInComment(params) {
+  return post('/api/user/checkin/checkInComment',params)
+}
+
+/**
+ * 粉丝与关注
+ * **/
+//我的关注
+export function myFollowing(params) {
+  return get(`/api/user/following/${params.userId}`,params)
+}
+
+export function followedMe(params) {
+  return get(`/api/user/fans/${params.userId}`,params)
 }
