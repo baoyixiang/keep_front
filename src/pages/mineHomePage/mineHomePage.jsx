@@ -28,14 +28,14 @@ export default class MineHomePage extends Component{
     Taro.getStorage({
       key:"userInfo",
       success(res){
-        console.log(res)
+        console.log(res);
         const data=res.data;
         that.setState({
           photo:data.avatarUrl,
           nickName:data.nickName
         })
       }
-    })
+    });
     const habitsList=[
       {cover:"",title:"考研",num:21,id:1},
       {cover:"",title:"自律~运动",num:12,id:2},

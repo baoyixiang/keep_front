@@ -8,7 +8,7 @@ const head=require('../../assets/images/mine/head.png')
 export default class Login extends Component {
   config = {
     navigationBarTitleText: '登录',
-  }
+  };
 
   componentWillMount () {
 
