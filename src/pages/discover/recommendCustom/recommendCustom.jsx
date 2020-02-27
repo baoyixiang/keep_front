@@ -7,6 +7,7 @@ import photo from "../../../assets/images/mine/keep_statics.png";
 import './recommendCustom.scss'
 import {getRecommendCustomList} from "../../../api/apis";
 import {AtButton} from "taro-ui";
+import {joinCustom} from "../../../common/joinCustom/joinCustom";
 
 export default class RecommendCustom extends Component{
 
@@ -20,13 +21,11 @@ export default class RecommendCustom extends Component{
   componentDidMount() {
     let {tags} = this.$router.params;
 
-    let typeList = [tags];
-
     let userInfo = Taro.getStorageSync('userInfoModel');
 
-    getRecommendCustomList(userInfo.id,typeList).then((result)=>{
+    getRecommendCustomList(userInfo.id,tags).then((result)=>{
       this.setState({
-        recommendCustomList: result.data[0].customList
+        recommendCustomList: result.data
       })
     })
   }
@@ -55,7 +54,7 @@ export default class RecommendCustom extends Component{
         <Image className='recommend-custom-list_item_icon' src={item.logo || image}/>
         <Text className='recommend-custom-list_item_title'>{item.title || "——"}</Text>
         <Text className='recommend-custom-list_item_days'>已有233位朋友在坚持</Text>
-        <AtButton className='recommend-custom-list_item-button'>加入</AtButton>
+        <AtButton className='recommend-custom-list_item-button' onClick={()=>joinCustom(item.id)}>加入</AtButton>
       </View>
     )
   }

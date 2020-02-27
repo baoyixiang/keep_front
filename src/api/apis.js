@@ -22,10 +22,16 @@ export function getRecommendUserList() {
 /**
  * 获取推荐习惯列表
  */
-export function getRecommendCustomList(userId,tagsList) {
-  return post('/api/user/custom/recommend_custom_list',{userId,tagsList})
+export function getRecommendCustomList(userId,tag) {
+  return post('/api/user/custom/recommend_custom_list',{userId,tag})
 }
 
+/**
+ * 加入习惯
+ */
+export function JoinCustom(params) {
+  return post('/api/user/custom/join_custom',params)
+}
 
 //获取主页列表
 export function getUserCustomList(params){
