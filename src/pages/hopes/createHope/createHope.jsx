@@ -58,7 +58,7 @@ export default class CreateHope extends Component{
     const filePath=that.state.files[0].url;
     let pos=filePath.lastIndexOf('.');
     let ext=filePath.substr(pos,filePath.length);
-    if(that.state.hopeText===''||that.satte.files.length===0){
+    if(that.state.hopeText===''||that.state.files.length===0){
       Taro.showModal({
         title:'提示',
         content:'文字&图片不能为空',
@@ -87,14 +87,14 @@ export default class CreateHope extends Component{
               wordContent:that.state.hopeText
             }
             console.log(params)
-            // createHope(params).then(res=>{
-            //   if(res.statusCode){
-            //     that.setState({
-            //       loading:false,
-            //     })
-            //     Taro.navigateBack();
-            //   }
-            // })
+            createHope(params).then(res=>{
+              if(res.statusCode){
+                that.setState({
+                  loading:false,
+                })
+                Taro.navigateBack();
+              }
+            })
           }
         })
 
