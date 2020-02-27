@@ -13,9 +13,15 @@ export default class Index extends Component {
     super(props);
     this.state={
       statusBarHeight:0,
-      habitsList:[]
+      habitsList:[
+        {
+          custom: {},
+        }
+      ]
     }
   }
+
+  pageNo = 0;
 
   componentWillMount () {
     Taro.getStorage({
@@ -29,41 +35,37 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
-    Taro.getStorage({
-      key:'userInfoModel',
-      success(res){
-        const params={
-          pageNo:0,
-          pageSize:10,
-          userId:res.data.id
-        }
-        getUserCustomList(params).then(res=>{
-          console.log(res)
-        })
-      }
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      pageNo:0,
+      pageSize:10,
+      userId:userInfoModel.id
+    };
+    getUserCustomList(params).then(res=>{
+      this.setState({
+        habitsList: res.data.list
+      })
     })
-    // getRecommendCustomList()
-    let that=this;
-    const habitsList=[
-      {
-        image:photo,
-        title:"考研",
-        days:1
-      },
-      {
-        image:photo,
-        title:"考研",
-        days:1
-      },
-      {
-        image:photo,
-        title:"考研",
-        days:1
-      },
-    ]
-     this.setState({
-       habitsList
-     })
+    // const habitsList=[
+    //   {
+    //     image:photo,
+    //     title:"考研",
+    //     days:1
+    //   },
+    //   {
+    //     image:photo,
+    //     title:"考研",
+    //     days:1
+    //   },
+    //   {
+    //     image:photo,
+    //     title:"考研",
+    //     days:1
+    //   },
+    // ]
+    //  this.setState({
+    //    habitsList
+    //  })
 
   }
 
@@ -88,25 +90,27 @@ export default class Index extends Component {
   }
 
   renderHabits(){
-    const {habitsList}=this.state;
+    const {habitsList} = this.state;
     return habitsList.map(item=>{
-      return <View onClick={this.redirectToHabit.bind(this)} className='list_item'>
-        <Image className='list_item_icon' src={item.image}/>
-        <Text className='list_item_title'>{item.title}</Text>
-        <Text className='list_item_days'>已坚持{item.days}天</Text>
-      </View>
+      return (
+        <View onClick={this.redirectToHabit.bind(this)} className='list_item'>
+          <Image className='list_item_icon' src={item.custom.logo}/>
+          <Text className='list_item_title'>{item.custom.title}</Text>
+          <Text className='list_item_days'>已坚持1天</Text>
+        </View>
+      )
     })
   }
 
   render () {
-    let data=[1]
+    let {habitsList} = this.state;
     return (
       <View className='index' >
         <NavBar title={"点滴习惯"} back={false}/>
         <BarTakeUp/>
 
         {
-          data.length===0?<Text>暂无习惯</Text>:
+          habitsList.length===0?<Text>暂无习惯</Text>:
             <View>{this.renderHabits()}</View>
         }
         <AtButton className="create_habit_button" onClick={this.createHabit.bind(this)}>添加习惯</AtButton>

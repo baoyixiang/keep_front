@@ -35,7 +35,7 @@ export function JoinCustom(params) {
 
 //获取习惯列表
 export function getUserCustomList(params){
-  return post('/api/user/custom/list',params)
+  return post('/api/user/custom/join_list',params)
 }
 
 
