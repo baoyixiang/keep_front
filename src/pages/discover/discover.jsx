@@ -116,11 +116,7 @@ export default class Discover extends Component {
 
   renderRecommendHabit() {
     let {recommendCustomList} = this.state;
-    const recommendCustomItem = recommendCustomList.length > 0 ?
-      recommendCustomList.map((item)=>
-      // <View>
-      //   {this.renderHabit(item.customList,item.title)}
-      // </View>
+    const recommendCustomItem = recommendCustomList.map((item)=>
       <View className='discover-habit'>
         <View className='discover-habit-text at-row'>
           <View className='discover-habit-text-left'>
@@ -137,10 +133,7 @@ export default class Discover extends Component {
           {this.renderHabit(item.customList)}
         </View>
       </View>
-    ) :
-      <View>
-        <View>暂无推荐列表</View>
-      </View>
+    )
     return(
       <View>
         {recommendCustomItem}
@@ -155,7 +148,8 @@ export default class Discover extends Component {
   }
 
   renderHabit(customList) {
-    const customItem = customList.map((item)=>
+    const customItem = customList.length > 0 ?
+      customList.map((item)=>
       <View className='discover-habit-item at-row'>
         <View>
           <View className='at-row'>
@@ -175,7 +169,10 @@ export default class Discover extends Component {
         </View>
         <AtButton className='discover-habit-item-button'>加入</AtButton>
       </View>
-    )
+    ) :
+    <View className='discover-habit--no-item'>
+      <Text>暂无推荐列表</Text>
+    </View>
     return(
       <View className='discover-habit-list at-row'>
         {customItem}
