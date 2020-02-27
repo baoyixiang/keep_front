@@ -12,8 +12,8 @@ export default class CreateHabit extends Component{
       habitName:"",
       recommendList:[],
       tips:true,
-      files:[],
-      isOpened:false,
+      file:[],
+      isOpen:false,
     }
   }
 
@@ -31,16 +31,21 @@ export default class CreateHabit extends Component{
   }
   createCustom(){
     this.setState({
-      isOpened:!this.state.isOpened
+      isOpen:true
     })
   }
-
+  cancelCreate(){
+    this.setState({
+      isOpen:false,
+      file:[]
+    })
+  }
   createCustomConfirm(){
 
   }
-  onChange (files) {
+  onChange (file) {
     this.setState({
-      files
+      file
     })
   }
   changeHabitName(e){
@@ -60,7 +65,6 @@ export default class CreateHabit extends Component{
     return recommendList.map(item=>{
       return (
         <View className="createHabit_recommend_content">
-
           <Image src={item.img} className="createHabit_recommend_content_img"/>
           <View className="createHabit_recommend_content_text">
             <Text className="createHabit_recommend_content_text_title">{item.title}</Text>
@@ -74,26 +78,26 @@ export default class CreateHabit extends Component{
   }
 
   render() {
-    const {habitName, tips}=this.state;
+    const {habitName, tips,isOpen}=this.state;
     return(
       <View className="createHabit">
-        <AtModal isOpened={this.state.isOpened}>
+        <AtModal isOpened={isOpen}>
           <AtModalHeader>选择图标</AtModalHeader>
           <AtModalContent>
             {
-              this.state.files.length===1?<AtImagePicker
+              this.state.file.length===1?<AtImagePicker
                 length={1}
-                files={this.state.files}
+                files={this.state.file}
                 onChange={this.onChange.bind(this)}
                 showAddBtn={false}
               />:<AtImagePicker
                 length={1}
-                files={this.state.files}
+                files={this.state.file}
                 onChange={this.onChange.bind(this)}
               />
             }
           </AtModalContent>
-          <AtModalAction> <Button onClick={this.setState({files:[],isOpened:false})}>取消</Button> <Button onClick={this.createCustomConfirm.bind(this)}>确定</Button> </AtModalAction>
+          <AtModalAction> <Button onClick={this.cancelCreate.bind(this)}>取消</Button> <Button onClick={this.createCustomConfirm.bind(this)}>确定</Button> </AtModalAction>
         </AtModal>
         <NavBar back={true} title={"创建个人习惯"}/>
         <BarTakeUp height={50}/>

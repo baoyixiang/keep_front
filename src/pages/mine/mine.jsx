@@ -31,15 +31,16 @@ export default class Mine extends Component {
       }
     }). then()
     Taro.getStorage({
-      key: 'userInfo',
-      success(res) {
-        console.log("成功获取本地用户数据2");
-        console.log(res);
+      key:'userInfo',
+      success(res){
+        console.log(res.data)
         that.setState({
-          city: res.data.province + "-" + res.data.city,
+          nickName:res.data.nickName,
+          photo:res.data.avatarUrl,
+          city:res.data.province+"-"+res.data.city,
         })
       }
-    }).then()
+    })
   }
 
   handleClickNav(id){
@@ -102,7 +103,7 @@ export default class Mine extends Component {
     Taro.getStorage({
       key:'userInfo',
       success(res){
-        // console.log(res.data)
+        console.log(res.data)
         that.setState({
           nickName:res.data.nickName,
           photo:res.data.avatarUrl,
@@ -138,7 +139,7 @@ export default class Mine extends Component {
     return (
       <View className='mine'>
         <View className='mine_topBack'>
-          {photo?<View>
+          {1?<View>
             <Image className='mine_topBack_headImg' src={photo}/>
             <Text className='mine_topBack_nickName'>{nickName}</Text>
             <Text className='mine_topBack_headText'>{city}</Text>
