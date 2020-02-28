@@ -38,6 +38,12 @@ export function getUserCustomList(params){
   return post('/api/user/custom/join_list',params)
 }
 
+/**
+ * 创建习惯
+ */
+export function createCustom(params) {
+  return post('/api/user/custom/insert_custom',params)
+}
 
 /**
  * 心愿模块

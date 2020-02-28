@@ -19,7 +19,17 @@ export default class Hopes extends Component {
   }
   componentWillMount () { }
 
+
   componentDidMount () {
+
+
+  }
+
+  componentWillUnmount () {
+
+  }
+
+  componentDidShow () {
     let that=this;
     that.setState({
       loading:true
@@ -43,14 +53,7 @@ export default class Hopes extends Component {
         loading:false
       })
     })
-
   }
-
-  componentWillUnmount () {
-
-  }
-
-  componentDidShow () { }
 
   componentDidHide () { }
 

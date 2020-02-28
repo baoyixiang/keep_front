@@ -5,8 +5,9 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {AtButton, AtModalAction, AtModalContent, AtModalHeader, AtSearchBar, AtModal, AtImagePicker} from "taro-ui";
 import './createHabit.scss'
-import {getRecommendCustomList} from "../../api/apis";
+import {createCustom, getRecommendCustomList} from "../../api/apis";
 import {joinCustom} from "../../common/joinCustom/joinCustom";
+import Loading from "../../common/loading/loading";
 export default class CreateHabit extends Component{
   constructor(props){
     super(props);
@@ -16,6 +17,7 @@ export default class CreateHabit extends Component{
       tips:true,
       file:[],
       isOpen:false,
+      loading:false,
     }
   }
 
@@ -47,7 +49,53 @@ export default class CreateHabit extends Component{
     })
   }
   createCustomConfirm(){
+    let that=this;
+    if(this.state.habitName===''||this.state.file.length===0){
+      Taro.showModal({
+        title:'提示',
+        content:'名称||图片不能为空',
+        showCancel:false
+      })
+      return;
+    }
+    this.setState({
+      loading:true,
+      isOpen:false
+    })
+    Taro.getStorage({
+      key:'userInfoModel',
+      success(res){
+        const filePath=that.state.file[0].url;
+        let pos=filePath.lastIndexOf('.');
+        let ext=filePath.substr(pos,filePath.length)
+        Taro.cloud.uploadFile({
+          cloudPath:'habitIcon/'+Date.parse(new Date())+ext,
+          filePath:that.state.file[0].url,
+          success:r=>{
+            const params={
+              logo:r.fileID,
+              title:that.state.habitName,
+              userId:res.data.id
+            }
+            createCustom(params).then(res=>{
+              that.setState({
+                loading:false
+              })
+              Taro.showToast({
+                icon:"success",
+                duration:2000,
+              }).then(()=>{
+                Taro.navigateBack()
+              })
+            })
+          },
+          fail: res=>{
 
+          }
+        })
+      }
+    })
+    console.log(this.state)
   }
   onChange (file) {
     this.setState({
@@ -101,6 +149,7 @@ export default class CreateHabit extends Component{
     const {habitName, tips,isOpen}=this.state;
     return(
       <View className="createHabit">
+        <Loading display={this.state.loading}/>
         <AtModal isOpened={isOpen}>
           <AtModalHeader>选择图标</AtModalHeader>
           <AtModalContent>
