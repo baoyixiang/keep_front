@@ -33,14 +33,19 @@ export function JoinCustom(params) {
   return post('/api/user/custom/join_custom',params)
 }
 
-//获取习惯列表
+
+/**
+ * 获取习惯列表
+ */
 export function getUserCustomList(params){
   return post('/api/user/custom/join_list',params)
 }
 
-//获取用户习惯
-export function getOwnCustoms(params){
-  return post('/api/user/custom/list',params)
+/**
+ * 获取习惯详情
+ */
+export function getCustomDetail(params){
+  return post('/api/user/custom/custom_detail',params)
 }
 
 /**

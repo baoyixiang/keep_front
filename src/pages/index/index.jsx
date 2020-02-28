@@ -7,12 +7,14 @@ import photo from '../../assets/images/mine/keep_statics.png'
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {getOwnCustoms, getRecommendCustomList, getUserCustomList} from "../../api/apis";
+import Loading from "../../common/loading/loading";
 export default class Index extends Component {
 
   constructor(props){
     super(props);
     this.state={
       statusBarHeight:0,
+      loading:true,
       habitsList:[
         {
           custom: {},
@@ -35,23 +37,26 @@ export default class Index extends Component {
   }
 
   componentDidMount () {
+
+  }
+
+  componentWillUnmount () { }
+
+  componentDidShow () {
     let userInfoModel = Taro.getStorageSync('userInfoModel');
     const params={
       pageNo:0,
       pageSize:10,
       userId:userInfoModel.id
     };
-    getOwnCustoms(params).then(res=>{
+    getUserCustomList(params).then(res=>{
+      console.log(res)
       this.setState({
-        habitsList: res.data.list
+        habitsList: res.data.list,
+        loading:false,
       })
     })
-
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
 
   componentDidHide () { }
 
@@ -63,9 +68,9 @@ export default class Index extends Component {
     })
   }
 
-  redirectToHabit(){
+  redirectToHabit(id){
     Taro.navigateTo({
-      url:"../habitSign/habitSign?id=123",
+      url:"../habitSign/habitSign?id="+id,
     })
   }
 
@@ -73,9 +78,9 @@ export default class Index extends Component {
     const {habitsList} = this.state;
     return habitsList.map(item=>{
       return (
-        <View onClick={this.redirectToHabit.bind(this)} className='list_item'>
-          <Image className='list_item_icon' src={item.logo}/>
-          <Text className='list_item_title'>{item.title}</Text>
+        <View onClick={this.redirectToHabit.bind(this,item.custom.id)} className='list_item'>
+          <Image className='list_item_icon' src={item.custom.logo}/>
+          <Text className='list_item_title'>{item.custom.title}</Text>
           <Text className='list_item_days'>已坚持1天</Text>
         </View>
       )
@@ -88,9 +93,9 @@ export default class Index extends Component {
       <View className='index' >
         <NavBar title={"点滴习惯"} back={false}/>
         <BarTakeUp/>
-
+        <Loading display={this.state.loading}/>
         {
-          habitsList.length===0?<Text>暂无习惯</Text>:
+          habitsList.length===0?<Text className={'noHabit'}>暂无习惯</Text>:
             <View>{this.renderHabits()}</View>
         }
         <AtButton className="create_habit_button" onClick={this.createHabit.bind(this)}>添加习惯</AtButton>

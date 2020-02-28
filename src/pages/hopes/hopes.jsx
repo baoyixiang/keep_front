@@ -22,7 +22,9 @@ export default class Hopes extends Component {
 
   componentDidMount () {
 
-
+    this.setState({
+      loading:true
+    });
   }
 
   componentWillUnmount () {
@@ -31,9 +33,6 @@ export default class Hopes extends Component {
 
   componentDidShow () {
     let that=this;
-    that.setState({
-      loading:true
-    });
     getAllHopes({
       pageNo:0,
       pageSize:10,

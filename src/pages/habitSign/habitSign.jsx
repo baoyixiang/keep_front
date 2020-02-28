@@ -17,7 +17,11 @@ export default class HabitSign extends Component{
   }
 
   componentDidMount() {
-    // console.log(this.$router.params.id);
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      userId:userInfoModel.id,
+      customId:this.$router.params.id
+    }
   }
 
   changeSignStatus(){

@@ -79,7 +79,7 @@ export default class CreateHope extends Component{
           key:'userInfoModel',
           success(r){
             const params={
-              images:[{url:res.fileID},{}],
+              images:[res.fileID],
               createUserId:r.data.id,
               isSeeSelf: that.state.isSeeSelf,
               isAnonymous:that.state.isAnonymous,
