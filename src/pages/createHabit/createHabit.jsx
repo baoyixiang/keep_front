@@ -5,6 +5,7 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {AtButton, AtModalAction, AtModalContent, AtModalHeader, AtSearchBar, AtModal, AtImagePicker} from "taro-ui";
 import './createHabit.scss'
+import {getRecommendCustomList} from "../../api/apis";
 export default class CreateHabit extends Component{
   constructor(props){
     super(props);
@@ -18,16 +19,22 @@ export default class CreateHabit extends Component{
   }
 
   componentDidMount() {
-    let recommendList=[
-      {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
-      {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
-      {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
-      {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
-      {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
-    ];
-    this.setState({
-      recommendList
-    })
+    let userInfo = Taro.getStorageSync('userInfoModel');
+    getRecommendCustomList(userInfo.id,null).then((result)=>{
+      this.setState({
+        recommendList: result.data
+      })
+    });
+    // let recommendList=[
+    //   {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
+    //   {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
+    //   {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
+    //   {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
+    //   {img:'http://img4.imgtn.bdimg.com/it/u=1505732009,4176072429&fm=26&gp=0.jpg',title:"兴趣爱好",num:3},
+    // ];
+    // this.setState({
+    //   recommendList
+    // })
   }
   createCustom(){
     this.setState({
@@ -68,7 +75,7 @@ export default class CreateHabit extends Component{
           <Image src={item.img} className="createHabit_recommend_content_img"/>
           <View className="createHabit_recommend_content_text">
             <Text className="createHabit_recommend_content_text_title">{item.title}</Text>
-            <Text className="createHabit_recommend_content_text_num">已有{item.num}位萌友正在坚持</Text>
+            <Text className="createHabit_recommend_content_text_num">已有2位萌友正在坚持</Text>
           </View>
           <Button className="createHabit_recommend_content_btn">加入</Button>
           <View style={{clear:"both"}}></View>
