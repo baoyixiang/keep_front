@@ -45,14 +45,14 @@ page{
       border-bottom:1px solid #F8F8F8;
       .createHabit_recommend_content_img{
         display: block;
-        padding: 25px;
-        width:70px;
-        height:70px;
-        float:left;
+        margin: 25px;
+        width:75px;
+        height:75px;
+        border-radius: 150px;
       }
       .createHabit_recommend_content_text{
         width:400px;
-        float:left;
+        flex-direction: column;
         .createHabit_recommend_content_text_title{
           display: block;
           font-size:28px;
