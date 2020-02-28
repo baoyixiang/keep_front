@@ -6,7 +6,7 @@ import React from "react";
 import photo from '../../assets/images/mine/keep_statics.png'
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
-import {getRecommendCustomList, getUserCustomList} from "../../api/apis";
+import {getOwnCustoms, getRecommendCustomList, getUserCustomList} from "../../api/apis";
 export default class Index extends Component {
 
   constructor(props){
@@ -41,31 +41,11 @@ export default class Index extends Component {
       pageSize:10,
       userId:userInfoModel.id
     };
-    getUserCustomList(params).then(res=>{
+    getOwnCustoms(params).then(res=>{
       this.setState({
         habitsList: res.data.list
       })
     })
-    // const habitsList=[
-    //   {
-    //     image:photo,
-    //     title:"考研",
-    //     days:1
-    //   },
-    //   {
-    //     image:photo,
-    //     title:"考研",
-    //     days:1
-    //   },
-    //   {
-    //     image:photo,
-    //     title:"考研",
-    //     days:1
-    //   },
-    // ]
-    //  this.setState({
-    //    habitsList
-    //  })
 
   }
 
@@ -94,8 +74,8 @@ export default class Index extends Component {
     return habitsList.map(item=>{
       return (
         <View onClick={this.redirectToHabit.bind(this)} className='list_item'>
-          <Image className='list_item_icon' src={item.custom.logo}/>
-          <Text className='list_item_title'>{item.custom.title}</Text>
+          <Image className='list_item_icon' src={item.logo}/>
+          <Text className='list_item_title'>{item.title}</Text>
           <Text className='list_item_days'>已坚持1天</Text>
         </View>
       )

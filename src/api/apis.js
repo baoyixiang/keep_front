@@ -38,6 +38,11 @@ export function getUserCustomList(params){
   return post('/api/user/custom/join_list',params)
 }
 
+//获取用户习惯
+export function getOwnCustoms(params){
+  return post('/api/user/custom/list',params)
+}
+
 /**
  * 创建习惯
  */
