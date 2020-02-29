@@ -138,9 +138,9 @@ export default class InsistStatistics extends Component{
                 <View className="insist_content_others_statistics_title">数据统计</View>
                 <View className="insist_content_others_statistics_item">
                   <View className="insist_content_others_statistics_item_dot"></View>
-                  <View className="insist_content_others_statistics_item_text">开始坚持的天数</View>
+                  <View className="insist_content_others_statistics_item_text">开始坚持时间</View>
                   <View className="insist_content_others_statistics_item_day">
-                    <Text className="insist_content_others_statistics_item_day_num">{45} </Text>
+                    <Text className="insist_content_others_statistics_item_day_num">{itemDetail.joinCustom?itemDetail.joinCustom.joinTime.substring(0,10):0} </Text>
                     <Text className="insist_content_others_statistics_item_day_text"> 天</Text>
                   </View>
                 </View>
@@ -148,15 +148,15 @@ export default class InsistStatistics extends Component{
                   <View className="insist_content_others_statistics_item_dot" style={{backgroundColor:"#25A2F9"}}></View>
                   <View className="insist_content_others_statistics_item_text">总坚持天数</View>
                   <View className="insist_content_others_statistics_item_day">
-                    <Text className="insist_content_others_statistics_item_day_num" style={{color:"#25A2F9"}}>{38} </Text>
+                    <Text className="insist_content_others_statistics_item_day_num" style={{color:"#25A2F9"}}>{itemDetail.joinCustom.checkDaysCount} </Text>
                     <Text className="insist_content_others_statistics_item_day_text"> 天</Text>
                   </View>
                 </View>
                 <View className="insist_content_others_statistics_item">
                   <View className="insist_content_others_statistics_item_dot" style={{backgroundColor:"orange"}}></View>
-                  <View className="insist_content_others_statistics_item_text">连续坚持天数</View>
+                  <View className="insist_content_others_statistics_item_text">目标天数</View>
                   <View className="insist_content_others_statistics_item_day">
-                    <Text className="insist_content_others_statistics_item_day_num" style={{color:"orange"}}>{31} </Text>
+                    <Text className="insist_content_others_statistics_item_day_num" style={{color:"orange"}}>{itemDetail.joinCustom.targetDays} </Text>
                     <Text className="insist_content_others_statistics_item_day_text"> 天</Text>
                   </View>
                 </View>
