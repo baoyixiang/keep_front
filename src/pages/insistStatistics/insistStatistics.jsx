@@ -5,6 +5,9 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import { AtCalendar,AtProgress} from "taro-ui"
 import './insistStatistics.scss'
+import {getUserCustomList} from "../../api/apis";
+import all from '../../assets/images/all.png';
+import err from '../../assets/images/image_404.png'
 export default class InsistStatistics extends Component{
   constructor(props){
     super(props);
@@ -13,45 +16,66 @@ export default class InsistStatistics extends Component{
       type:0,
       itemDetail:{},
       percent:0,
+      total:undefined,
+      completed:0,
+      dataAll:[],
     }
   }
 
   componentDidMount() {
-    const topList=[
-      {icon:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2830705192,2886686135&fm=26&gp=0.jpg",type:0},
-      {icon:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1348721171,2094612710&fm=26&gp=0.jpg",type:1},
-      {icon:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2564250012,2143723317&fm=26&gp=0.jpg",type:2},
-      {icon:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2830705192,2886686135&fm=26&gp=0.jpg",type:3},
-      {icon:"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1348721171,2094612710&fm=26&gp=0.jpg",type:4},
-      {icon:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2564250012,2143723317&fm=26&gp=0.jpg",type:5},
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      pageNo:0,
+      pageSize:10,
+      userId:userInfoModel.id
+    };
+    let topList=[
+      {icon:all,type:0},
     ];
-    const percentR=60;
-    let count=0;
-    setTimeout(()=>{
-      let timer=setInterval(()=>{
-        console.log(1)
-        count=count+0.05
-        this.setState({
-          percent:percentR*count
-        })
-        if(Math.abs(count-1)<0.01){
-          clearInterval(timer)
+    let completed=0;
+    getUserCustomList(params).then(res=>{
+      let list=res.data.list;
+      console.log(list);
+      list.forEach((item,index)=>{
+        if(item.joinCustom.completed){
+          completed++;
         }
-      },16)
-    },350)
+        topList.push({
+          icon:item.custom.logo,
+          type:index+1
+        })
+      })
+      const percentR=completed/list.length;
+      let count=0;
+      setTimeout(()=>{
+        let timer=setInterval(()=>{
+          count=count+0.05
+          this.setState({
+            percent:percentR*count
+          })
+          if(Math.abs(count-1)<0.01){
+            clearInterval(timer)
+          }
+        },16)
+      },350)
 
-    this.setState({
-      topList
+      this.setState({
+        completed,
+        topList,
+        total:list.length,
+        dataAll:list,
+      })
     })
+
+
   }
 
   switchNavItem(type){
     this.setState({type})
+    console.log(this.state.dataAll[type-1])
     if(type!==0){
       this.setState({
-        itemDetail:{
-          title:"2020读书",
-        }
+        itemDetail:this.state.dataAll[type-1]
       })
     }
   }
@@ -95,20 +119,20 @@ export default class InsistStatistics extends Component{
               </View>
               <View className="insist_content_first_content">
                 <View className="insist_content_first_content_item">
-                  <Text className="insist_content_first_content_item_finishedNum">0</Text>
+                  <Text className="insist_content_first_content_item_finishedNum">{this.state.completed}</Text>
                   <Text className="insist_content_first_content_item_text">已完成</Text>
                 </View>
                 <View className="insist_content_first_content_item">
-                  <Text className="insist_content_first_content_item_notFinishedNum">5</Text>
+                  <Text className="insist_content_first_content_item_notFinishedNum">{this.state.total-this.state.completed}</Text>
                   <Text className="insist_content_first_content_item_text">未完成</Text>
                 </View>
                 <View className="insist_content_first_content_item">
-                  <Text className="insist_content_first_content_item_insistingNum">5</Text>
+                  <Text className="insist_content_first_content_item_insistingNum">{this.state.total}</Text>
                   <Text className="insist_content_first_content_item_text">坚持中</Text>
                 </View>
               </View>
             </View>:<View className="insist_content_others">
-              <Text className="insist_content_others_title">{itemDetail.title}</Text>
+              <Text className="insist_content_others_title">{itemDetail.custom.title}</Text>
               <AtCalendar onDayClick={()=>{}}  className="insist_content_others_calendar" marks={ [ { value: '2020/1/11' },{ value: '2020/1/12' },{ value: '2020/1/14' },{ value: '2020/1/26' } ] } />
               <View className="insist_content_others_statistics">
                 <View className="insist_content_others_statistics_title">数据统计</View>

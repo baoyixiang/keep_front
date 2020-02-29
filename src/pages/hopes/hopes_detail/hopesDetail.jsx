@@ -25,10 +25,11 @@ export default class HopeDetail extends Component{
   }
   componentDidMount() {
     let {id}=this.$router.params;
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
     this.setState({
       loading:true,
     })
-    getHopeDetail(id).then(res=>{
+    getHopeDetail({userId:userInfoModel.id,hopeId:Number(id)}).then(res=>{
       this.setState({
         loading:false,
         detail:res.data
