@@ -5,6 +5,7 @@ import {Image, Text, View} from "@tarojs/components";
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {AtTextarea, AtImagePicker, AtButton, AtIcon, AtProgress} from "taro-ui";
+import Loading from "../../common/loading/loading";
 let timer;
 let recordManager;
 let soundTime=0;
@@ -28,6 +29,7 @@ export default class RecordMood extends Component{
       trySoundTime:0,
       totalTime:0,
       isListen:false,
+      loading:false,
     }
   }
   componentDidMount() {
@@ -80,44 +82,27 @@ export default class RecordMood extends Component{
     })
   }
 
-  uploadFiles(i,sum,ratePhotos){
+  uploadFiles(){
     let that=this;
-    if(i===sum){
-      if(that.state.moodText==''){
-        Taro.hideLoading()
-        Taro.showModal({
-          title:'提示',
-          content:'评论文字不能为空',
-          showCancel:false
-        })
-      }else {
+    const filePath=that.state.files[0].url;
+    let pos=filePath.lastIndexOf('.');
+    let ext=filePath.substr(pos,filePath.length)
+    Taro.cloud.uploadFile({
+      cloudPath:'recordMood/'+Date.parse(new Date())+ext,
+      filePath:that.state.files[0].url,
+      success:res=>{
+        const data=res.fileID;
+        that.uploadSound(data);
+      },
+      fail: res=>{
 
       }
-    }else{
-      const filePath=that.state.files[i].url;
-      let pos=filePath.lastIndexOf('.');
-      let ext=filePath.substr(pos,filePath.length)
-      Taro.cloud.uploadFile({
-        cloudPath:'recordMood/'+Date.parse(new Date())+ext,
-        filePath:that.state.files[i].url,
-        success:res=>{
-          const data=res.fileID;
-          ratePhotos.push(data)
-          that.uploadFiles(i+1,sum,ratePhotos)
-        },
-        fail: res=>{
-
-        }
-      })
-    }
+    })
 
   }
 
   submit(){
-    Taro.showToast({
-      title:"请稍候",
-      icon:'loading'
-    });
+
     if(this.state.moodText==""){
       Taro.showModal({
         title:"提示",
@@ -126,11 +111,11 @@ export default class RecordMood extends Component{
       })
       return;
     }
-    this.uploadSound();
-    this.uploadFiles(0,this.state.files.length,[])
+
+    this.uploadFiles()
   }
 
-  uploadSound(){
+  uploadSound(picUrl){
     let sound=this.state.sound;
     if(sound){
       let pos=sound.lastIndexOf('.');
@@ -139,12 +124,22 @@ export default class RecordMood extends Component{
         cloudPath:'recordSound/'+Date.parse(new Date())+ext,
         filePath:sound,
         success:res=>{
-
+          console.log(res.fileID)
         },
         fail: res=>{
 
         }
       })
+    }else{
+      // {
+      //   "checkInId": 0,
+      //   "images": [
+      //   "string"
+      // ],
+      //   "voice": "string",
+      //   "wordContent": "string"
+      // }
+      recordMineMood(params)
     }
   }
 
@@ -277,20 +272,19 @@ export default class RecordMood extends Component{
       <View className="recordMood">
         <NavBar back={true} title={"记录心情"}/>
         <BarTakeUp/>
+        <Loading display={this.state.loading}/>
         <AtTextarea customStyle={{width:"95%",margin:"20px auto"}} placeholder="写下今天做了什么和收获吧~" value={this.state.moodText} onChange={this.changeMoodText.bind(this)}/>
         {
           this.state.files.length===1?<AtImagePicker
             length={3}
             files={this.state.files}
             onChange={this.onChange.bind(this)}
-            onFail={this.onFail.bind(this)}
-            onImageClick={this.onImageClick.bind(this)}
+            // onImageClick={this.onImageClick.bind(this)}
             showAddBtn={false}
           />:<AtImagePicker
             length={3}
             files={this.state.files}
             onChange={this.onChange.bind(this)}
-            onFail={this.onFail.bind(this)}
           />
         }
         {

@@ -68,9 +68,9 @@ export default class Index extends Component {
     })
   }
 
-  redirectToHabit(id){
+  redirectToHabit(id,title,completed){
     Taro.navigateTo({
-      url:"../habitSign/habitSign?id="+id,
+      url:"../habitSign/habitSign?id="+id+"&title="+title+"&completed="+completed,
     })
   }
 
@@ -78,10 +78,10 @@ export default class Index extends Component {
     const {habitsList} = this.state;
     return habitsList.map(item=>{
       return (
-        <View onClick={this.redirectToHabit.bind(this,item.custom.id)} className='list_item'>
+        <View onClick={this.redirectToHabit.bind(this,item.custom.id,item.custom.title,item.joinCustom.completed)} className='list_item'>
           <Image className='list_item_icon' src={item.custom.logo}/>
           <Text className='list_item_title'>{item.custom.title}</Text>
-          <Text className='list_item_days'>已坚持1天</Text>
+          <Text className='list_item_days'>已坚持{item.joinCustom.checkDaysCount}天</Text>
         </View>
       )
     })

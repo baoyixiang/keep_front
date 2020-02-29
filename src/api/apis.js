@@ -49,6 +49,19 @@ export function getCustomDetail(params){
 }
 
 /**
+ * 打卡模块
+ */
+export function customSign(params){
+  return post('/api/user/checkin/checkIn',params)
+}
+
+/**
+ * 记录心情*/
+export function recordMineMood(params){
+  return post('/api/user/checkin/checkInRecord',params);
+}
+
+/**
  * 创建习惯
  */
 export function createCustom(params) {

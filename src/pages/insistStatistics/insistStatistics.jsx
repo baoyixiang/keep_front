@@ -8,6 +8,7 @@ import './insistStatistics.scss'
 import {getUserCustomList} from "../../api/apis";
 import all from '../../assets/images/all.png';
 import err from '../../assets/images/image_404.png'
+let count=0;
 export default class InsistStatistics extends Component{
   constructor(props){
     super(props);
@@ -32,6 +33,7 @@ export default class InsistStatistics extends Component{
     let topList=[
       {icon:all,type:0},
     ];
+    let that=this;
     let completed=0;
     getUserCustomList(params).then(res=>{
       let list=res.data.list;
@@ -46,12 +48,11 @@ export default class InsistStatistics extends Component{
         })
       })
       const percentR=completed/list.length;
-      let count=0;
       setTimeout(()=>{
         let timer=setInterval(()=>{
           count=count+0.05
-          this.setState({
-            percent:percentR*count
+          that.setState({
+            percent:percentR*count*100
           })
           if(Math.abs(count-1)<0.01){
             clearInterval(timer)
