@@ -127,7 +127,7 @@ export default class CreateHabit extends Component{
           <View>
             <View className="createHabit_recommend_content_text at-row">
               <Text className="createHabit_recommend_content_text_title">{item.title}</Text>
-              <Text className="createHabit_recommend_content_text_num">已有2位萌友正在坚持</Text>
+              <Text className="createHabit_recommend_content_text_num">已有{item.joinCount}位萌友正在坚持</Text>
             </View>
           </View>
           <Button className="createHabit_recommend_content_btn" onClick={this.joinCustomAndDelete.bind(this,recommendList,item,item.id)}>加入</Button>

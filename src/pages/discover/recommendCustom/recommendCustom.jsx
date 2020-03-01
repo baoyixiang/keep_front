@@ -69,7 +69,7 @@ export default class RecommendCustom extends Component{
       <View className='recommend-custom-list_item'>
         <Image className='recommend-custom-list_item_icon' src={item.logo || image}/>
         <Text className='recommend-custom-list_item_title'>{item.title || "——"}</Text>
-        <Text className='recommend-custom-list_item_days'>已有233位朋友在坚持</Text>
+        <Text className='recommend-custom-list_item_days'>已有{item.joinCount}位朋友在坚持</Text>
         <AtButton className='recommend-custom-list_item-button' onClick={this.joinCustomAndDelete.bind(this,recommendCustomList,item,item.id)}>加入</AtButton>
       </View>
     )

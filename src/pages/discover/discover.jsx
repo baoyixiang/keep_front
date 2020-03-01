@@ -234,7 +234,7 @@ export default class Discover extends Component {
                   <Text>{item.title || "暂无"}</Text>
                 </View>
                 <View className='discover-habit-item-text-bottom'>
-                  <Text>已有233位朋友在坚持</Text>
+                  <Text>已有{item.joinCount}位朋友在坚持</Text>
                 </View>
               </View>
             </View>
@@ -268,7 +268,7 @@ export default class Discover extends Component {
                     <Text>{item.title || "暂无"}</Text>
                   </View>
                   <View className='discover-habit-item-text-bottom'>
-                    <Text>已有233位朋友在坚持</Text>
+                    <Text>已有{item.joinCount}位朋友在坚持</Text>
                   </View>
                 </View>
               </View>
@@ -302,7 +302,7 @@ export default class Discover extends Component {
                     <Text>{item.title || "暂无"}</Text>
                   </View>
                   <View className='discover-habit-item-text-bottom'>
-                    <Text>已有233位朋友在坚持</Text>
+                    <Text>已有{item.joinCount}位朋友在坚持</Text>
                   </View>
                 </View>
               </View>
