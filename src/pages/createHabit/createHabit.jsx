@@ -8,7 +8,6 @@ import './createHabit.scss'
 import {createCustom, getRecommendCustomList} from "../../api/apis";
 import {joinCustom} from "../../common/joinCustom/joinCustom";
 import Loading from "../../common/loading/loading";
-let flag=0;
 export default class CreateHabit extends Component{
   constructor(props){
     super(props);
@@ -24,20 +23,9 @@ export default class CreateHabit extends Component{
 
   componentDidMount() {
     let userInfo = Taro.getStorageSync('userInfoModel');
-    let recommendList = [];
-    getRecommendCustomList(userInfo.id,"学习").then((result)=>{
-      flag++;
-      recommendList = recommendList.concat(result.data);
-    });
-    getRecommendCustomList(userInfo.id,"运动").then((result)=>{
-      flag++;
-      recommendList = recommendList.concat(result.data);
-    });
-    getRecommendCustomList(userInfo.id,"音乐").then((result)=>{
-      flag++;
-      recommendList = recommendList.concat(result.data);
+    getRecommendCustomList(userInfo.id,null).then((result)=>{
       this.setState({
-        recommendList: recommendList
+        recommendList: result.data
       })
     });
   }
