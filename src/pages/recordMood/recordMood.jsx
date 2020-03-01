@@ -6,6 +6,7 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {AtTextarea, AtImagePicker, AtButton, AtIcon, AtProgress} from "taro-ui";
 import Loading from "../../common/loading/loading";
+import {recordMineMood} from "../../api/apis";
 let timer;
 let recordManager;
 let soundTime=0;
@@ -139,6 +140,9 @@ export default class RecordMood extends Component{
       //   "voice": "string",
       //   "wordContent": "string"
       // }
+      const params={
+
+      }
       recordMineMood(params)
     }
   }

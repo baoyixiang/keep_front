@@ -21,10 +21,6 @@ export default class Hopes extends Component {
 
 
   componentDidMount () {
-
-    this.setState({
-      loading:true
-    });
   }
 
   componentWillUnmount () {

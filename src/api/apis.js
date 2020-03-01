@@ -82,7 +82,11 @@ export function createHope(params) {
 
 //获取心愿详情
 export function getHopeDetail(params){
-  return post('/api/user/hope/hopeDetail',{hopeId:params})
+  return post('/api/user/hope/hopeDetail',params)
+}
+//给心愿点赞
+export function likeHopes(params){
+  return post('/api/user/hope/likeHope',params)
 }
 
 /**

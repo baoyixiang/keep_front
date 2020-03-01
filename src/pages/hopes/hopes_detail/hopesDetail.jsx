@@ -4,7 +4,7 @@ import React from "react";
 import {Image, Text, View} from "@tarojs/components";
 import NavBar from "../../../common/navBar/navBar";
 import BarTakeUp from "../../../common/barTakeUp/barTakeUp";
-import {getHopeDetail} from "../../../api/apis";
+import {getHopeDetail, likeHopes} from "../../../api/apis";
 import comment from "../../../assets/images/record/comment.png";
 import like from "../../../assets/images/record/like.png";
 import on_like from "../../../assets/images/record/on_like.png";
@@ -20,7 +20,10 @@ export default class HopeDetail extends Component{
         pic:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3073982641,3389786265&fm=26&gp=0.jpg",
         id:1,
       },
-      isLike:false
+      isLike:false,
+      userId:undefined,
+      hopeId:undefined,
+
     }
   }
   componentDidMount() {
@@ -29,12 +32,41 @@ export default class HopeDetail extends Component{
     this.setState({
       loading:true,
     })
-    getHopeDetail({userId:userInfoModel.id,hopeId:Number(id)}).then(res=>{
+    console.log({userId:Number.parseInt(userInfoModel.id),hopeId:Number.parseInt(id)})
+    getHopeDetail({userId:Number.parseInt(userInfoModel.id),hopeId:Number.parseInt(id)}).then(res=>{
       this.setState({
         loading:false,
-        detail:res.data
+        detail:res.data.hope,
+        isLike:res.data.liked,
+        userId:userInfoModel.id,
+        hopeId:id
       })
       console.log(res.data)
+    })
+  }
+  likeHope(){
+
+    let {id}=this.$router.params;
+    const params={
+      hopeId:this.state.hopeId,
+      likeState:Number(!this.state.isLike),
+      userId:this.state.userId
+    }
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    likeHopes(params).then(res=>{
+      getHopeDetail({userId:Number.parseInt(userInfoModel.id),hopeId:Number.parseInt(id)}).then(res=>{
+        this.setState({
+          loading:false,
+          detail:res.data.hope,
+          isLike:res.data.liked,
+          userId:userInfoModel.id,
+          hopeId:id
+        })
+        console.log(res.data)
+      })
+    })
+    this.setState({
+      isLike:true
     })
   }
   render() {
@@ -46,7 +78,7 @@ export default class HopeDetail extends Component{
         <View className='content'>
           <View className='content_top'>
             <Image className='head' src={detail.head}/>
-            <Text className='time'>{detail.time}</Text>
+            <Text className='time'>{detail.createTime.substring(0,10)}</Text>
 
           </View>
           <Text className='content_text'>{detail.wordContent}</Text>
@@ -56,7 +88,7 @@ export default class HopeDetail extends Component{
             {/*  <Image src={comment} className={"text_icon"}/>*/}
             {/*  <Text className="text_text">0</Text>*/}
             {/*</View>*/}
-           <View onClick={()=>{this.setState({isLike:!this.state.isLike})}}> {!isLike?<View className="like">
+           <View onClick={this.likeHope.bind(this)}> {!isLike?<View className="like">
               <Image src={like} className="like_icon"/>
               <Text className="like_text">{detail.likeCount}</Text>
             </View>:<View className="like">
