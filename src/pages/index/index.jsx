@@ -16,9 +16,6 @@ export default class Index extends Component {
       statusBarHeight:0,
       loading:true,
       habitsList:[
-        {
-          custom: {},
-        }
       ]
     }
   }
