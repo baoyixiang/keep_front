@@ -39,7 +39,9 @@ export default class RecommendCustom extends Component{
         <BarTakeUp/>
         {
           recommendCustomList.length === 0 ?
-            <Text>暂无习惯</Text> :
+            <View className='recommend-custom-no-item'>
+              <Text>暂无推荐习惯</Text>
+            </View> :
             <View>{this.renderHabits()}</View>
         }
       </View>
@@ -48,8 +50,6 @@ export default class RecommendCustom extends Component{
 
   joinCustomAndDelete(customList,customItem,customId) {
     joinCustom(customId);
-    console.log("删除前");
-    console.log(customList);
     for (let i = 0; i < customList.length; i++) {
       if(customList[i] == customItem) {
         customList.splice(i,i+1);
@@ -58,8 +58,6 @@ export default class RecommendCustom extends Component{
     this.setState({
       customList: customList,
     });
-    console.log("删除后");
-    console.log(customList);
   }
 
   renderHabits(){

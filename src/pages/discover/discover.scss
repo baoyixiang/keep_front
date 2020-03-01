@@ -31,10 +31,10 @@ page{
   height: 120px;
   margin-top: 20px;
   .discover-no-recommend{
+    color: #4F678B;
     font-size: 32px;
-    width: 91.4%;
+    width: 100%;
     text-align: center;
-    line-height: 4;
   }
   .discover-recommend-item{
     width: 100px;
@@ -107,7 +107,10 @@ page{
     }
   }
   .discover-habit--no-item{
-    margin-left: 40%;
-    margin-top: 90px;
+    color: #4F678B;
+    font-weight: bold;
+    text-align: center;
+    height: 90px;
+    padding-top: 10px;
   }
 }

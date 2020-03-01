@@ -205,8 +205,6 @@ export default class Discover extends Component {
 
   joinCustomAndDelete(customList,customItem,customId) {
     joinCustom(customId);
-    console.log("删除前");
-    console.log(customList);
     for (let i = 0; i < customList.length; i++) {
       if(customList[i] == customItem) {
         customList.splice(i,i+1);
@@ -215,8 +213,6 @@ export default class Discover extends Component {
     this.setState({
       customList: customList,
     });
-    console.log("删除后");
-    console.log(customList);
   }
 
   renderStudy() {
