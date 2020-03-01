@@ -5,7 +5,7 @@ import {Image, Text, View} from "@tarojs/components";
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import {AtButton} from "taro-ui";
-import {customSign} from "../../api/apis";
+import {cancelSign, customSign} from "../../api/apis";
 
 export default class HabitSign extends Component{
   constructor(props){
@@ -35,25 +35,25 @@ export default class HabitSign extends Component{
       userId:userInfoModel.id,
       customId:this.state.customId,
     }
-    // if(this.state.completed){
-    //   Taro.showModal({
-    //     title:"取消打卡",
-    //     content:"取消打卡后，该习惯当天的记录会被情况，您确定删除？",
-    //     confirmColor:'#DD2C4B',
-    //     confirmText:"取消打卡",
-    //     cancelText:"关闭",
-    //     success(e){
-    //       if(e.confirm){
-    //         customSign(params).then(res=>{
-    //           console.log(res)
-    //           that.setState({
-    //             completed:res.data.optSuccess
-    //           })
-    //         })
-    //       }
-    //     }
-    //   })
-    // }else{
+    if(this.state.completed){
+      Taro.showModal({
+        title:"取消打卡",
+        content:"取消打卡后，该习惯当天的记录会被情况，您确定删除？",
+        confirmColor:'#DD2C4B',
+        confirmText:"取消打卡",
+        cancelText:"关闭",
+        success(e){
+          if(e.confirm){
+            cancelSign(params).then(res=>{
+              console.log(res)
+              that.setState({
+                completed:!res.data.optSuccess
+              })
+            })
+          }
+        }
+      })
+    }else{
       console.log(111)
       customSign(params).then(res=>{
         console.log(res)
@@ -61,12 +61,12 @@ export default class HabitSign extends Component{
           completed:res.data.optSuccess
         })
       })
-    // }
+    }
   }
 
   redirectToMood(){
     Taro.navigateTo({
-      url:'../recordMood/recordMood',
+      url:'../recordMood/recordMood?customId='+this.state.customId,
     })
   }
 

@@ -39,7 +39,7 @@ export default class InsistStatistics extends Component{
       let list=res.data.list;
       console.log(list);
       list.forEach((item,index)=>{
-        if(item.joinCustom.completed){
+        if(item.isCheckInToday){
           completed++;
         }
         topList.push({

@@ -60,6 +60,13 @@ page{
       color:#AAAAAA;
       font-size: 24px;
     }
+    .list_item_check{
+      position:absolute;
+      height:75px;
+      width:75px;
+      right:20px;
+      top:45px;
+    }
   }
 }
 @keyframes rubberBand {

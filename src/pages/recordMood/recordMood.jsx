@@ -31,6 +31,8 @@ export default class RecordMood extends Component{
       totalTime:0,
       isListen:false,
       loading:false,
+      id:undefined,
+      customId:undefined
     }
   }
   componentDidMount() {
@@ -73,9 +75,6 @@ export default class RecordMood extends Component{
     })
   }
 
-  onFail (mes) {
-    console.log(mes)
-  }
 
   changeMoodText(e){
     this.setState({
@@ -92,6 +91,7 @@ export default class RecordMood extends Component{
       cloudPath:'recordMood/'+Date.parse(new Date())+ext,
       filePath:that.state.files[0].url,
       success:res=>{
+        console.log(res)
         const data=res.fileID;
         that.uploadSound(data);
       },
@@ -102,17 +102,27 @@ export default class RecordMood extends Component{
 
   }
 
-  submit(){
+  componentDidShow(): void {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    let customId=Number(this.$router.params.customId);
+    this.setState({
+      id:userInfoModel.id,
+      customId:customId
+    })
+  }
 
-    if(this.state.moodText==""){
+  submit(){
+    if(this.state.moodText==""||this.state.files.length===0){
       Taro.showModal({
         title:"提示",
-        content:"请输入文字",
+        content:"请输入文字图片",
         showCancel:false
       })
       return;
     }
-
+    this.setState({
+      loading:true,
+    })
     this.uploadFiles()
   }
 
@@ -126,24 +136,39 @@ export default class RecordMood extends Component{
         filePath:sound,
         success:res=>{
           console.log(res.fileID)
+          const params={
+            customId: this.state.customId,
+            userId:this.state.id,
+            wordContent: this.state.moodText,
+            images:[picUrl],
+            voice:res.fileID,
+          }
+          recordMineMood(params).then(res=>{
+            this.setState({
+              loading:false,
+            })
+            console.log(res)
+          })
         },
         fail: res=>{
 
         }
       })
     }else{
-      // {
-      //   "checkInId": 0,
-      //   "images": [
-      //   "string"
-      // ],
-      //   "voice": "string",
-      //   "wordContent": "string"
-      // }
-      const params={
 
+      const params={
+        customId: this.state.customId,
+        userId:this.state.id,
+        wordContent: this.state.moodText,
+        images:[picUrl],
+        voice:''
       }
-      recordMineMood(params)
+      recordMineMood(params).then(res=>{
+        this.setState({
+          loading:false,
+        })
+        Taro.navigateBack({delta: 2})
+      })
     }
   }
 

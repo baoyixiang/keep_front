@@ -1,4 +1,4 @@
-import {post, get} from './api';
+import {post, get, del} from './api';
 import * as Taro from "@tarojs/taro";
 import { func } from 'prop-types';
 import {save} from "../action/user";
@@ -53,6 +53,13 @@ export function getCustomDetail(params){
  */
 export function customSign(params){
   return post('/api/user/checkin/checkIn',params)
+}
+
+/**
+ * 取消打卡
+ */
+export function cancelSign(params){
+  return del('/api/user/checkin/deleteCheckIn',params)
 }
 
 /**

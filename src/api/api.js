@@ -18,6 +18,22 @@ export function post(url, data) {
     fail: ((e)=>failToast(e)),
   })
 }
+
+export function del(url, data) {
+  let token = Taro.getStorageSync('token');
+  return Taro.request({
+    url: `${BASE_URL}${url}`,
+    data: data,
+    header:{
+      'content-type': 'application/json',
+      'Authorization': token,
+    },
+    method:"DELETE",
+    success: ((res)=>checkToken(res)),
+    fail: ((e)=>failToast(e)),
+  })
+}
+
 export function get(url, data) {
   let token = Taro.getStorageSync('token');
   return Taro.request({
