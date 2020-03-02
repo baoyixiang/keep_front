@@ -6,6 +6,7 @@ import comment from '../../assets/images/record/comment.png';
 import like from '../../assets/images/record/like.png';
 import on_like from '../../assets/images/record/on_like.png'
 import {AtInput} from "taro-ui";
+import {recordComment} from "../../api/apis";
 let iac;
 let timer;
 export default class Record extends Component{
@@ -16,6 +17,7 @@ export default class Record extends Component{
       canBlur:false,
       placeHolder:"评论一下~",
       soundWidth:24,
+      commentContent:""
     };
   }
 
@@ -24,11 +26,12 @@ export default class Record extends Component{
   }
 
   componentDidMount() {
+    console.log('props',this.props.data)
     iac=Taro.createInnerAudioContext();
   }
 
   renderComments(item){
-    return item.comments.map(i=>{
+    return item.checkInComments.map(i=>{
       return <View onClick={this.changeAnswering.bind(this,item.id,i.from)} key={i.id} style={{overflow:"scroll"}}>
           {
             i.to?<Text className="comments_content">
@@ -48,11 +51,13 @@ export default class Record extends Component{
   blurInput(){
     this.setState({
       answering:-1,
-      placeHolder:"评论一下~"
+      placeHolder:"评论一下~",
+      commentContent:''
     })
   }
 
   changeAnswering(id,pl){
+    console.log(id,pl)
     let placeHolder="评论一下~";
     if(pl){
       placeHolder="回复"+pl;
@@ -105,18 +110,43 @@ export default class Record extends Component{
       console.log(234)
     })
   }
+
+  replyToOthers(checkInId){
+    // {
+    //   "checkInId": 0,
+    //   "commentContent": "string",
+    //   "commentTime": "2020-03-02T08:49:45.471Z",
+    //   "replyTo": 0,
+    //   "userId": 0
+    // }
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      checkInId:checkInId,
+      commentContent: this.state.commentContent,
+      userId:userInfoModel.id
+    }
+    recordComment(params).then(res=>{
+      console.log(res)
+    })
+  }
+  changeCommentContent(e){
+    this.setState({
+      commentContent:e.target.value,
+    })
+  }
   renderList(){
     let {data}=this.props;
     const {soundWidth}=this.state;
+    console.log(data)
     if(!data){data=[]}
     const {answering,placeHolder}=this.state;
     return data.map((item,index)=>{
       return <View className="record_item">
         <View style={{position:"relative",width:"92%",margin:"0 auto"}}>
           <View className="top">
-            <Image className="img" src={item.avatar}/>
-            <Text className="nickName">{item.nickName}</Text>
-            <View className="insist">坚持<Text className="insist_day">{item.title}</Text></View>
+            <Image className="img" src={item.user.avatar}/>
+            <Text className="nickName">{item.user.name}</Text>
+            <View className="insist">坚持<Text className="insist_day">{item.customTitle}</Text></View>
             <Text className="date">{item.date}</Text>
             {/*<Text className="day">{item.day}</Text>*/}
           </View>
@@ -126,26 +156,25 @@ export default class Record extends Component{
             </View>
             <View className="record_item_sound_time">{item.sound.time}</View>
           </View>:null}
-          <Image onClick={this.handlePreview.bind(this,item.img)} src={item.img} className="content_img"/>
+          <Image onClick={this.handlePreview.bind(this,item.img)} src={item.checkIn.images[0]} className="content_img"/>
           <View className="content_text">
-            <Text className="content_text_text">{item.content}</Text>
+            <Text className="content_text_text">{item.checkIn.wordContent}</Text>
           </View>
           <View className="comments">
             {this.renderComments(item)}
           </View>
-          {answering===item.id? <View className="inpView"><Input onConfirm={()=>{
-            console.log('enter')}} autoFocus={true} onBlur={this.blurInput} placeholder={placeHolder} className="inpView_input"/></View>:null}
+          {answering===item.checkIn.id? <View className="inpView"><Input onInput={this.changeCommentContent.bind(this)} onConfirm={this.replyToOthers.bind(this,item.checkIn.id)} autoFocus={true} onBlur={this.blurInput} placeholder={placeHolder} className="inpView_input"/></View>:null}
           <View className="comment">
-            <View onClick={this.changeAnswering.bind(this,item.id,"")} className="text">
+            <View onClick={this.changeAnswering.bind(this,item.checkIn.id,'')} className="text">
               <Image src={comment} className={"text_icon"}/>
-              <Text className="text_text">0</Text>
+              {/*<Text className="text_text">0</Text>*/}
             </View>
-            {!item.isLike?<View className="like">
-              <Image onClick={this.props.changeStatus.bind(this,item.id)} src={like} className="like_icon"/>
-              <Text className="like_text">10</Text>
+            {!item.isSelfLike?<View className="like">
+              <Image onClick={this.props.changeStatus.bind(this,item.checkIn.id)} src={like} className="like_icon"/>
+              <Text className="like_text">{item.likeUsers.length}</Text>
             </View>:<View className="like">
-            <Image onClick={this.props.changeStatus.bind(this,item.id)} src={on_like} className="like_icon like_on"/>
-            <Text className="like_text">10</Text>
+            <Image src={on_like} className="like_icon like_on"/>
+            <Text className="like_text">{item.likeUsers.length}</Text>
           </View>}
           </View>
         </View>
@@ -162,3 +191,4 @@ export default class Record extends Component{
     )
   }
 }
+

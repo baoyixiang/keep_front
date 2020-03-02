@@ -6,8 +6,8 @@ export const ENV_PROD = "prod";
 
 const dev = {
   env: ENV_DEV,
-  BASE_URL: 'http://192.168.1.41:8080',
-  // BASE_URL: 'http://47.94.97.168:8080',
+  // BASE_URL: 'http://192.168.1.41:8080',
+  BASE_URL: 'http://47.94.97.168:8080',
   // BASE_URL: 'http://127.0.0.1:8080',
 };
 

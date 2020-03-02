@@ -7,7 +7,7 @@ import {Image, ScrollView, Text, View} from "@tarojs/components";
 import {AtButton, AtTabs, AtTabsPane} from "taro-ui";
 import Record from "../../common/record/record";
 import Bottom from "../../common/bottom/Bottom";
-import {getCustomRecord, getUserCustomList} from "../../api/apis";
+import {getCustomRecord, getUserCustomList, likeRecord} from "../../api/apis";
 
 export default class MineCommunity extends Component{
   constructor(props){
@@ -17,7 +17,8 @@ export default class MineCommunity extends Component{
       displayRecords:[],
       statusBarHeight:0,
       displayTop:false,
-      hiddenBack:""
+      hiddenBack:"",
+      customId:undefined
     }
   }
   onPageScroll(obj) {
@@ -39,17 +40,6 @@ export default class MineCommunity extends Component{
   }
 
   componentDidMount() {
-    const displayRecords=[
-      {id:1,isLike:false,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录",
-        comments:[{from:"与我西南",to:"珊莎",content:"向你学习向你学习向你学习向你学习向你学习向你学习向你学习向你学习"},{from:"珊莎",to:"",content: "谢谢大家"}]
-      },
-      {id:2,isLike:true,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录",
-        comments:[{from:"与我西南",to:"珊莎",content:"向你学习"},{from:"珊莎",to:"",content: "谢谢大家"}]
-      },
-      {id:3,isLike:true,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"marks sluaser",title:"heiheihei11123",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录",
-        comments:[{from:"与我西南",to:"珊莎",content:"向你学习"},{from:"珊莎",to:"",content: "谢谢大家"},{from:'三胖123',to:'死兔子',content:'哈哈哈'}]
-      },
-    ]
     let userInfoModel = Taro.getStorageSync('userInfoModel');
     const params={
       pageNo:0,
@@ -57,26 +47,23 @@ export default class MineCommunity extends Component{
       userId:userInfoModel.id
     };
     getUserCustomList(params).then(res=>{
-      console.log(res.data.list)
       let tabList=[];
       let customId=res.data.list[0].custom.id;
       res.data.list.forEach(item=>{
         tabList.push({title:item.custom.title,id:item.custom.id})
       })
-      // {
-      //   "customId": 0,
-      //   "pageNo": 0,
-      //   "pageSize": 0
-      // }
       const param={
         customId:customId,
         pageNo: 0,
-        pageSize: 100
+        pageSize: 100,
+        myUserId:userInfoModel.id
       }
       getCustomRecord(param).then(res=>{
-        console.log(res)
+        console.log('a',res.data.items)
         this.setState({
-          tabList
+          tabList:tabList,
+          displayRecords:res.data.items,
+          customId,
         })
       })
 
@@ -86,16 +73,26 @@ export default class MineCommunity extends Component{
       this.setState({
         statusBarHeight:  res.statusBarHeight || 0,
       });})
-    this.setState({
-      displayRecords,
-    })
-
   }
 
   handleClick (value) {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
     this.setState({
-      current: value,
-      displayRecords:this.state.displayRecords.reverse()
+      displayRecords:[]
+    })
+    const param={
+      customId:this.state.tabList[value].id,
+      pageNo: 0,
+      pageSize: 100,
+      myUserId:userInfoModel.id
+    }
+    getCustomRecord(param).then(res=>{
+      console.log('a',res.data.items)
+      this.setState({
+        displayRecords:res.data.items,
+        current: value,
+        customId:this.state.tabList[value].id
+      })
     })
   }
 
@@ -113,10 +110,31 @@ export default class MineCommunity extends Component{
   }
   changeLikeStatus(id){
     console.log(id)
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+
+    const params={
+      checkInId:id,
+      userId:userInfoModel.id
+    }
+    likeRecord(params).then(res=>{
+      const param={
+        customId:this.state.customId,
+        pageNo: 0,
+        pageSize: 100,
+        myUserId:userInfoModel.id
+      }
+      getCustomRecord(param).then(res=>{
+        console.log('a',res.data.items)
+        this.setState({
+          displayRecords:res.data.items,
+        })
+      })
+    })
+
     let {displayRecords}=this.state;
     displayRecords.forEach(item=>{
-      if(item.id===id){
-        item.isLike=!item.isLike;
+      if(item.checkIn.id===id){
+        item.isSelfLike=!item.isSelfLike;
       }
     })
     this.setState({

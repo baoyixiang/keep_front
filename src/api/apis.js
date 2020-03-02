@@ -72,7 +72,21 @@ export function recordMineMood(params){
  * 习惯所有打卡记录
  */
 export function getCustomRecord(params) {
-  return post('/api/checkin/checkInList',params)
+  return post('/api/user/checkin/CustomCheckIns',params)
+}
+
+/**
+ * 打卡点赞
+ */
+export function likeRecord(params) {
+  return post('/api/user/checkin/LikeCheckIn',params)
+}
+
+/**
+ * 打卡评论
+ */
+export function recordComment(params){
+  return post('/api/user/checkin/checkInComment',params)
 }
 
 /**
