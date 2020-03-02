@@ -52,10 +52,10 @@ export default class Hopes extends Component {
 
   componentDidHide () { }
 
-  redirectToHopeDetail(id){
+  redirectToHopeDetail(id,avatar){
     console.log(id)
     Taro.navigateTo({
-      url:`./hopes_detail/hopesDetail?id=${id}`
+      url:`./hopes_detail/hopesDetail?id=${id}&avatar=${avatar}`
     })
   }
 
@@ -69,7 +69,7 @@ export default class Hopes extends Component {
     return <View className='left'>
       {
         list.map(item=>{
-          return <View onClick={this.redirectToHopeDetail.bind(this,item.id)} className='list_item'>
+          return <View onClick={this.redirectToHopeDetail.bind(this,item.id,item.avatar)} className='list_item'>
             <View className='list_item_top'>
               <Image className='list_item_photo' src={item.avatar} mode='aspectFill'/>
               <Text className='list_item_text'>{item.createTime.substring(0,11)}</Text>

@@ -77,8 +77,8 @@ export default class HopeDetail extends Component{
         <BarTakeUp/>
         <View className='content'>
           <View className='content_top'>
-            <Image className='head' src={detail.head}/>
-            <Text className='time'>{detail.createTime.substring(0,10)}</Text>
+            <Image className='head' src={this.$router.params.avatar}/>
+            <Text className='time'>{detail.createTime?detail.createTime.substring(0,10):''}</Text>
 
           </View>
           <Text className='content_text'>{detail.wordContent}</Text>
