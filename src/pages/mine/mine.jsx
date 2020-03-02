@@ -13,7 +13,8 @@ export default class Mine extends Component {
     this.state={
       photo:"",
       nickName:"",
-      city:""
+      city:"",
+      userId: 0,
     }
   }
 
@@ -27,6 +28,7 @@ export default class Mine extends Component {
         that.setState({
           nickName: res.data.name,
           photo: res.data.avatar,
+          userId: res.data.id,
         })
       }
     }). then()
@@ -51,14 +53,14 @@ export default class Mine extends Component {
         content:"请先去登录",
         showCancel:false
 
-      })
+      });
       return;
     }
     switch(id){
       case 0:
         Taro.navigateTo({
-          url:"../mineHomePage/mineHomePage"
-        })
+          url:`../mineHomePage/mineHomePage?id=${this.state.userId}&avatar=${this.state.photo}&name=${this.state.nickName}`
+        });
         break;
       case 1:
         Taro.navigateTo({
@@ -73,7 +75,7 @@ export default class Mine extends Component {
       case 3:
         Taro.navigateTo({
           url:'../minePlaceFiles/minePlaceFiles'
-        })
+        });
       default:break;
     }
   }
