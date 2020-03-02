@@ -149,7 +149,7 @@ export default class Mine extends Component {
         <AtModal isOpened={isOpen}>
           <AtModalHeader>技术交流赞赏作者</AtModalHeader>
           <AtModalContent>
-            <Image src={require('../../assets/images/scanCode.jpg')} style={{width:'95%',margin:'0 auto'}} className='scanCode'/>
+            <Image src={require('../../assets/images/scanCode.jpg')} style={{width:'95%',margin:'0 auto'}} className='scanCode' mode={'widthFix'}/>
           </AtModalContent>
           <AtModalAction> <Button onClick={this.closeModal.bind(this)}>确定</Button> </AtModalAction>
         </AtModal>
