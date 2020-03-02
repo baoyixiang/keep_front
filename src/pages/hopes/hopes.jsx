@@ -53,7 +53,7 @@ export default class Hopes extends Component {
   componentDidHide () { }
 
   redirectToHopeDetail(id,avatar){
-    console.log(id)
+    console.log(id,avatar)
     Taro.navigateTo({
       url:`./hopes_detail/hopesDetail?id=${id}&avatar=${avatar}`
     })
@@ -66,16 +66,17 @@ export default class Hopes extends Component {
   }
 
   renderLeft(list){
+    console.log(list)
     return <View className='left'>
       {
-        list.map(item=>{
-          return <View onClick={this.redirectToHopeDetail.bind(this,item.id,item.avatar)} className='list_item'>
+        list.map(i=>{
+          return <View onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar)} className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={item.avatar} mode='aspectFill'/>
-              <Text className='list_item_text'>{item.createTime.substring(0,11)}</Text>
+              <Image className='list_item_photo' src={i.avatar} mode='aspectFill'/>
+              <Text className='list_item_text'>{i.createTime.substring(0,11)}</Text>
             </View>
-            <Image className='list_item_img' src={item.images[0]||require('../../assets/images/image_404.png')}/>
-            <Text className='list_item_content'>{item.wordContent}</Text>
+            <Image className='list_item_img' src={i.images[0]||""}/>
+            <Text className='list_item_content'>{i.wordContent}</Text>
           </View>
         })
       }
@@ -84,16 +85,15 @@ export default class Hopes extends Component {
   renderRight(list){
     return <View className='right'>
       {
-        list.map(item=>{
-          return <View onClick={this.redirectToHopeDetail.bind(this,item.id)} className='list_item'>
+        list.map(i=>{
+          return <View onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar)} className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={item.avatar} mode='aspectFill'/>
-              <Text className='list_item_text'>{item.createTime.substring(0,11)}</Text>
+              <Image className='list_item_photo' src={i.avatar} mode='aspectFill'/>
+              <Text className='list_item_text'>{i.createTime.substring(0,11)}</Text>
             </View>
-            <Image className='list_item_img' src={item.images[0]||require('../../assets/images/image_404.png')}/>
-            <Text className='list_item_content'>{item.wordContent}</Text>
-          </View>
-        })
+            <Image className='list_item_img' src={i.images[0]||""}/>
+            <Text className='list_item_content'>{i.wordContent}</Text>
+          </View>})
       }
     </View>;
   }

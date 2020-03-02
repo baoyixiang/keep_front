@@ -45,7 +45,9 @@ export default class HopeDetail extends Component{
     })
   }
   likeHope(){
-
+    if(this.state.isLike){
+      return;
+    }
     let {id}=this.$router.params;
     const params={
       hopeId:this.state.hopeId,
@@ -82,7 +84,7 @@ export default class HopeDetail extends Component{
 
           </View>
           <Text className='content_text'>{detail.wordContent}</Text>
-          <Image className='pic'  mode={'widthFix'}  src={detail.images?detail.images[0]:require('../../../assets/images/image_404.png')}/>
+          <Image className='pic'  mode={'widthFix'}  src={detail.images?detail.images[0]:''}/>
           <View className="comment">
             {/*<View className="text">*/}
             {/*  <Image src={comment} className={"text_icon"}/>*/}
