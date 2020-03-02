@@ -74,7 +74,7 @@ export default class FansOrAttention extends Component{
             return <View onClick={ () => {this.redirectToPerson(item.id, item.avatar, item.name)} } className='list'>
               <Image className='photo' src={item.avatar} alt={"头像"}/>
               <Text className='name'>{item.name}</Text>
-              {type===1?<Text className='cancelAttention'>取消关注</Text>:null}
+              {type===1?<View className='cancelAttention'>取消关注</View>:null}
             </View>
           })
         }

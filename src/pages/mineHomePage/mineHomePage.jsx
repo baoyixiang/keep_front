@@ -19,6 +19,8 @@ export default class MineHomePage extends Component{
       nickName: '',
       fans: 0,
       follow: 0,
+      isFollowing: false,
+      followList: [],
       habitNumber: 0,
       bigIndex: 0,
       recordList: [],
@@ -45,13 +47,44 @@ export default class MineHomePage extends Component{
         habitNumber: res.data.total,
       });
     });
+    // myFollowing({
+    //   userId: this.state.userId,
+    // }).then( res => {
+    //   that.setState({
+    //     followList: res.data,
+    //     follow: res.data.length,
+    //   });
+    //   res.data.map( (item) => {
+    //     if( item.id === this.state.userId){
+    //       that.setState({
+    //         isFollowing: true
+    //       });
+    //     }
+    //   });
+    //   console.log('followList1',res.data);
+    //   console.log('followList2',this.state.followList);
+    // });
+    // followedMe({
+    //   userId: this.state.userId,
+    // }).then( res => {
+    //   that.setState({
+    //     fans: res.data.length,
+    //   });
+    // });
+    // console.log('isFollowing:',this.state.isFollowing)
+  }
+
+  componentDidMount() {
+    let that = this;
     myFollowing({
       userId: this.state.userId,
     }).then( res => {
       that.setState({
+        followList: res.data,
         follow: res.data.length,
       });
-      console.log('res',res);
+      console.log('followList1',res.data);
+      console.log('followList2',this.state.followList);
     });
     followedMe({
       userId: this.state.userId,
@@ -60,7 +93,15 @@ export default class MineHomePage extends Component{
         fans: res.data.length,
       });
       console.log('res',res);
-    })
+    });
+    this.state.followList.map( (item) => {
+      if( item.id === this.state.userId){
+        this.setState({
+          isFollowing: true
+        });
+      }
+    });
+    console.log('isFollowing:',this.state.isFollowing)
   }
 
   selectBook(index){
@@ -161,6 +202,7 @@ export default class MineHomePage extends Component{
         <View className="homePage_relate">
           <View className="homePage_relate_fans" onClick={this.redirectToPerson.bind(this,"粉丝")}>粉丝 {fans}</View>
           <View className="homePage_relate_follow" onClick={this.redirectToPerson.bind(this,"关注")}>关注 {follow}</View>
+          {/*<View className="homePage_relate_attention">关注TA</View>*/}
         </View>
         <View className="homePage_insist">
           {habitNumber === 0 ? <Text className="homePage_no_habit">快去加入习惯吧!</Text> :
