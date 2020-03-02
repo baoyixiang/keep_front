@@ -168,7 +168,7 @@ export default class Record extends Component{
             </View>
             <View className="record_item_sound_time">{item.sound.time}</View>
           </View>:null}
-          <Image onClick={this.handlePreview.bind(this,item.img)} src={item.checkIn.images[0]} className="content_img"/>
+          <Image mode={"widthFix"} onClick={this.handlePreview.bind(this,item.img)} src={item.checkIn.images[0]} className="content_img"/>
           <View className="content_text">
             <Text className="content_text_text">{item.checkIn.wordContent}</Text>
           </View>

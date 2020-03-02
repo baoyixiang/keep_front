@@ -5,7 +5,7 @@ import React from "react";
 import hope_list from "../../assets/images/mine/hope_list.png";
 import keep_statics from "../../assets/images/mine/keep_statics.png";
 import concerned from "../../assets/images/mine/concerned.png";
-import {AtIcon} from "taro-ui";
+import {AtIcon, AtImagePicker, AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
 export default class Mine extends Component {
 
   constructor(props){
@@ -15,6 +15,7 @@ export default class Mine extends Component {
       nickName:"",
       city:"",
       userId: 0,
+      isOpen:false,
     }
   }
 
@@ -73,9 +74,9 @@ export default class Mine extends Component {
         });
         break;
       case 3:
-        Taro.navigateTo({
-          url:'../minePlaceFiles/minePlaceFiles'
-        });
+        this.setState({
+          isOpen:true
+        })
       default:break;
     }
   }
@@ -86,7 +87,7 @@ export default class Mine extends Component {
       {id:0,img:hope_list,text:"我的主页"},
       {id:1,img:keep_statics,text:"坚持统计"},
       {id:2,img:hope_list,text:"我的社区"},
-      {id:3,img:concerned,text:"我的归档"},
+      {id:3,img:concerned,text:"关于我们"},
     ];
     return obj.map(item=>{
       return <View onClick={this.handleClickNav.bind(this,item.id)} className='mine_nav_item'>
@@ -136,10 +137,22 @@ export default class Mine extends Component {
       }
     })
   }
+  closeModal(){
+    this.setState({
+      isOpen:false
+    })
+  }
   render () {
-    const {photo,nickName,city}=this.state;
+    const {photo,nickName,city,isOpen}=this.state;
     return (
       <View className='mine'>
+        <AtModal isOpened={isOpen}>
+          <AtModalHeader>技术交流赞赏作者</AtModalHeader>
+          <AtModalContent>
+            <Image src={require('../../assets/images/scanCode.jpg')} style={{width:'95%',margin:'0 auto'}} className='scanCode'/>
+          </AtModalContent>
+          <AtModalAction> <Button onClick={this.closeModal.bind(this)}>确定</Button> </AtModalAction>
+        </AtModal>
         <View className='mine_topBack'>
           {1?<View>
             <Image className='mine_topBack_headImg' src={photo}/>

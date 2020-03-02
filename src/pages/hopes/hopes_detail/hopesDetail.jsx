@@ -82,7 +82,7 @@ export default class HopeDetail extends Component{
 
           </View>
           <Text className='content_text'>{detail.wordContent}</Text>
-          <Image className='pic' src={detail.images?detail.images[0]:require('../../../assets/images/image_404.png')}/>
+          <Image className='pic'  mode={'widthFix'}  src={detail.images?detail.images[0]:require('../../../assets/images/image_404.png')}/>
           <View className="comment">
             {/*<View className="text">*/}
             {/*  <Image src={comment} className={"text_icon"}/>*/}
