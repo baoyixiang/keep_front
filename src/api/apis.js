@@ -69,6 +69,13 @@ export function recordMineMood(params){
 }
 
 /**
+ * 习惯所有打卡记录
+ */
+export function getCustomRecord(params) {
+  return post('/api/checkin/checkInList',params)
+}
+
+/**
  * 创建习惯
  */
 export function createCustom(params) {

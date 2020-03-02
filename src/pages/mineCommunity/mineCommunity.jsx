@@ -7,6 +7,7 @@ import {Image, ScrollView, Text, View} from "@tarojs/components";
 import {AtButton, AtTabs, AtTabsPane} from "taro-ui";
 import Record from "../../common/record/record";
 import Bottom from "../../common/bottom/Bottom";
+import {getCustomRecord, getUserCustomList} from "../../api/apis";
 
 export default class MineCommunity extends Component{
   constructor(props){
@@ -38,14 +39,6 @@ export default class MineCommunity extends Component{
   }
 
   componentDidMount() {
-    const tabList=[
-      { title: '热门' },
-      { title: '关注' },
-      { title: '最新' },
-      { title: '背单词' },
-      { title: '自律~活动' },
-      { title: '2020读书' },
-      { title: '老年人的胳膊之2020'}];
     const displayRecords=[
       {id:1,isLike:false,avatar:"https://wx.qlogo.cn/mmopen/vi_32/bBia1LLVBHnd823ezdhCaS5HwJFJicWMwSUacGNRtZ6x0N2lic6zswyeyVOolgQnESERZXPkJwKJ7fIIAAxokbOGw/132",nickName:"carrier",title:"记录当天的小幸福",day:127,date:"01-19 16:43",img:"http://img0.imgtn.bdimg.com/it/u=2658774027,2205418363&fm=26&gp=0.jpg",content:"这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录这是一段记录",
         comments:[{from:"与我西南",to:"珊莎",content:"向你学习向你学习向你学习向你学习向你学习向你学习向你学习向你学习"},{from:"珊莎",to:"",content: "谢谢大家"}]
@@ -57,13 +50,43 @@ export default class MineCommunity extends Component{
         comments:[{from:"与我西南",to:"珊莎",content:"向你学习"},{from:"珊莎",to:"",content: "谢谢大家"},{from:'三胖123',to:'死兔子',content:'哈哈哈'}]
       },
     ]
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      pageNo:0,
+      pageSize:10,
+      userId:userInfoModel.id
+    };
+    getUserCustomList(params).then(res=>{
+      console.log(res.data.list)
+      let tabList=[];
+      let customId=res.data.list[0].custom.id;
+      res.data.list.forEach(item=>{
+        tabList.push({title:item.custom.title,id:item.custom.id})
+      })
+      // {
+      //   "customId": 0,
+      //   "pageNo": 0,
+      //   "pageSize": 0
+      // }
+      const param={
+        customId:customId,
+        pageNo: 0,
+        pageSize: 100
+      }
+      getCustomRecord(param).then(res=>{
+        console.log(res)
+        this.setState({
+          tabList
+        })
+      })
+
+    })
     Taro.getSystemInfo({
     }).then(res => {
       this.setState({
         statusBarHeight:  res.statusBarHeight || 0,
       });})
     this.setState({
-      tabList,
       displayRecords,
     })
 
