@@ -56,7 +56,7 @@ export default class RecommendCustom extends Component{
       }
     }
     this.setState({
-      customList: customList,
+      recommendCustomList: customList,
     });
   }
 

@@ -148,7 +148,7 @@ export default class Discover extends Component {
           <View className='discover-habit-text-right' onClick={()=>Taro.navigateTo({
             url: `/pages/discover/recommendCustom/recommendCustom?tags=${studyTag}`,
           }).then()}>
-            <Text>查看更多</Text>
+            <Text>查看全部</Text>
           </View>
         </View>
         <View className='discover-habit-divider'></View>
@@ -170,7 +170,7 @@ export default class Discover extends Component {
           <View className='discover-habit-text-right' onClick={()=>Taro.navigateTo({
             url: `/pages/discover/recommendCustom/recommendCustom?tags=${sportTag}`,
           }).then()}>
-            <Text>查看更多</Text>
+            <Text>查看全部</Text>
           </View>
         </View>
         <View className='discover-habit-divider'></View>
@@ -192,7 +192,7 @@ export default class Discover extends Component {
           <View className='discover-habit-text-right' onClick={()=>Taro.navigateTo({
             url: `/pages/discover/recommendCustom/recommendCustom?tags=${musicTag}`,
           }).then()}>
-            <Text>查看更多</Text>
+            <Text>查看全部</Text>
           </View>
         </View>
         <View className='discover-habit-divider'></View>
@@ -203,7 +203,7 @@ export default class Discover extends Component {
     );
   }
 
-  joinCustomAndDelete(customList,customItem,customId) {
+  joinStudyCustomAndDelete(customList,customItem,customId) {
     joinCustom(customId);
     for (let i = 0; i < customList.length; i++) {
       if(customList[i] == customItem) {
@@ -211,33 +211,36 @@ export default class Discover extends Component {
       }
     }
     this.setState({
-      customList: customList,
+      recommendStudyList: customList,
     });
   }
 
   renderStudy() {
     let {recommendStudyList} = this.state;
     const customItem = recommendStudyList.length > 0 ?
-      recommendStudyList.map((item)=>
-      <View className='discover-habit-item at-row'>
-        <View>
-          <View className='at-row'>
-            <Image className='discover-habit-item-image' src={item.logo} />
-            <View className='discover-habit-item-divider'></View>
+      recommendStudyList.map((item,index)=> {
+        while(index < 3) {
+          return <View className='discover-habit-item at-row'>
             <View>
-              <View className='discover-habit-item-text at-row'>
-                <View className='discover-habit-item-text-top'>
-                  <Text>{item.title || "暂无"}</Text>
-                </View>
-                <View className='discover-habit-item-text-bottom'>
-                  <Text>已有{item.joinCount}位朋友在坚持</Text>
+              <View className='at-row'>
+                <Image className='discover-habit-item-image' src={item.logo} />
+                <View className='discover-habit-item-divider'></View>
+                <View>
+                  <View className='discover-habit-item-text at-row'>
+                    <View className='discover-habit-item-text-top'>
+                      <Text>{item.title || "暂无"}</Text>
+                    </View>
+                    <View className='discover-habit-item-text-bottom'>
+                      <Text>已有{item.joinCount}位朋友在坚持</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
+            <AtButton className='discover-habit-item-button' onClick={this.joinStudyCustomAndDelete.bind(this,recommendStudyList,item,item.id)}>加入</AtButton>
           </View>
-        </View>
-        <AtButton className='discover-habit-item-button' onClick={this.joinCustomAndDelete.bind(this,recommendStudyList,item,item.id)}>加入</AtButton>
-      </View>
+        }
+      }
     ) :
     <View className='discover-habit--no-item'>
       <Text>暂无推荐列表</Text>
@@ -249,29 +252,44 @@ export default class Discover extends Component {
     );
   }
 
+  joinSportCustomAndDelete(customList,customItem,customId) {
+    joinCustom(customId);
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == customItem) {
+        customList.splice(i,i+1);
+      }
+    }
+    this.setState({
+      recommendSportList: customList,
+    });
+  }
+
   renderSport() {
     let {recommendSportList} = this.state;
     const customItem = recommendSportList.length > 0 ?
-      recommendSportList.map((item)=>
-        <View className='discover-habit-item at-row'>
-          <View>
-            <View className='at-row'>
-              <Image className='discover-habit-item-image' src={item.logo} />
-              <View className='discover-habit-item-divider'></View>
-              <View>
-                <View className='discover-habit-item-text at-row'>
-                  <View className='discover-habit-item-text-top'>
-                    <Text>{item.title || "暂无"}</Text>
-                  </View>
-                  <View className='discover-habit-item-text-bottom'>
-                    <Text>已有{item.joinCount}位朋友在坚持</Text>
+      recommendSportList.map((item,index)=> {
+        if(index < 3) {
+          return <View className='discover-habit-item at-row'>
+            <View>
+              <View className='at-row'>
+                <Image className='discover-habit-item-image' src={item.logo} />
+                <View className='discover-habit-item-divider'></View>
+                <View>
+                  <View className='discover-habit-item-text at-row'>
+                    <View className='discover-habit-item-text-top'>
+                      <Text>{item.title || "暂无"}</Text>
+                    </View>
+                    <View className='discover-habit-item-text-bottom'>
+                      <Text>已有{item.joinCount}位朋友在坚持</Text>
+                    </View>
                   </View>
                 </View>
               </View>
             </View>
+            <AtButton className='discover-habit-item-button' onClick={this.joinSportCustomAndDelete.bind(this,recommendSportList,item,item.id)}>加入</AtButton>
           </View>
-          <AtButton className='discover-habit-item-button' onClick={this.joinCustomAndDelete.bind(this,recommendSportList,item,item.id)}>加入</AtButton>
-        </View>
+        }
+      }
       ) :
       <View className='discover-habit--no-item'>
         <Text>暂无推荐列表</Text>
@@ -283,11 +301,23 @@ export default class Discover extends Component {
     );
   }
 
+  joinMusicCustomAndDelete(customList,customItem,customId) {
+    joinCustom(customId);
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == customItem) {
+        customList.splice(i,i+1);
+      }
+    }
+    this.setState({
+      recommendMusicList: customList,
+    });
+  }
+
   renderMusic() {
     let {recommendMusicList} = this.state;
     const customItem = recommendMusicList.length > 0 ?
-      recommendMusicList.map((item)=>
-        <View className='discover-habit-item at-row'>
+      recommendMusicList.map((item,index)=> {
+        return <View className='discover-habit-item at-row'>
           <View>
             <View className='at-row'>
               <Image className='discover-habit-item-image' src={item.logo} />
@@ -304,8 +334,9 @@ export default class Discover extends Component {
               </View>
             </View>
           </View>
-          <AtButton className='discover-habit-item-button' onClick={this.joinCustomAndDelete.bind(this,recommendMusicList,item,item.id)}>加入</AtButton>
+          <AtButton className='discover-habit-item-button' onClick={this.joinMusicCustomAndDelete.bind(this,recommendMusicList,item,item.id)}>加入</AtButton>
         </View>
+      }
       ) :
       <View className='discover-habit--no-item'>
         <Text>暂无推荐列表</Text>
