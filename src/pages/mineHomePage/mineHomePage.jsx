@@ -5,13 +5,11 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import './mineHomePage.scss'
 import Record from "../../common/record/record";
-import { AtFloatLayout } from "taro-ui"
-import { getUserCustomList, myFollowing, followedMe } from "../../api/apis";
+import {getUserCustomList, myFollowing, followedMe, followPeople} from "../../api/apis";
 
 export default class MineHomePage extends Component{
   constructor(props) {
     super(props);
-    this.book=[];
     this.state = {
       userId: 0,
       habitsList: [],
@@ -41,41 +39,17 @@ export default class MineHomePage extends Component{
       userId: this.$router.params.id
     };
     getUserCustomList(params).then( res => {
-      console.log('habitList',res);
       that.setState({
         habitsList: res.data.list,
         habitNumber: res.data.total,
       });
     });
-    // myFollowing({
-    //   userId: this.state.userId,
-    // }).then( res => {
-    //   that.setState({
-    //     followList: res.data,
-    //     follow: res.data.length,
-    //   });
-    //   res.data.map( (item) => {
-    //     if( item.id === this.state.userId){
-    //       that.setState({
-    //         isFollowing: true
-    //       });
-    //     }
-    //   });
-    //   console.log('followList1',res.data);
-    //   console.log('followList2',this.state.followList);
-    // });
-    // followedMe({
-    //   userId: this.state.userId,
-    // }).then( res => {
-    //   that.setState({
-    //     fans: res.data.length,
-    //   });
-    // });
-    // console.log('isFollowing:',this.state.isFollowing)
   }
 
   componentDidMount() {
     let that = this;
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const myId = userInfoModel.id;
     myFollowing({
       userId: this.state.userId,
     }).then( res => {
@@ -84,22 +58,30 @@ export default class MineHomePage extends Component{
         follow: res.data.length,
       });
       console.log('followList1',res.data);
-      console.log('followList2',this.state.followList);
     });
+    if( myId == this.$router.params.id){
+      that.setState({
+        isFollowing: true,
+      })
+    }else{
+      myFollowing({
+        userId: myId,
+      }).then( res => {
+        res.data.map( (item) => {
+          if( item.id == this.state.userId){
+            that.setState({
+              isFollowing: true
+            });
+          }
+        });
+      });
+    }
     followedMe({
       userId: this.state.userId,
     }).then( res => {
       that.setState({
         fans: res.data.length,
       });
-      console.log('res',res);
-    });
-    this.state.followList.map( (item) => {
-      if( item.id === this.state.userId){
-        this.setState({
-          isFollowing: true
-        });
-      }
     });
     console.log('isFollowing:',this.state.isFollowing)
   }
@@ -115,11 +97,8 @@ export default class MineHomePage extends Component{
     return habitsList.map((item,index)=>{
       return <View onClick={this.selectBook.bind(this,index)} className={index!==bigIndex?"homePage_insist_content_item":"homePage_insist_content_item bigItem"}>
         <Image className="homePage_insist_content_item_cover" src={item.custom.logo}/>
-        <View onClick={this.handleClose.bind(this,item.custom.id)}  className="homePage_insist_content_item_set">
-          <Image className="homePage_insist_content_item_set_icon" src={require('../../assets/images/homePage/set.png')}/>
-        </View>
         <Text className="homePage_insist_content_item_title">{item.custom.title}</Text>
-        <Text className="homePage_insist_content_item_day">{item.joinCustom.checkDaysCount}天</Text>
+        <Text className="homePage_insist_content_item_day">已坚持{item.joinCustom.checkDaysCount}天</Text>
       </View>
     })
   }
@@ -143,36 +122,30 @@ export default class MineHomePage extends Component{
     })
   }
 
-  handleClose(id){
-    console.log(id);
-    this.setState({
-      isOpen:!this.state.isOpen
-    })
-  }
-
-  handleHabit(flag){
-    let info="";
-    if(flag===0){
-      info="删除"
-    }else {
-      info="归档"
-    }
-    let that=this;
-    Taro.showModal({
-      title:"提示",
-      content:`是否确认${info}？`,
-      confirmText:"确认",
-      confirmColor:"#DD2C4B",
-      cancelText:"关闭",
-      success(e){
-        if(e.confirm){
-          that.handleClose();
-        }else{
-          that.handleClose()
-        }
+  followPeople = () => {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params = {
+      followedUserId: this.state.userId,
+      userId: userInfoModel.id,
+    };
+    followPeople(params).then( res => {
+      if(res.statusCode === 200){
+        Taro.showToast({
+          title: "已关注",
+          icon: "success",
+          duration: 1000,
+        }).then(
+          myFollowing({
+            userId: this.state.userId,
+          }).then( res => {
+            this.setState({
+              persons: res.data,
+            });
+          })
+        );
       }
     })
-  }
+  };
 
   render() {
     const {
@@ -187,22 +160,18 @@ export default class MineHomePage extends Component{
       <View className="homePage">
         <NavBar back={true} title={"个人主页"}/>
         <BarTakeUp/>
-        <AtFloatLayout isOpened={this.state.isOpen}  onClose={this.handleClose.bind(this,0)}>
-          <View>
-            <View className='floatLay' onClick={this.handleHabit.bind(this,0)}>删除习惯</View>
-            <View className='floatLay' onClick={this.handleHabit.bind(this,1)}>归档习惯</View>
-            <View className='floatLay' onClick={this.handleClose.bind(this)}>取消</View>
-          </View>
-        </AtFloatLayout>
         <View className="homePage_top">
           <Image className="homePage_top_photo" src={photo}/>
           <Text className="homePage_top_name">{nickName}</Text>
           <Text className="homePage_top_text">遇见更好的自己</Text>
         </View>
-        <View className="homePage_relate">
+        <View className={this.state.isFollowing ? "homePage_relate_follow" : "homePage_relate_unFollow"}>
           <View className="homePage_relate_fans" onClick={this.redirectToPerson.bind(this,"粉丝")}>粉丝 {fans}</View>
           <View className="homePage_relate_follow" onClick={this.redirectToPerson.bind(this,"关注")}>关注 {follow}</View>
-          {/*<View className="homePage_relate_attention">关注TA</View>*/}
+          {this.state.isFollowing ? null :
+            <View className="homePage_relate_attention" onClick={()=>{this.followPeople()}}>
+            关注TA
+            </View>}
         </View>
         <View className="homePage_insist">
           {habitNumber === 0 ? <Text className="homePage_no_habit">快去加入习惯吧!</Text> :

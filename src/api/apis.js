@@ -136,3 +136,11 @@ export function myFollowing(params) {
 export function followedMe(params) {
   return get(`/api/user/fans/${params.userId}`,params)
 }
+
+export function followPeople(params) {
+  return post(`/api/user/follow`,params)
+}
+
+export function cancelFollowPeople(params) {
+  return post(`/api/user/cancelFollow`,params)
+}

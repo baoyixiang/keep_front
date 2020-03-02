@@ -2,10 +2,11 @@ import Taro,{Component} from '@tarojs/taro';
 import React from "react";
 import NavBar from "../../../common/navBar/navBar";
 import BarTakeUp from "../../../common/barTakeUp/barTakeUp";
-import {Image, Text, View} from "@tarojs/components";
+import {Button, Image, Text, View} from "@tarojs/components";
 import './fansOrAttention.scss'
 import Bottom from "../../../common/bottom/Bottom";
-import {followedMe, myFollowing} from "../../../api/apis";
+import {cancelFollowPeople, followedMe, myFollowing} from "../../../api/apis";
+// import '~taro-ui/dist/style/components/flex.scss';
 
 export default class FansOrAttention extends Component{
   constructor(props){
@@ -38,13 +39,12 @@ export default class FansOrAttention extends Component{
           userId: this.$router.params.id,
           persons: res.data,
         });
-        console.log('persons',this.state.persons);
       })
     }
   }
 
   componentDidMount() {
-    let type=0;
+    let type;
     if(this.$router.params.title.indexOf("关注")!==-1){
       type=1
     }else{
@@ -63,6 +63,32 @@ export default class FansOrAttention extends Component{
     })
   };
 
+  followPeople = (id) => {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params = {
+      followedUserId: id,
+      userId: userInfoModel.id,
+    };
+    cancelFollowPeople(params).then( res => {
+      if(res.statusCode === 200){
+        Taro.showToast({
+          title: "已取消关注",
+          icon: "success",
+          duration: 1000,
+        }).then(
+          myFollowing({
+            userId: this.$router.params.id,
+          }).then( res => {
+            this.setState({
+              userId: this.$router.params.id,
+              persons: res.data,
+            });
+          })
+        );
+      }
+    })
+  };
+
   render() {
     const {persons,type}=this.state;
     return <View>
@@ -71,10 +97,15 @@ export default class FansOrAttention extends Component{
       <View>
         {
           persons.map(item=>{
-            return <View onClick={ () => {this.redirectToPerson(item.id, item.avatar, item.name)} } className='list'>
-              <Image className='photo' src={item.avatar} alt={"头像"}/>
-              <Text className='name'>{item.name}</Text>
-              {type===1?<View className='cancelAttention'>取消关注</View>:null}
+            return <View className='list'>
+              <View onClick={ () => {this.redirectToPerson(item.id, item.avatar, item.name)} } >
+                <Image className='photo' src={item.avatar} alt={"头像"}/>
+                <Text className='name'>{item.name}</Text>
+              </View>
+              <View>
+                {type === 1?<View className='cancelAttention' onClick={()=>{this.followPeople(item.id)}}>
+                  取消关注</View>:null}
+              </View>
             </View>
           })
         }

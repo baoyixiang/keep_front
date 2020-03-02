@@ -37,7 +37,7 @@ page{
       top:260px;
     }
   }
-  .homePage_relate{
+  .homePage_relate_follow{
     height: 100px;
     display: flex;
     justify-content: space-around;
@@ -52,6 +52,29 @@ page{
       text-align: center;
       font-size: 26px;
       width: 50%;
+    }
+  }
+  .homePage_relate_unFollow{
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    line-height: 100px;
+    background: white;
+    .homePage_relate_fans{
+      text-align: center;
+      font-size: 26px;
+      width: 33.33%;
+    }
+    .homePage_relate_follow{
+      text-align: center;
+      font-size: 26px;
+      width: 33.33%;
+    }
+    .homePage_relate_attention{
+      text-align: center;
+      font-size: 26px;
+      width:33.33%;
+      color:#1A80D2;
     }
   }
   .homePage_insist{

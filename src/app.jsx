@@ -47,7 +47,7 @@ class App extends Component {
         iconPath: "assets/images/tabbar/discover.png",
         selectedIconPath: "assets/images/tabbar/discover_selected.png"
       },{
-        text: "社区",
+        text: "心愿",
         pagePath: "pages/hopes/hopes",
         iconPath: "assets/images/tabbar/hope.png",
         selectedIconPath: "assets/images/tabbar/hope_selected.png"
