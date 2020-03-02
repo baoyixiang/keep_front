@@ -27,7 +27,6 @@ export default class Record extends Component{
   }
 
   componentDidMount() {
-    console.log('props',this.props.data)
     iac=Taro.createInnerAudioContext();
   }
 
@@ -60,8 +59,6 @@ export default class Record extends Component{
   }
 
   changeAnswering(id,pl,replyId){
-    console.log(replyId)
-    console.log(id,pl)
     let placeHolder="评论一下~";
     if(pl){
       placeHolder="回复"+pl;
@@ -112,7 +109,6 @@ export default class Record extends Component{
       this.setState({
         soundWidth:24
       })
-      console.log(234)
     })
   }
 
@@ -133,9 +129,7 @@ export default class Record extends Component{
         replyTo:this.state.replyId
       }
     }
-    console.log(params)
     recordComment(params).then(res=>{
-      console.log(res)
       if(res.statusCode===200){
         this.props.refresh();
       }
@@ -149,7 +143,6 @@ export default class Record extends Component{
   renderList(){
     let {data}=this.props;
     const {soundWidth}=this.state;
-    console.log(data)
     if(!data){data=[]}
     const {answering,placeHolder}=this.state;
     return data.map((item,index)=>{
