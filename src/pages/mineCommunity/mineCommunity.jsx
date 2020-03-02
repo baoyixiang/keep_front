@@ -39,6 +39,22 @@ export default class MineCommunity extends Component{
     }
   }
 
+  refreshRecordList(){
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const param={
+      customId:this.state.customId,
+      pageNo: 0,
+      pageSize: 100,
+      myUserId:userInfoModel.id
+    }
+    getCustomRecord(param).then(res=>{
+      console.log('a',res.data.items)
+      this.setState({
+        displayRecords:res.data.items,
+      })
+    })
+  }
+
   componentDidMount() {
     let userInfoModel = Taro.getStorageSync('userInfoModel');
     const params={
@@ -117,18 +133,7 @@ export default class MineCommunity extends Component{
       userId:userInfoModel.id
     }
     likeRecord(params).then(res=>{
-      const param={
-        customId:this.state.customId,
-        pageNo: 0,
-        pageSize: 100,
-        myUserId:userInfoModel.id
-      }
-      getCustomRecord(param).then(res=>{
-        console.log('a',res.data.items)
-        this.setState({
-          displayRecords:res.data.items,
-        })
-      })
+      this.refreshRecordList()
     })
 
     let {displayRecords}=this.state;
@@ -155,7 +160,7 @@ export default class MineCommunity extends Component{
           {
             tabList.map((item,index)=>{
               return <AtTabsPane customStyle={{overflow:"scroll"}} current={this.state.current} index={index}>
-                  <Record changeStatus={this.changeLikeStatus.bind(this)} data={displayRecords}/>
+                  <Record refresh={this.refreshRecordList.bind(this)} changeStatus={this.changeLikeStatus.bind(this)} data={displayRecords}/>
               </AtTabsPane>
             })
           }

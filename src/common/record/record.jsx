@@ -17,7 +17,8 @@ export default class Record extends Component{
       canBlur:false,
       placeHolder:"评论一下~",
       soundWidth:24,
-      commentContent:""
+      commentContent:"",
+      replyId:undefined
     };
   }
 
@@ -31,14 +32,15 @@ export default class Record extends Component{
   }
 
   renderComments(item){
-    return item.checkInComments.map(i=>{
-      return <View onClick={this.changeAnswering.bind(this,item.id,i.from)} key={i.id} style={{overflow:"scroll"}}>
+    const checkInComments=item.checkInComments;
+    return checkInComments.map(i=>{
+      return <View onClick={this.changeAnswering.bind(this,item.checkIn.id,i.userName,i.userId)} key={i.id} style={{overflow:"scroll"}}>
           {
-            i.to?<Text className="comments_content">
-                <Text className="comments_content_nickName">{i.from}</Text><Text className="comments_content_text"> 回复 </Text><Text className="comments_content_nickName">{i.to} </Text><Text className="comments_content_text">:{item.content}</Text>
+            i.replyTo?<Text className="comments_content">
+                <Text className="comments_content_nickName">{i.userName}</Text><Text className="comments_content_text"> 回复 </Text><Text className="comments_content_nickName">{i.replyToName} </Text><Text className="comments_content_text">:{i.commentContent}</Text>
             </Text>:
               <Text className="comments_content">
-                <Text><Text className="comments_content_nickName">{i.from}</Text><Text className="comments_content_text">: {i.content}</Text></Text>
+                <Text><Text className="comments_content_nickName">{i.userName}</Text><Text className="comments_content_text">: {i.commentContent}</Text></Text>
               </Text>
           }
         </View>
@@ -52,11 +54,13 @@ export default class Record extends Component{
     this.setState({
       answering:-1,
       placeHolder:"评论一下~",
-      commentContent:''
+      commentContent:'',
+      replyId:undefined
     })
   }
 
-  changeAnswering(id,pl){
+  changeAnswering(id,pl,replyId){
+    console.log(replyId)
     console.log(id,pl)
     let placeHolder="评论一下~";
     if(pl){
@@ -65,6 +69,7 @@ export default class Record extends Component{
     this.setState({
       answering:id,
       placeHolder,
+      replyId,
     })
   }
   playSound(url){
@@ -112,21 +117,28 @@ export default class Record extends Component{
   }
 
   replyToOthers(checkInId){
-    // {
-    //   "checkInId": 0,
-    //   "commentContent": "string",
-    //   "commentTime": "2020-03-02T08:49:45.471Z",
-    //   "replyTo": 0,
-    //   "userId": 0
-    // }
     let userInfoModel = Taro.getStorageSync('userInfoModel');
-    const params={
-      checkInId:checkInId,
-      commentContent: this.state.commentContent,
-      userId:userInfoModel.id
+    let params;
+    if(!this.state.replyId){
+      params={
+        checkInId:checkInId,
+        commentContent: this.state.commentContent,
+        userId:userInfoModel.id
+      }
+    }else{
+      params={
+        checkInId:checkInId,
+        commentContent: this.state.commentContent,
+        userId:userInfoModel.id,
+        replyTo:this.state.replyId
+      }
     }
+    console.log(params)
     recordComment(params).then(res=>{
       console.log(res)
+      if(res.statusCode===200){
+        this.props.refresh();
+      }
     })
   }
   changeCommentContent(e){
@@ -165,7 +177,7 @@ export default class Record extends Component{
           </View>
           {answering===item.checkIn.id? <View className="inpView"><Input onInput={this.changeCommentContent.bind(this)} onConfirm={this.replyToOthers.bind(this,item.checkIn.id)} autoFocus={true} onBlur={this.blurInput} placeholder={placeHolder} className="inpView_input"/></View>:null}
           <View className="comment">
-            <View onClick={this.changeAnswering.bind(this,item.checkIn.id,'')} className="text">
+            <View onClick={this.changeAnswering.bind(this,item.checkIn.id,"","")} className="text">
               <Image src={comment} className={"text_icon"}/>
               {/*<Text className="text_text">0</Text>*/}
             </View>
