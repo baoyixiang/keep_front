@@ -7,6 +7,7 @@ import {AtButton, AtSearchBar} from "taro-ui";
 import {getRecommendCustomList, getRecommendUserList, JoinCustom} from "../../api/apis";
 import NavBar from "../../common/navBar/navBar";
 import {joinCustom} from "../../common/joinCustom/joinCustom";
+import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 
 export default class Discover extends Component {
 
@@ -80,7 +81,8 @@ export default class Discover extends Component {
     return (
       <View className='discover-page'>
         <NavBar title="发现"/>
-        <View className='discover-divider-0'></View>
+        <BarTakeUp/>
+        {/*<View className='discover-divider-0'></View>*/}
         {this.renderSearch()}
         <View className='discover-divider-1'></View>
         {this.renderRecommend()}

@@ -10,7 +10,7 @@ page{
   }
 }
 .discover-search{
-
+  background: transparent;
 }
 .discover-recommend{
   width: 92%;
@@ -113,4 +113,10 @@ page{
     height: 90px;
     padding-top: 10px;
   }
+}
+.at-search-bar{
+  background: transparent;
+}
+.at-search-bar__action{
+  background: #25A2F9;
 }
