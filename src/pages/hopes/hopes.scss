@@ -90,16 +90,17 @@ page{
 }
 .btn1{
   position:fixed;
-  width:30%;
+  width:32%;
   box-shadow:rgba(0, 0, 0, 0.2) 2px 4px 8px 1px;
   background: #25A2F9;
   color:white;
   border-radius: 40px;
   font-size: 26px;
-  left:8%;
+  left:5%;
   bottom:30px;
   height:33px;
   border:none;
+  outline: none;
 }
 .at-switch__title {
   padding-left: 10px;
@@ -107,4 +108,7 @@ page{
 }
 .at-switch__switch {
   background: #25A2F9;
+}
+.at-switch::after{
+  border: none;
 }
