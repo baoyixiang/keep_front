@@ -152,6 +152,7 @@ export default class Record extends Component{
     const {soundWidth}=this.state;
     if(!data){data=[]}
     const {answering,placeHolder}=this.state;
+    console.log(data)
     return data.map((item,index)=>{
       return <View className="record_item">
         <View style={{position:"relative",width:"92%",margin:"0 auto"}}>
@@ -159,7 +160,7 @@ export default class Record extends Component{
             <Image className="img"  onClick={this.viewOtherIndex.bind(this,item.user.id,item.user.avatar,item.user.name)} src={item.user.avatar}/>
             <Text className="nickName">{item.user.name}</Text>
             <View className="insist">坚持<Text className="insist_day">{item.customTitle}</Text></View>
-            <Text className="date">{item.date}</Text>
+            <Text className="date">{item.checkIn.checkInTime?item.checkIn.checkInTime.substring(0,10):null}</Text>
             {/*<Text className="day">{item.day}</Text>*/}
           </View>
           {item.sound?<View onClick={this.playSound.bind(this,item.sound.url)} className="record_item_sound">
