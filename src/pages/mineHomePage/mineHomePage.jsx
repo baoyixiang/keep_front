@@ -69,7 +69,8 @@ export default class MineHomePage extends Component{
       const param={
         pageNo: 0,
         pageSize: 100,
-        myUserId: myId,//todo
+        myUserId: myId,
+        userId: myId,
       };
       getCustomRecord(param).then(res=>{
         console.log('a',res.data.items);
@@ -162,7 +163,8 @@ export default class MineHomePage extends Component{
       const param={
         pageNo: 0,
         pageSize: 100,
-        myUserId:userInfoModel.id
+        myUserId:userInfoModel.id,
+        userId: myId,
       };
       getCustomRecord(param).then(res=>{
         this.setState({
