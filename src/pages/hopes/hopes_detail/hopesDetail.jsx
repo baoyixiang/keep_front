@@ -71,6 +71,13 @@ export default class HopeDetail extends Component{
       isLike:true
     })
   }
+
+  viewOtherIndex(userId,photo,nickName){
+    Taro.navigateTo({
+      url:`../../mineHomePage/mineHomePage?id=${userId}&avatar=${photo}&name=${nickName}`
+    });
+  }
+
   render() {
     const {detail,isLike}=this.state;
     return (
@@ -79,7 +86,7 @@ export default class HopeDetail extends Component{
         <BarTakeUp/>
         <View className='content'>
           <View className='content_top'>
-            <Image className='head' src={this.$router.params.avatar}/>
+            <Image onClick={this.viewOtherIndex.bind(this,detail.createUserId,this.$router.params.avatar,this.$router.params.name)} className='head' src={this.$router.params.avatar}/>
             <Text className='time'>{detail.createTime?detail.createTime.substring(0,10):''}</Text>
 
           </View>

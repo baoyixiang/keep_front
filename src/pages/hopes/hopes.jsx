@@ -52,10 +52,10 @@ export default class Hopes extends Component {
 
   componentDidHide () { }
 
-  redirectToHopeDetail(id,avatar){
+  redirectToHopeDetail(id,avatar,name){
     console.log(id,avatar)
     Taro.navigateTo({
-      url:`./hopes_detail/hopesDetail?id=${id}&avatar=${avatar}`
+      url:`./hopes_detail/hopesDetail?id=${id}&avatar=${avatar}&name=${name}`
     })
   }
 
@@ -66,33 +66,39 @@ export default class Hopes extends Component {
   }
 
   renderLeft(list){
-    console.log(list)
     return <View className='left'>
       {
         list.map(i=>{
-          return <View onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar)} className='list_item'>
+          return <View className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={i.avatar} mode='aspectFill'/>
-              <Text className='list_item_text'>{i.createTime.substring(0,11)}</Text>
+              <Image onClick={this.viewOtherIndex.bind(this,i.createUserId,i.avatar,i.name)} className='list_item_photo' src={i.avatar} mode='aspectFill'/>
+              <Text onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)}  className='list_item_text'>{i.createTime.substring(0,10)}</Text>
             </View>
-            <Image className='list_item_img' src={i.images[0]||""}/>
-            <Text className='list_item_content'>{i.wordContent}</Text>
+            <Image onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)}   mode='aspectFill' className='list_item_img' src={i.images[0]||""}/>
+            <Text onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)}  className='list_item_content'>{i.wordContent}</Text>
           </View>
         })
       }
     </View>
   }
+
+  viewOtherIndex(userId,photo,nickName){
+    Taro.navigateTo({
+      url:`../mineHomePage/mineHomePage?id=${userId}&avatar=${photo}&name=${nickName}`
+    });
+  }
+
   renderRight(list){
     return <View className='right'>
       {
         list.map(i=>{
-          return <View onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar)} className='list_item'>
+          return <View className='list_item'>
             <View className='list_item_top'>
-              <Image className='list_item_photo' src={i.avatar} mode='aspectFill'/>
-              <Text className='list_item_text'>{i.createTime.substring(0,11)}</Text>
+              <Image onClick={this.viewOtherIndex.bind(this,i.createUserId,i.avatar,i.name)} className='list_item_photo' src={i.avatar} mode='aspectFill'/>
+              <Text  onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)} className='list_item_text'>{i.createTime.substring(0,10)}</Text>
             </View>
-            <Image className='list_item_img' src={i.images[0]||""}/>
-            <Text className='list_item_content'>{i.wordContent}</Text>
+            <Image  onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)} mode='aspectFill' className='list_item_img' src={i.images[0]||""}/>
+            <Text  onClick={this.redirectToHopeDetail.bind(this, i.id, i.avatar,i.name)} className='list_item_content'>{i.wordContent}</Text>
           </View>})
       }
     </View>;
