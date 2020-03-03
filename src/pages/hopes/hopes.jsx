@@ -52,6 +52,51 @@ export default class Hopes extends Component {
 
   componentDidShow () {
 
+    let that=this;
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    if(!this.state.seeMe){
+      getAllHopes({
+        pageNo:0,
+        pageSize:100,
+        myUserId:userInfoModel.id
+      }).then(res=>{
+        let left=[];
+        let right=[];
+        res.data.forEach((item,index)=>{
+          if(index%2===0){
+            left.push(item)
+          }else{
+            right.push(item)
+          }
+        })
+        that.setState({
+          left,right,
+          loading:false
+        })
+      })
+    }else{
+      getMyHope({
+        pageNo:0,
+        pageSize:100,
+        userId:userInfoModel.id
+      }).then(res=>{
+        console.log('res',res)
+        let left=[];
+        let right=[];
+        res.data.forEach((item,index)=>{
+          if(index%2===0){
+            left.push(item)
+          }else{
+            right.push(item)
+          }
+        })
+        that.setState({
+          left,right,
+        })
+      })
+    }
+
+
   }
 
   componentDidHide () { }
