@@ -5,7 +5,7 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import './mineHomePage.scss'
 import Record from "../../common/record/record";
-import {getUserCustomList, myFollowing, followedMe, followPeople} from "../../api/apis";
+import {getUserCustomList, myFollowing, followedMe, followPeople, likeRecord, getCustomRecord} from "../../api/apis";
 
 export default class MineHomePage extends Component{
   constructor(props) {
@@ -22,12 +22,15 @@ export default class MineHomePage extends Component{
       habitNumber: 0,
       bigIndex: 0,
       recordList: [],
+      displayRecords: [],
       isOpen:false,
+      customId:undefined
     }
   }
 
   componentDidShow() {
     let that = this;
+    // let userInfoModel = Taro.getStorageSync('userInfoModel');
     that.setState({
       photo :this.$router.params.avatar,
       nickName: this.$router.params.name,
@@ -59,9 +62,20 @@ export default class MineHomePage extends Component{
       });
       console.log('followList1',res.data);
     });
-    if( myId == this.$router.params.id){
+    if( myId == this.$router.params.id){//使用===会出问题
       that.setState({
         isFollowing: true,
+      });
+      const param={
+        pageNo: 0,
+        pageSize: 100,
+        myUserId: myId,//todo
+      };
+      getCustomRecord(param).then(res=>{
+        console.log('a',res.data.items);
+        this.setState({
+          displayRecords:res.data.items,
+        })
       })
     }else{
       myFollowing({
@@ -83,7 +97,18 @@ export default class MineHomePage extends Component{
         fans: res.data.length,
       });
     });
-    console.log('isFollowing:',this.state.isFollowing)
+    const param={
+      pageNo: 0,
+      pageSize: 100,
+      myUserId: myId,
+      userId: this.state.userId,
+    };
+    getCustomRecord(param).then(res=>{
+      console.log('a',res.data.items);
+      this.setState({
+        displayRecords:res.data.items,
+      })
+    })
   }
 
   selectBook(index){
@@ -110,16 +135,53 @@ export default class MineHomePage extends Component{
   }
 
   changeLikeStatus(id){
-    console.log(id);
-    let {recordList}=this.state;
-    recordList.forEach(item=>{
-      if(item.id===id){
-        item.isLike=!item.isLike;
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      checkInId:id,
+      userId:userInfoModel.id
+    };
+    likeRecord(params).then(res=>{
+      this.refreshRecordList()
+    });
+
+    let {displayRecords}=this.state;
+    displayRecords.forEach(item=>{
+      if(item.checkIn.id===id){
+        item.isSelfLike=!item.isSelfLike;
       }
     });
     this.setState({
-      recordList
+      displayRecords
     })
+  }
+
+  refreshRecordList () {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const myId = userInfoModel.id;
+    if( myId == this.$router.params.id){
+      const param={
+        pageNo: 0,
+        pageSize: 100,
+        myUserId:userInfoModel.id
+      };
+      getCustomRecord(param).then(res=>{
+        this.setState({
+          displayRecords:res.data.items,
+        })
+      })
+    }else {
+      const param={
+        pageNo: 0,
+        pageSize: 100,
+        myUserId: myId,
+        userId: this.state.userId,
+      };
+      getCustomRecord(param).then(res=>{
+        this.setState({
+          displayRecords:res.data.items,
+        })
+      })
+    }
   }
 
   followPeople = () => {
@@ -154,7 +216,7 @@ export default class MineHomePage extends Component{
       fans,
       follow,
       habitNumber,
-      recordList
+      displayRecords
     } = this.state;
     return(
       <View className="homePage">
@@ -183,8 +245,9 @@ export default class MineHomePage extends Component{
             </View>}
         </View>
         <View className="homePage_record">
-          <Text className="homePage_record_title">我的打卡记录</Text>
-          <Record changeStatus={this.changeLikeStatus.bind(this)} data={recordList}/>
+          <Text className="homePage_record_title">打卡记录</Text>
+          <Record refresh={this.refreshRecordList.bind(this)}
+                  changeStatus={this.changeLikeStatus.bind(this)} data={displayRecords}/>
         </View>
       </View>
     )

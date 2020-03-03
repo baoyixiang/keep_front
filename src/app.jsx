@@ -19,7 +19,6 @@ class App extends Component {
       'pages/mineHomePage/mineHomePage',
       'pages/minePlaceFiles/minePlaceFiles',
       'pages/mineHomePage/fansOrAttention/fansOrAttention',
-      'pages/mineHomePage/othersHomePage/othersHomePage',
       'pages/insistStatistics/insistStatistics',
       'pages/habitSign/habitSign',
       'pages/mineCommunity/mineCommunity',
