@@ -80,13 +80,15 @@ export default class HopeDetail extends Component{
 
   render() {
     const {detail,isLike}=this.state;
+    console.log(this.$router.params.avatar)
     return (
       <View>
         <NavBar back={true} title="心愿详情"/>
         <BarTakeUp/>
         <View className='content'>
           <View className='content_top'>
-            <Image onClick={this.viewOtherIndex.bind(this,detail.createUserId,this.$router.params.avatar,this.$router.params.name)} className='head' src={this.$router.params.avatar}/>
+            {this.$router.params.avatar?<Image onClick={this.viewOtherIndex.bind(this,detail.createUserId,this.$router.params.avatar,this.$router.params.name)} className='head' src={this.$router.params.avatar}/>:
+              <Image className='head' src={require('../../../assets/images/user.png')}/>}
             <Text className='time'>{detail.createTime?detail.createTime.substring(0,10):''}</Text>
 
           </View>

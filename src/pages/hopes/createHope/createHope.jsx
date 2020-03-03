@@ -134,10 +134,10 @@ export default class CreateHope extends Component{
           />
         }
         <View className='isSeeSelf'>
-          <AtSwitch title='匿名' checked={this.state.isSeeSelf} onChange={this.handleChange} />
+          <AtSwitch title='匿名' checked={this.state.isAnonymous} onChange={this.handleChange2} />
         </View>
         <View className='isAnonymous'>
-          <AtSwitch title='仅自己可见' checked={this.state.isAnonymous} onChange={this.handleChange2} />
+          <AtSwitch title='仅自己可见' checked={this.state.isSeeSelf} onChange={this.handleChange} />
         </View>
         <AtButton onClick={this.submitHope.bind(this)} className="submit">发 布</AtButton>
       </View>

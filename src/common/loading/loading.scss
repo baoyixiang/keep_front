@@ -11,6 +11,7 @@
   border-radius: 50%;
   border-top:10px solid #E74C3C;
   animation:a1 2s linear infinite;
+  z-index: 10000;
   //-webkit-box-reflect:below 10px  -webkit-gradient(linear, 0 0, 0 100%, from(transparent), to(white));
 }
 .loading::after,.loading::before{

@@ -100,7 +100,10 @@ export function createCustom(params) {
  * 心愿模块
  * **/
 export function getAllHopes(params){
-  return post('/api/user/hope/allHopes',params)
+  return post('/api/user/hope/myAllHopes',params)
+}
+export function getMyHope(params) {
+  return post('/api/user/hope/hopeList',params)
 }
 
 //创建心愿
@@ -115,6 +118,11 @@ export function getHopeDetail(params){
 //给心愿点赞
 export function likeHopes(params){
   return post('/api/user/hope/likeHope',params)
+}
+
+//删除心愿
+export function delMyHope(params) {
+  return post('/api/user/hope/delMyHope',params)
 }
 
 /**
