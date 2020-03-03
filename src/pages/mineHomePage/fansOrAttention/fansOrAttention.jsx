@@ -15,7 +15,8 @@ export default class FansOrAttention extends Component{
       title:"",
       userId: 0,
       type:0,
-      persons:[]
+      persons:[],
+      isMyself: false,
     }
   }
 
@@ -44,6 +45,7 @@ export default class FansOrAttention extends Component{
   }
 
   componentDidMount() {
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
     let type;
     if(this.$router.params.title.indexOf("关注")!==-1){
       type=1
@@ -53,7 +55,12 @@ export default class FansOrAttention extends Component{
     this.setState({
       title:this.$router.params.title,
       type
-    })
+    });
+    if( this.$router.params.id == userInfoModel.id){
+      this.setState({
+        isMyself: true
+      })
+    }
   }
 
   redirectToPerson = (id, avatar, name) => {
@@ -90,7 +97,7 @@ export default class FansOrAttention extends Component{
   };
 
   render() {
-    const {persons,type}=this.state;
+    const { persons, type, isMyself}=this.state;
     return <View>
       <NavBar title={this.state.title} back={true}/>
       <BarTakeUp height={45}/>
@@ -102,10 +109,11 @@ export default class FansOrAttention extends Component{
                 <Image className='photo' src={item.avatar} alt={"头像"}/>
                 <Text className='name'>{item.name}</Text>
               </View>
-              <View>
-                {type === 1?<View className='cancelAttention' onClick={()=>{this.followPeople(item.id)}}>
-                  取消关注</View>:null}
-              </View>
+                { isMyself ? <View>
+                  {type === 1 ? <View className='cancelAttention' onClick={()=>{this.followPeople(item.id)}}>
+                    取消关注</View>:null}
+                </View> : null
+                }
             </View>
           })
         }
