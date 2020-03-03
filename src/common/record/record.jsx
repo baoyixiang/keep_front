@@ -30,16 +30,23 @@ export default class Record extends Component{
     iac=Taro.createInnerAudioContext();
   }
 
+  viewOtherIndex(userId,photo,nickName){
+    console.log(userId,photo,nickName)
+    Taro.navigateTo({
+      url:`../mineHomePage/mineHomePage?id=${userId}&avatar=${photo}&name=${nickName}`
+    });
+  }
+
   renderComments(item){
     const checkInComments=item.checkInComments;
     return checkInComments.map(i=>{
       return <View onClick={this.changeAnswering.bind(this,item.checkIn.id,i.userName,i.userId)} key={i.id} style={{overflow:"scroll"}}>
           {
             i.replyTo?<Text className="comments_content">
-                <Text className="comments_content_nickName">{i.userName}</Text><Text className="comments_content_text"> 回复 </Text><Text className="comments_content_nickName">{i.replyToName} </Text><Text className="comments_content_text">:{i.commentContent}</Text>
+                <Text onClick={this.viewOtherIndex.bind(this,i.userId,i.userAvatar,i.userName)} className="comments_content_nickName">{i.userName}</Text><Text className="comments_content_text"> 回复 </Text><Text onClick={this.viewOtherIndex.bind(this,i.replyTo,i.replyToAvatar,i.replyToName)} className="comments_content_nickName">{i.replyToName} </Text><Text className="comments_content_text">:{i.commentContent}</Text>
             </Text>:
               <Text className="comments_content">
-                <Text><Text className="comments_content_nickName">{i.userName}</Text><Text className="comments_content_text">: {i.commentContent}</Text></Text>
+                <Text><Text className="comments_content_nickName" onClick={this.viewOtherIndex.bind(this,i.userId,i.userAvatar,i.userName)}>{i.userName}</Text><Text className="comments_content_text">: {i.commentContent}</Text></Text>
               </Text>
           }
         </View>
@@ -149,7 +156,7 @@ export default class Record extends Component{
       return <View className="record_item">
         <View style={{position:"relative",width:"92%",margin:"0 auto"}}>
           <View className="top">
-            <Image className="img" src={item.user.avatar}/>
+            <Image className="img"  onClick={this.viewOtherIndex.bind(this,item.user.id,item.user.avatar,item.user.name)} src={item.user.avatar}/>
             <Text className="nickName">{item.user.name}</Text>
             <View className="insist">坚持<Text className="insist_day">{item.customTitle}</Text></View>
             <Text className="date">{item.date}</Text>

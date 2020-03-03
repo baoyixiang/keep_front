@@ -27,7 +27,7 @@ export default class InsistStatistics extends Component{
     let userInfoModel = Taro.getStorageSync('userInfoModel');
     const params={
       pageNo:0,
-      pageSize:10,
+      pageSize:100,
       userId:userInfoModel.id
     };
     let topList=[
@@ -48,17 +48,21 @@ export default class InsistStatistics extends Component{
         })
       })
       const percentR=completed/list.length;
-      setTimeout(()=>{
-        let timer=setInterval(()=>{
-          count=count+0.05
-          that.setState({
-            percent:percentR*count*100
-          })
-          if(Math.abs(count-1)<0.01){
-            clearInterval(timer)
-          }
-        },16)
-      },350)
+        setTimeout(()=>{
+          let timer=setInterval(()=>{
+            if(count-1>=-0.01){
+              clearInterval(timer)
+            }else
+              count=count+0.05
+            that.setState({
+              percent:percentR*count*100
+            })
+            if(count-1>=-0.01){
+              clearInterval(timer)
+            }
+          },18)
+        },350)
+
 
       this.setState({
         completed,

@@ -86,12 +86,15 @@
       background:#FAFAFA;
       margin:20px auto;
       padding-bottom: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       .content_text_text{
         font-size: 28px;
         width:95%;
         display: block;
         margin:0 auto;
         text-indent: 1em;
+        word-break: break-all;
       }
     }
     .inpView{
