@@ -4,8 +4,9 @@ import './habitSign.scss';
 import {Image, Text, View} from "@tarojs/components";
 import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
-import {AtButton} from "taro-ui";
-import {cancelSign, customSign} from "../../api/apis";
+import {AtButton, AtTabsPane} from "taro-ui";
+import {cancelSign, customSign, getCustomRecord, likeRecord} from "../../api/apis";
+import Record from "../../common/record/record";
 
 export default class HabitSign extends Component{
   constructor(props){
@@ -13,21 +14,66 @@ export default class HabitSign extends Component{
     this.state={
       completed:undefined,
       title:undefined,
-      customId:undefined
+      customId:undefined,
+      displayRecords:[]
     }
   }
 
   componentDidMount() {
-
-    console.log(this.$router.params);
     let data=this.$router.params;
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
     this.setState({
       completed:data.completed==='true'?true:false,
       customId:Number(data.id),
       title:data.title
     })
+    const param={
+      customId:Number(data.id),
+      pageNo: 0,
+      pageSize: 100,
+      myUserId:userInfoModel.id
+    }
+    getCustomRecord(param).then(res=>{
+      this.setState({
+        displayRecords:res.data.items,
+      })
+    })
+  }
+  refreshRecordList(){
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const param={
+      customId:this.state.customId,
+      pageNo: 0,
+      pageSize: 100,
+      myUserId:userInfoModel.id
+    }
+    getCustomRecord(param).then(res=>{
+      this.setState({
+        displayRecords:res.data.items,
+      })
+    })
   }
 
+  changeLikeStatus(id){
+    let userInfoModel = Taro.getStorageSync('userInfoModel');
+    const params={
+      checkInId:id,
+      userId:userInfoModel.id
+    }
+    likeRecord(params).then(res=>{
+      this.refreshRecordList()
+    })
+
+    let {displayRecords}=this.state;
+    displayRecords.forEach(item=>{
+      if(item.checkIn.id===id){
+        item.isSelfLike=!item.isSelfLike;
+      }
+    })
+    this.setState({
+      displayRecords
+    })
+  }
   changeSignStatus(){
     let that=this;
     let userInfoModel = Taro.getStorageSync('userInfoModel');
@@ -71,6 +117,7 @@ export default class HabitSign extends Component{
   }
 
   render() {
+    const {displayRecords}=this.state;
     return(
       <View className="Sign">
         <NavBar title={this.state.title} back={true}/>
@@ -84,6 +131,10 @@ export default class HabitSign extends Component{
             }</View></View>
           {this.state.completed?<AtButton onClick={this.redirectToMood.bind(this)} className="Sign_check_btn">记录心情</AtButton>:null}
         </View>
+        <View className={'divide'}>
+          打卡心情记录
+        </View>
+        {displayRecords.length>0?<Record refresh={this.refreshRecordList.bind(this)} changeStatus={this.changeLikeStatus.bind(this)} data={displayRecords}/>:<View className={'customRecord'}>没有任何记录</View>}
       </View>
     )
   }
