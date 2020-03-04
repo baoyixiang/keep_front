@@ -38,7 +38,7 @@ export default class MineHomePage extends Component{
     });
     const params= {
       pageNo: 0,
-      pageSize: 10,
+      pageSize: 100,
       userId: this.$router.params.id
     };
     getUserCustomList(params).then( res => {

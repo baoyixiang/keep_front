@@ -43,7 +43,7 @@ export default class Index extends Component {
     let userInfoModel = Taro.getStorageSync('userInfoModel');
     const params={
       pageNo:0,
-      pageSize:10,
+      pageSize:100,
       userId:userInfoModel.id
     };
     getUserCustomList(params).then(res=>{
