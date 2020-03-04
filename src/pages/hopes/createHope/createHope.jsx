@@ -27,7 +27,6 @@ export default class CreateHope extends Component{
   }
 
   onFail (mes) {
-    console.log(mes)
   }
 
   getDate(){
@@ -42,11 +41,9 @@ export default class CreateHope extends Component{
     return rq
   }
   componentDidMount() {
-    // console.log(this.getDate())
   }
 
   handleChange = isSeeSelf => {
-    console.log(isSeeSelf)
     this.setState({ isSeeSelf })
   }
   handleChange2=isAnonymous=>{
@@ -86,7 +83,6 @@ export default class CreateHope extends Component{
               voice:"",
               wordContent:that.state.hopeText
             }
-            console.log(params)
             createHope(params).then(res=>{
               if(res.statusCode){
                 that.setState({

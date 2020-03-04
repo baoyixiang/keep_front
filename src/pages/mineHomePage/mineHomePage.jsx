@@ -60,7 +60,6 @@ export default class MineHomePage extends Component{
         followList: res.data,
         follow: res.data.length,
       });
-      console.log('followList1',res.data);
     });
     if( myId == this.$router.params.id){//使用===会出问题
       that.setState({
@@ -73,7 +72,6 @@ export default class MineHomePage extends Component{
         userId: myId,
       };
       getCustomRecord(param).then(res=>{
-        console.log('a',res.data.items);
         this.setState({
           displayRecords:res.data.items,
         })
@@ -105,7 +103,6 @@ export default class MineHomePage extends Component{
       userId: this.state.userId,
     };
     getCustomRecord(param).then(res=>{
-      console.log('a',res.data.items);
       this.setState({
         displayRecords:res.data.items,
       })

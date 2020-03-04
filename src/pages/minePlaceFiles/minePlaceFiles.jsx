@@ -41,9 +41,7 @@ export default class MinePlaceFiles extends Component{
           that.setState({
             list
           })
-          console.log('confirm')
         }else{
-          console.log('cancel')
         }
       }
     })

@@ -38,7 +38,6 @@ export default class InsistStatistics extends Component{
     let completed=0;
     getUserCustomList(params).then(res=>{
       let list=res.data.list;
-      console.log(list);
       list.forEach((item,index)=>{
         if(item.isCheckInToday){
           completed++;

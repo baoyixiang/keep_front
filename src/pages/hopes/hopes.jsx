@@ -80,7 +80,6 @@ export default class Hopes extends Component {
         pageSize:100,
         userId:userInfoModel.id
       }).then(res=>{
-        console.log('res',res)
         let left=[];
         let right=[];
         res.data.forEach((item,index)=>{
@@ -158,7 +157,6 @@ export default class Hopes extends Component {
               pageSize:100,
               userId:userInfoModel.id
             }).then(res=>{
-              console.log('res',res)
               let left=[];
               let right=[];
               res.data.forEach((item,index)=>{
@@ -175,7 +173,6 @@ export default class Hopes extends Component {
             })
           })
         }else{
-          console.log('cancel')
         }
       }
     })
@@ -252,7 +249,6 @@ export default class Hopes extends Component {
         pageSize:100,
         userId:userInfoModel.id
       }).then(res=>{
-        console.log('res',res)
         let left=[];
         let right=[];
         res.data.forEach((item,index)=>{

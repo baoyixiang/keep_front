@@ -32,7 +32,6 @@ export default class HopeDetail extends Component{
     this.setState({
       loading:true,
     })
-    console.log({userId:Number.parseInt(userInfoModel.id),hopeId:Number.parseInt(id)})
     getHopeDetail({userId:Number.parseInt(userInfoModel.id),hopeId:Number.parseInt(id)}).then(res=>{
       this.setState({
         loading:false,
@@ -41,7 +40,6 @@ export default class HopeDetail extends Component{
         userId:userInfoModel.id,
         hopeId:id
       })
-      console.log(res.data)
     })
   }
   likeHope(){
@@ -64,7 +62,6 @@ export default class HopeDetail extends Component{
           userId:userInfoModel.id,
           hopeId:id
         })
-        console.log(res.data)
       })
     })
     this.setState({
@@ -80,7 +77,6 @@ export default class HopeDetail extends Component{
 
   render() {
     const {detail,isLike}=this.state;
-    console.log(this.$router.params.avatar)
     return (
       <View>
         <NavBar back={true} title="心愿详情"/>

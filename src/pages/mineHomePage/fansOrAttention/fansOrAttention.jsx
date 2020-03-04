@@ -21,7 +21,6 @@ export default class FansOrAttention extends Component{
   }
 
   componentWillMount() {
-    console.log("hhh",this.$router.params);
     if( this.$router.params.title === "粉丝"){
       followedMe({
         userId: this.$router.params.id,
@@ -30,7 +29,6 @@ export default class FansOrAttention extends Component{
           userId: this.$router.params.id,
           persons: res.data,
         });
-        console.log('persons',this.state.persons);
       })
     }else if( this.$router.params.title === "关注"){
       myFollowing({
@@ -64,7 +62,6 @@ export default class FansOrAttention extends Component{
   }
 
   redirectToPerson = (id, avatar, name) => {
-    console.log('id:',id);
     Taro.navigateTo({
       url:`../mineHomePage?id=${id}&avatar=${avatar}&name=${name}`
     })

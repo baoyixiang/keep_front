@@ -66,7 +66,6 @@ export default class Index extends Component {
       userId:userInfoModel.id
     };
     getUserCustomList(params).then(res=>{
-      console.log(res)
       this.setState({
         habitsList: res.data.list,
         loading:false,

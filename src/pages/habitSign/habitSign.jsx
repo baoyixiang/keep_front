@@ -91,7 +91,6 @@ export default class HabitSign extends Component{
         success(e){
           if(e.confirm){
             cancelSign(params).then(res=>{
-              console.log(res)
               that.setState({
                 completed:!res.data.optSuccess
               })
@@ -100,9 +99,7 @@ export default class HabitSign extends Component{
         }
       })
     }else{
-      console.log(111)
       customSign(params).then(res=>{
-        console.log(res)
         that.setState({
           completed:res.data.optSuccess
         })

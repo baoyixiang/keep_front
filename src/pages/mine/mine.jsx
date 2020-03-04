@@ -24,8 +24,6 @@ export default class Mine extends Component {
     Taro.getStorage({
       key: 'userInfoModel',
       success(res) {
-        console.log("成功获取存储本地用户数据1");
-        console.log(res);
         that.setState({
           nickName: res.data.name,
           photo: res.data.avatar,
@@ -36,7 +34,6 @@ export default class Mine extends Component {
     Taro.getStorage({
       key:'userInfo',
       success(res){
-        console.log(res.data)
         that.setState({
           nickName:res.data.nickName,
           photo:res.data.avatarUrl,
@@ -106,7 +103,6 @@ export default class Mine extends Component {
     Taro.getStorage({
       key:'userInfo',
       success(res){
-        console.log(res.data)
         that.setState({
           nickName:res.data.nickName,
           photo:res.data.avatarUrl,
@@ -132,7 +128,6 @@ export default class Mine extends Component {
             city:"",
           })
         }else{
-          console.log('cancel')
         }
       }
     })

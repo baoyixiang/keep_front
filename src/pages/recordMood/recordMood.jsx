@@ -45,7 +45,6 @@ export default class RecordMood extends Component{
       })
     })
     recordManager.onError((res)=>{
-      console.log(res)
     })
     Taro.getSystemInfo().then(res=>{
       this.setState({
@@ -91,7 +90,6 @@ export default class RecordMood extends Component{
       cloudPath:'recordMood/'+Date.parse(new Date())+ext,
       filePath:that.state.files[0].url,
       success:res=>{
-        console.log(res)
         const data=res.fileID;
         that.uploadSound(data);
       },
@@ -135,7 +133,6 @@ export default class RecordMood extends Component{
         cloudPath:'recordSound/'+Date.parse(new Date())+ext,
         filePath:sound,
         success:res=>{
-          console.log(res.fileID)
           const params={
             customId: this.state.customId,
             userId:this.state.id,
@@ -147,7 +144,6 @@ export default class RecordMood extends Component{
             this.setState({
               loading:false,
             })
-            console.log(res)
           })
         },
         fail: res=>{
@@ -239,7 +235,6 @@ export default class RecordMood extends Component{
   }
 
   tryListen(){
-    console.log(ica.src)
     let that=this;
     if(this.state.isListen){
       ica.pause();
@@ -274,7 +269,6 @@ export default class RecordMood extends Component{
       trySoundTime:Math.floor(this.state.percentage*this.state.totalTime),
     })
     ica.seek(this.state.percentage*this.state.totalTime);
-    console.log(ica.currentTime);
     tryTimer=setInterval(()=>{
       this.setState({
         percentage:ica.currentTime/this.state.totalTime>1?1:ica.currentTime/this.state.totalTime,

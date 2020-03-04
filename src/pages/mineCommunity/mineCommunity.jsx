@@ -74,7 +74,6 @@ export default class MineCommunity extends Component{
         myUserId:userInfoModel.id
       };
       getCustomRecord(param).then(res=>{
-        console.log('a',res.data.items);
         this.setState({
           tabList:tabList,
           displayRecords:res.data.items,

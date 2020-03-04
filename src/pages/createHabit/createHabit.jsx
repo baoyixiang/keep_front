@@ -87,7 +87,6 @@ export default class CreateHabit extends Component{
         })
       }
     })
-    console.log(this.state)
   }
   onChange (file) {
     this.setState({
