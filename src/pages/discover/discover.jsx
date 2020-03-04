@@ -39,7 +39,7 @@ export default class Discover extends Component {
 
     let userInfo = Taro.getStorageSync('userInfoModel');
 
-    getRecommendUserList().then((result)=>{
+    getRecommendUserList(userInfo.id).then((result)=>{
       this.setState({
         recommendUserList: result.data
       })
@@ -119,7 +119,7 @@ export default class Discover extends Component {
       <View className='discover-no-recommend'>暂无推荐用户</View> :
       recommendUserList.map((item)=>
         <View className='discover-recommend-item'>
-          <Image className='discover-recommend-item-image' src={item.avatar} onClick={()=>{}} mode={"aspectFill"}/>
+          <Image className='discover-recommend-item-image' src={item.avatar} onClick={this.viewOtherIndex.bind(this,item.id,item.avatar,item.name)} mode={"aspectFill"}/>
         </View>
       );
     return(
@@ -137,6 +137,12 @@ export default class Discover extends Component {
         </View>
       </View>
     );
+  }
+
+  viewOtherIndex(userId,photo,nickName){
+    Taro.navigateTo({
+      url:`../mineHomePage/mineHomePage?id=${userId}&avatar=${photo}&name=${nickName}`
+    }).then();
   }
 
   renderRecommendStudy() {

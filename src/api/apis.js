@@ -15,8 +15,8 @@ export  function doLogin(code,avatarUrl,nickName,personalSignature,gender) {
 /**
  * 获取推荐用户列表
  */
-export function getRecommendUserList() {
-  return get(`/api/user/recommend_user_list`)
+export function getRecommendUserList(userId) {
+  return get(`/api/user/recommend_user_list`,{userId})
 }
 
 /**
