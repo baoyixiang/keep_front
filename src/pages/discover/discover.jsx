@@ -238,6 +238,7 @@ export default class Discover extends Component {
                     <View className='discover-habit-item-text-top'>
                       <Text>{item.title || "暂无"}</Text>
                     </View>
+                    <View className='discover-habit-item-text-divider'></View>
                     <View className='discover-habit-item-text-bottom'>
                       <Text>已有{item.joinCount}位朋友在坚持</Text>
                     </View>
@@ -287,6 +288,7 @@ export default class Discover extends Component {
                     <View className='discover-habit-item-text-top'>
                       <Text>{item.title || "暂无"}</Text>
                     </View>
+                    <View className='discover-habit-item-text-divider'></View>
                     <View className='discover-habit-item-text-bottom'>
                       <Text>已有{item.joinCount}位朋友在坚持</Text>
                     </View>
@@ -335,6 +337,7 @@ export default class Discover extends Component {
                   <View className='discover-habit-item-text-top'>
                     <Text>{item.title || "暂无"}</Text>
                   </View>
+                  <View className='discover-habit-item-text-divider'></View>
                   <View className='discover-habit-item-text-bottom'>
                     <Text>已有{item.joinCount}位朋友在坚持</Text>
                   </View>

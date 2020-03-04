@@ -75,10 +75,10 @@ page{
     flex-direction: column;
   }
   .discover-habit-item{
-    width: 85%;
+    width: 89%;
     height: 100px;
-    margin-left: 8%;
-    margin-right: 7%;
+    margin-left: 6%;
+    margin-right: 5%;
     justify-content: space-between;
     .discover-habit-item-image{
       width: 75px;
@@ -86,24 +86,32 @@ page{
       border-radius: 150px;
     }
     .discover-habit-item-divider{
-      width: 10px;
+      width: 30px;
     }
     .discover-habit-item-text{
       flex-direction: column;
       justify-content: space-around;
       .discover-habit-item-text-top{
-        font-size: 28px;
+        font-size: 26px;
+        font-weight: bold;
+      }
+      .discover-habit-item-text-divider{
+        height: 10px;
       }
       .discover-habit-item-text-bottom{
         font-size: 20px;
+        color: #AAAAAA;
       }
     }
     .discover-habit-item-button{
-      width: 80px;
+      width: 100px;
       height: 50px;
       font-size: 24px;
       line-height: 45px;
       margin-top: 10px;
+      border-radius: 150px;
+      background: #F7F7F7;
+      color: #1A80D2;
     }
   }
   .discover-habit--no-item{

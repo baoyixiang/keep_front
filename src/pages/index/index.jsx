@@ -37,6 +37,25 @@ export default class Index extends Component {
 
   }
 
+  // onPullDownRefresh() {
+  //   let userInfoModel = Taro.getStorageSync('userInfoModel');
+  //   const params={
+  //     pageNo:0,
+  //     pageSize:10,
+  //     userId:userInfoModel.id
+  //   };
+  //   getUserCustomList(params).then(res=>{
+  //     console.log(res)
+  //     this.setState({
+  //       habitsList: res.data.list,
+  //       loading:false,
+  //     })
+  //   });
+  //   setTimeout(function () {
+  //     Taro.stopPullDownRefresh()
+  //   },1000)
+  // }
+
   componentWillUnmount () { }
 
   componentDidShow () {
