@@ -5,7 +5,7 @@ import NavBar from "../../common/navBar/navBar";
 import BarTakeUp from "../../common/barTakeUp/barTakeUp";
 import { AtCalendar,AtProgress} from "taro-ui"
 import './insistStatistics.scss'
-import {getUserCustomList} from "../../api/apis";
+import {getCustomRecordList, getUserCustomList} from "../../api/apis";
 import all from '../../assets/images/all.png';
 import err from '../../assets/images/image_404.png'
 let count=0;
@@ -20,6 +20,7 @@ export default class InsistStatistics extends Component{
       total:undefined,
       completed:0,
       dataAll:[],
+      marks:[],
     }
   }
 
@@ -76,12 +77,38 @@ export default class InsistStatistics extends Component{
   }
 
   switchNavItem(type){
+    let that=this;
     this.setState({type})
-    console.log(this.state.dataAll[type-1])
     if(type!==0){
-      this.setState({
-        itemDetail:this.state.dataAll[type-1]
+      // {
+      //   "customId": 0,
+      //   "myUserId": 0,
+      //   "pageNo": 0,
+      //   "pageSize": 0,
+      //   "userId": 0
+      // }
+      let userInfoModel = Taro.getStorageSync('userInfoModel');
+      const params={
+        customId:this.state.dataAll[type-1].custom.id,
+        myUserId:userInfoModel.id,
+        userId:userInfoModel.id,
+        pageNo:0,
+        pageSize:1000,
+      }
+      getCustomRecordList(params).then(res=>{
+
+        const list=res.data.items;
+        let marks=[];
+        list.forEach(item=>{
+          // { value: '2020/1/11' }
+          marks.push({value:item.checkIn.checkInTime.substring(0,10).replace(/-/g,'/')})
+        })
+        this.setState({
+          itemDetail:this.state.dataAll[type-1],
+          marks
+        })
       })
+
     }
   }
 
@@ -138,7 +165,7 @@ export default class InsistStatistics extends Component{
               </View>
             </View>:<View className="insist_content_others">
               <Text className="insist_content_others_title">{itemDetail.custom.title}</Text>
-              <AtCalendar onDayClick={()=>{}}  className="insist_content_others_calendar" marks={ [ { value: '2020/1/11' },{ value: '2020/1/12' },{ value: '2020/1/14' },{ value: '2020/1/26' } ] } />
+              <AtCalendar onDayClick={()=>{}}  className="insist_content_others_calendar" marks={ this.state.marks } />
               <View className="insist_content_others_statistics">
                 <View className="insist_content_others_statistics_title">数据统计</View>
                 <View className="insist_content_others_statistics_item">

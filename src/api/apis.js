@@ -41,6 +41,10 @@ export function getUserCustomList(params){
   return post('/api/user/custom/join_list',params)
 }
 
+export function getCustomRecordList(params){
+  return post('/api/user/checkin/CustomCheckIns',params)
+}
+
 /**
  * 获取习惯详情
  */
