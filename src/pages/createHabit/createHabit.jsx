@@ -105,15 +105,15 @@ export default class CreateHabit extends Component{
     })
   }
 
-  joinCustomAndDelete(recommendList,recommendItem,customId) {
+  joinCustomAndDelete(customList,customItem,customId) {
     joinCustom(customId);
-    for (let i = 0; i < recommendList.length; i++) {
-      if(recommendList[i] == recommendItem) {
-        recommendList.splice(i,i+1);
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == customItem) {
+        customList.splice(i,i+1);
       }
     }
     this.setState({
-      recommendList: recommendList,
+      recommendList: customList,
     });
   }
 
