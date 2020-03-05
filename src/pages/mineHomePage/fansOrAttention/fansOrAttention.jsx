@@ -97,7 +97,7 @@ export default class FansOrAttention extends Component{
     const { persons, type, isMyself}=this.state;
     return <View>
       <NavBar title={this.state.title} back={true}/>
-      <BarTakeUp height={45}/>
+      <BarTakeUp height={55}/>
       <View>
         {
           persons.map(item=>{
